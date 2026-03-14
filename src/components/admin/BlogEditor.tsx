@@ -71,7 +71,7 @@ function Divider() {
 }
 
 // ── Toolbar ───────────────────────────────────────────────────────────────────
-function Toolbar({ editor, onImageUpload }: { editor: Editor; onImageUpload: () => void }) {
+function Toolbar({ editor }: { editor: Editor }) {
   const currentFont = editor.getAttributes("textStyle").fontFamily ?? "";
 
   function setLink() {

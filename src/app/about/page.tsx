@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+
 import { EducationTimeline } from "@/components/about/EducationTimeline";
 import { HackathonTimeline } from "@/components/about/HackathonTimeline";
 import { ExperienceTimeline } from "@/components/about/ExperienceTimeline";
