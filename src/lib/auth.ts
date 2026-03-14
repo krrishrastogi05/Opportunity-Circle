@@ -14,7 +14,7 @@ export const authOptions: NextAuthOptions = {
           credentials?.username === process.env.ADMIN_USERNAME &&
           credentials?.password === process.env.ADMIN_PASSWORD
         ) {
-          return { id: "1", name: "Maaz", email: "admin@maaz.dev" };
+          return { id: "1", name: "Admin", email: "admin@portfolio.dev" };
         }
         return null;
       },
@@ -23,7 +23,11 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/admin/login",
   },
-  session: { strategy: "jwt" },
+  session: {
+    strategy: "jwt",
+    maxAge: 8 * 60 * 60,    // 8 hours — expire and force re-login
+    updateAge: 0,             // never silently refresh — always use original expiry
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) token.isAdmin = true;
