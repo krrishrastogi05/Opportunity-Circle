@@ -4,6 +4,8 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { calcReadTime } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 function generatePin(): string {
   return Math.floor(1000 + Math.random() * 9000).toString();
 }
@@ -11,30 +13,39 @@ function generatePin(): string {
 // PUT /api/blogs/[id] — admin only: update post
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const session = await getServerSession(authOptions);
-  if (!session) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  if (!session)
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
   try {
     const body = await req.json();
-    const { title, slug, content, excerpt, coverImage, tags, visibility, category } = body;
+    const {
+      title,
+      slug,
+      content,
+      excerpt,
+      coverImage,
+      tags,
+      visibility,
+      category,
+    } = body;
 
     const existing = await prisma.blog.findUnique({ where: { id: params.id } });
-    if (!existing) return NextResponse.json({ message: "Not found" }, { status: 404 });
+    if (!existing)
+      return NextResponse.json({ message: "Not found" }, { status: 404 });
 
     const vis: string = visibility ?? existing.visibility;
     const cat: string = category ?? existing.category;
     const isPublic = vis === "PUBLIC";
 
     // Generate new PIN if switching to UNLISTED and no pin yet
-    const pin =
-      vis === "UNLISTED"
-        ? existing.pin ?? generatePin()
-        : null;
+    const pin = vis === "UNLISTED" ? (existing.pin ?? generatePin()) : null;
 
     const wasPublic = existing.visibility === "PUBLIC";
-    const publishedAt = !wasPublic && isPublic ? new Date() : existing.publishedAt;
+    const publishedAt =
+      !wasPublic && isPublic ? new Date() : existing.publishedAt;
 
     const updateData: Record<string, unknown> = {
       visibility: vis,
@@ -69,10 +80,11 @@ export async function PUT(
 // DELETE /api/blogs/[id] — admin only
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const session = await getServerSession(authOptions);
-  if (!session) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  if (!session)
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
   try {
     await prisma.blog.delete({ where: { id: params.id } });
