@@ -97,7 +97,7 @@ export async function GitHubBento() {
           className="col-span-2 rounded-2xl border border-border overflow-hidden relative group hover:border-foreground/20 transition-colors min-h-[200px] bg-neutral-900"
         >
           <Image
-            src="/placeholder/writer.png"
+            src="/placeholder/gidd.gif"
             alt="writer"
             fill
             className="object-cover object-center"
