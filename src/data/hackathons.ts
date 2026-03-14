@@ -20,7 +20,7 @@ export const hackathons: Hackathon[] = [
     description:
       "National winner — top 0.2% of all participating teams across India. One of the most prestigious student hackathons in the country.",
     rank: "National Winner",
-    logo: "/placeholder/hackathon-logo.png",
+    logo: "/placeholder/sih_logo.png",
   },
   {
     id: "2",
@@ -31,7 +31,7 @@ export const hackathons: Hackathon[] = [
     description:
       "Ranked Top 75 out of 50,000+ participants — top 0.15%. Competed against some of the best engineering minds in the country.",
     rank: "Top 75 / 50,000+",
-    logo: "/placeholder/hackathon-logo.png",
+    logo: "/placeholder/amazon.png",
   },
   {
     id: "3",
@@ -42,7 +42,7 @@ export const hackathons: Hackathon[] = [
     description:
       "National Finalist — top 0.5% of all participating teams. Built a data-driven solution for India's identity infrastructure authority.",
     rank: "National Finalist",
-    logo: "/placeholder/hackathon-logo.png",
+    logo: "/placeholder/aadhar.png",
   },
 ];
 
@@ -93,7 +93,7 @@ export const experience: Experience[] = [
       "Added session ownership validation on DataFileRoute mutation endpoints to prevent unauthorized data writes (PR #277).",
       "Improved web accessibility (a11y) by adding ARIA labels, live regions, and keyboard navigation support (PR #273).",
     ],
-    logo: "/placeholder/company-logo.png",
+    logo: "/placeholder/UN.png",
     link: "https://github.com/OECD-OCS/MUIOGO",
   },
 ];
