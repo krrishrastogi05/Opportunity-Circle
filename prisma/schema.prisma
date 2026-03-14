@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Blog {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  content     Json
+  excerpt     String?
+  coverImage  String?
+  // visibility: PUBLIC | PRIVATE | UNLISTED
+  visibility  String    @default("PRIVATE")
+  // category: TECHNICAL | GENERAL
+  category    String    @default("TECHNICAL")
+  // 4-digit PIN for UNLISTED posts
+  pin         String?
+  // keep published for backwards compat (mirrors visibility === "PUBLIC")
+  published   Boolean   @default(false)
+  tags        String[]
+  readTime    Int?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+}
