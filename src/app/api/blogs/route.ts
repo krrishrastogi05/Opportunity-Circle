@@ -4,6 +4,8 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { slugify, calcReadTime } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 function generatePin(): string {
   return Math.floor(1000 + Math.random() * 9000).toString();
 }
@@ -28,7 +30,10 @@ export async function GET() {
     });
     return NextResponse.json(blogs);
   } catch {
-    return NextResponse.json({ message: "Failed to fetch blogs" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to fetch blogs" },
+      { status: 500 },
+    );
   }
 }
 
@@ -41,10 +46,14 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { title, content, excerpt, coverImage, tags, visibility, category } = body;
+    const { title, content, excerpt, coverImage, tags, visibility, category } =
+      body;
 
     if (!title || !content) {
-      return NextResponse.json({ message: "Title and content are required" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Title and content are required" },
+        { status: 400 },
+      );
     }
 
     const vis: string = visibility ?? "PRIVATE";
@@ -78,7 +87,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(blog, { status: 201 });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Failed to create blog";
+    const message =
+      err instanceof Error ? err.message : "Failed to create blog";
     return NextResponse.json({ message }, { status: 500 });
   }
 }

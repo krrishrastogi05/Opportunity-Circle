@@ -1,14 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 // GET /api/blogs/unlisted?slug=XXX&pin=YYYY
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const slug = searchParams.get("slug");
-  const pin  = searchParams.get("pin");
+  const pin = searchParams.get("pin");
 
   if (!slug || !pin) {
-    return NextResponse.json({ message: "slug and pin are required" }, { status: 400 });
+    return NextResponse.json(
+      { message: "slug and pin are required" },
+      { status: 400 },
+    );
   }
 
   try {

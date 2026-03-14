@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
+    "postinstall": "prisma generate",
     "start": "next start",
     "lint": "next lint"
   },
@@ -49,7 +50,7 @@
     "prisma": "^5.22.0",
     "react": "^18",
     "react-activity-calendar": "^3.1.1",
-    "react-day-picker": "^9.14.0",
+    "react-day-picker": "^8.10.1",
     "react-dom": "^18",
     "react-icons": "^5.6.0",
     "reading-time": "^1.5.0",
