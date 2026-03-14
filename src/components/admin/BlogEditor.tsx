@@ -15,31 +15,50 @@ import { Color } from "@tiptap/extension-color";
 import FontFamily from "@tiptap/extension-font-family";
 import Placeholder from "@tiptap/extension-placeholder";
 import { common, createLowlight } from "lowlight";
-import { useRef, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import {
-  Bold, Italic, Underline as UnderlineIcon, Strikethrough,
-  Code, AlignLeft, AlignCenter, AlignRight,
-  List, ListOrdered, Quote, Minus, Image as ImageIcon,
-  Link as LinkIcon, Heading1, Heading2, Heading3,
-  Highlighter, Undo, Redo, Type,
+  Bold,
+  Italic,
+  Underline as UnderlineIcon,
+  Strikethrough,
+  Code,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  List,
+  ListOrdered,
+  Quote,
+  Minus,
+  Image as ImageIcon,
+  Link as LinkIcon,
+  Heading1,
+  Heading2,
+  Heading3,
+  Highlighter,
+  Undo,
+  Redo,
+  Type,
 } from "lucide-react";
 
 const lowlight = createLowlight(common);
 
 // Fonts available in the toolbar
 const FONTS = [
-  { label: "Default",   value: "" },
-  { label: "Inter",     value: "Inter, sans-serif" },
-  { label: "Georgia",   value: "Georgia, serif" },
-  { label: "Mono",      value: "ui-monospace, monospace" },
-  { label: "Playfair",  value: "'Playfair Display', serif" },
+  { label: "Default", value: "" },
+  { label: "Inter", value: "Inter, sans-serif" },
+  { label: "Georgia", value: "Georgia, serif" },
+  { label: "Mono", value: "ui-monospace, monospace" },
+  { label: "Playfair", value: "'Playfair Display', serif" },
   { label: "Space Gro", value: "'Space Grotesk', sans-serif" },
 ];
 
 // ── Toolbar button helper ─────────────────────────────────────────────────────
 function ToolBtn({
-  onClick, active, disabled, title, children,
+  onClick,
+  active,
+  disabled,
+  title,
+  children,
 }: {
   onClick: () => void;
   active?: boolean;
@@ -50,7 +69,10 @@ function ToolBtn({
   return (
     <button
       type="button"
-      onMouseDown={(e) => { e.preventDefault(); onClick(); }}
+      onMouseDown={(e) => {
+        e.preventDefault();
+        onClick();
+      }}
       disabled={disabled}
       title={title}
       className={cn(
@@ -58,7 +80,7 @@ function ToolBtn({
         active
           ? "bg-foreground text-background"
           : "text-muted-foreground hover:bg-accent hover:text-foreground",
-        disabled && "opacity-30 pointer-events-none"
+        disabled && "opacity-30 pointer-events-none",
       )}
     >
       {children}
@@ -75,9 +97,15 @@ function Toolbar({ editor }: { editor: Editor }) {
   const currentFont = editor.getAttributes("textStyle").fontFamily ?? "";
 
   function setLink() {
-    const url = window.prompt("Enter URL", editor.getAttributes("link").href ?? "https://");
+    const url = window.prompt(
+      "Enter URL",
+      editor.getAttributes("link").href ?? "https://",
+    );
     if (url === null) return;
-    if (url === "") { editor.chain().focus().unsetLink().run(); return; }
+    if (url === "") {
+      editor.chain().focus().unsetLink().run();
+      return;
+    }
     editor.chain().focus().setLink({ href: url }).run();
   }
 
@@ -89,10 +117,18 @@ function Toolbar({ editor }: { editor: Editor }) {
   return (
     <div className="flex flex-wrap items-center gap-0.5 px-3 py-2 border-b border-border bg-muted/30">
       {/* Undo / Redo */}
-      <ToolBtn onClick={() => editor.chain().focus().undo().run()} title="Undo" disabled={!editor.can().undo()}>
+      <ToolBtn
+        onClick={() => editor.chain().focus().undo().run()}
+        title="Undo"
+        disabled={!editor.can().undo()}
+      >
         <Undo className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().redo().run()} title="Redo" disabled={!editor.can().redo()}>
+      <ToolBtn
+        onClick={() => editor.chain().focus().redo().run()}
+        title="Redo"
+        disabled={!editor.can().redo()}
+      >
         <Redo className="h-3.5 w-3.5" />
       </ToolBtn>
 
@@ -110,7 +146,11 @@ function Toolbar({ editor }: { editor: Editor }) {
         title="Font family"
       >
         {FONTS.map((f) => (
-          <option key={f.value} value={f.value} style={{ fontFamily: f.value || undefined }}>
+          <option
+            key={f.value}
+            value={f.value}
+            style={{ fontFamily: f.value || undefined }}
+          >
             {f.label}
           </option>
         ))}
@@ -119,100 +159,166 @@ function Toolbar({ editor }: { editor: Editor }) {
       <Divider />
 
       {/* Headings */}
-      <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        active={editor.isActive("heading", { level: 1 })} title="Heading 1">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+        active={editor.isActive("heading", { level: 1 })}
+        title="Heading 1"
+      >
         <Heading1 className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        active={editor.isActive("heading", { level: 2 })} title="Heading 2">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+        active={editor.isActive("heading", { level: 2 })}
+        title="Heading 2"
+      >
         <Heading2 className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        active={editor.isActive("heading", { level: 3 })} title="Heading 3">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+        active={editor.isActive("heading", { level: 3 })}
+        title="Heading 3"
+      >
         <Heading3 className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().setParagraph().run()}
-        active={editor.isActive("paragraph")} title="Paragraph">
+      <ToolBtn
+        onClick={() => editor.chain().focus().setParagraph().run()}
+        active={editor.isActive("paragraph")}
+        title="Paragraph"
+      >
         <Type className="h-3.5 w-3.5" />
       </ToolBtn>
 
       <Divider />
 
       {/* Inline formatting */}
-      <ToolBtn onClick={() => editor.chain().focus().toggleBold().run()}
-        active={editor.isActive("bold")} title="Bold">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleBold().run()}
+        active={editor.isActive("bold")}
+        title="Bold"
+      >
         <Bold className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().toggleItalic().run()}
-        active={editor.isActive("italic")} title="Italic">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleItalic().run()}
+        active={editor.isActive("italic")}
+        title="Italic"
+      >
         <Italic className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().toggleUnderline().run()}
-        active={editor.isActive("underline")} title="Underline">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleUnderline().run()}
+        active={editor.isActive("underline")}
+        title="Underline"
+      >
         <UnderlineIcon className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().toggleStrike().run()}
-        active={editor.isActive("strike")} title="Strikethrough">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleStrike().run()}
+        active={editor.isActive("strike")}
+        title="Strikethrough"
+      >
         <Strikethrough className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().toggleCode().run()}
-        active={editor.isActive("code")} title="Inline code">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleCode().run()}
+        active={editor.isActive("code")}
+        title="Inline code"
+      >
         <Code className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().toggleHighlight().run()}
-        active={editor.isActive("highlight")} title="Highlight">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleHighlight().run()}
+        active={editor.isActive("highlight")}
+        title="Highlight"
+      >
         <Highlighter className="h-3.5 w-3.5" />
       </ToolBtn>
 
       <Divider />
 
       {/* Text colour */}
-      <label title="Text colour" className="h-7 w-7 flex items-center justify-center rounded hover:bg-accent cursor-pointer">
+      <label
+        title="Text colour"
+        className="h-7 w-7 flex items-center justify-center rounded hover:bg-accent cursor-pointer"
+      >
         <input
           type="color"
           defaultValue="#ffffff"
-          onChange={(e) => editor.chain().focus().setColor(e.target.value).run()}
+          onChange={(e) =>
+            editor.chain().focus().setColor(e.target.value).run()
+          }
           className="sr-only"
         />
-        <span className="text-xs font-bold" style={{ color: editor.getAttributes("textStyle").color ?? "currentColor" }}>A</span>
+        <span
+          className="text-xs font-bold"
+          style={{
+            color: editor.getAttributes("textStyle").color ?? "currentColor",
+          }}
+        >
+          A
+        </span>
       </label>
 
       <Divider />
 
       {/* Alignment */}
-      <ToolBtn onClick={() => editor.chain().focus().setTextAlign("left").run()}
-        active={editor.isActive({ textAlign: "left" })} title="Align left">
+      <ToolBtn
+        onClick={() => editor.chain().focus().setTextAlign("left").run()}
+        active={editor.isActive({ textAlign: "left" })}
+        title="Align left"
+      >
         <AlignLeft className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().setTextAlign("center").run()}
-        active={editor.isActive({ textAlign: "center" })} title="Align center">
+      <ToolBtn
+        onClick={() => editor.chain().focus().setTextAlign("center").run()}
+        active={editor.isActive({ textAlign: "center" })}
+        title="Align center"
+      >
         <AlignCenter className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().setTextAlign("right").run()}
-        active={editor.isActive({ textAlign: "right" })} title="Align right">
+      <ToolBtn
+        onClick={() => editor.chain().focus().setTextAlign("right").run()}
+        active={editor.isActive({ textAlign: "right" })}
+        title="Align right"
+      >
         <AlignRight className="h-3.5 w-3.5" />
       </ToolBtn>
 
       <Divider />
 
       {/* Lists */}
-      <ToolBtn onClick={() => editor.chain().focus().toggleBulletList().run()}
-        active={editor.isActive("bulletList")} title="Bullet list">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        active={editor.isActive("bulletList")}
+        title="Bullet list"
+      >
         <List className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        active={editor.isActive("orderedList")} title="Numbered list">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        active={editor.isActive("orderedList")}
+        title="Numbered list"
+      >
         <ListOrdered className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        active={editor.isActive("blockquote")} title="Blockquote">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+        active={editor.isActive("blockquote")}
+        title="Blockquote"
+      >
         <Quote className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        active={editor.isActive("codeBlock")} title="Code block">
+      <ToolBtn
+        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+        active={editor.isActive("codeBlock")}
+        title="Code block"
+      >
         <Code className="h-3.5 w-3.5" />
       </ToolBtn>
-      <ToolBtn onClick={() => editor.chain().focus().setHorizontalRule().run()} title="Divider">
+      <ToolBtn
+        onClick={() => editor.chain().focus().setHorizontalRule().run()}
+        title="Divider"
+      >
         <Minus className="h-3.5 w-3.5" />
       </ToolBtn>
 
@@ -245,7 +351,8 @@ function Toolbar({ editor }: { editor: Editor }) {
             fetch("/api/upload-image", { method: "POST", body: form })
               .then((r) => r.json())
               .then((d) => {
-                if (d.url) editor.chain().focus().setImage({ src: d.url }).run();
+                if (d.url)
+                  editor.chain().focus().setImage({ src: d.url }).run();
               })
               .catch(() => {
                 // Fallback: embed as base64
@@ -286,19 +393,20 @@ export function BlogEditor({ initialContent, onChange }: BlogEditorProps) {
       FontFamily,
       Placeholder.configure({ placeholder: "Start writing your post here…" }),
     ],
-    content: initialContent ?? { type: "doc", content: [{ type: "paragraph" }] },
+    content: initialContent ?? {
+      type: "doc",
+      content: [{ type: "paragraph" }],
+    },
     immediatelyRender: false,
     onUpdate: ({ editor }) => onChange(editor.getJSON() as JSONContent),
   });
 
-  const uploadRef = useRef<() => void>(() => {});
-  const handleUpload = useCallback(() => uploadRef.current?.(), []);
-
-  if (!editor) return <div className="h-96 animate-pulse bg-muted rounded-xl" />;
+  if (!editor)
+    return <div className="h-96 animate-pulse bg-muted rounded-xl" />;
 
   return (
     <div className="border border-border rounded-xl overflow-hidden bg-background">
-      <Toolbar editor={editor} onImageUpload={handleUpload} />
+      <Toolbar editor={editor} />
       <EditorContent
         editor={editor}
         className="min-h-[520px]"

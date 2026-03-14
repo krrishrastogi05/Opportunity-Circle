@@ -1,85 +1,92 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
+import * as React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { DayPicker } from "react-day-picker";
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 // type utilities
-type UnionKeys<T> = T extends T ? keyof T : never
-type Expand<T> = T extends T ? { [K in keyof T]: T[K] } : never
+type UnionKeys<T> = T extends T ? keyof T : never;
+type Expand<T> = T extends T ? { [K in keyof T]: T[K] } : never;
 type OneOf<T extends object[]> = {
   [K in keyof T]: Expand<
     T[K] & Partial<Record<Exclude<UnionKeys<T[number]>, keyof T[K]>, never>>
-  >
-}[number]
+  >;
+}[number];
 
 // types
-export type Classname = string
+export type Classname = string;
 export type WeightedDateEntry = {
-  date: Date
-  weight: number
-}
+  date: Date;
+  weight: number;
+};
 
 interface IDatesPerVariant {
-  datesPerVariant: Date[][]
+  datesPerVariant: Date[][];
 }
 interface IWeightedDatesEntry {
-  weightedDates: WeightedDateEntry[]
+  weightedDates: WeightedDateEntry[];
 }
 
-type VariantDatesInput = OneOf<[IDatesPerVariant, IWeightedDatesEntry]>
+type VariantDatesInput = OneOf<[IDatesPerVariant, IWeightedDatesEntry]>;
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
-  variantClassnames: Classname[]
-} & VariantDatesInput
+  variantClassnames: Classname[];
+} & VariantDatesInput;
 
 function useModifers(
   variantClassnames: Classname[],
-  datesPerVariant: Date[][]
+  datesPerVariant: Date[][],
 ): [Record<string, Date[]>, Record<string, string>] {
-  const noOfVariants = variantClassnames.length
+  const noOfVariants = variantClassnames.length;
 
   const variantLabels = [...Array(noOfVariants)].map(
-    (_, idx) => `__variant${idx}`
-  )
+    (_, idx) => `__variant${idx}`,
+  );
 
-  const modifiers = variantLabels.reduce((acc, key, index) => {
-    acc[key] = datesPerVariant[index]
-    return acc
-  }, {} as Record<string, Date[]>)
+  const modifiers = variantLabels.reduce(
+    (acc, key, index) => {
+      acc[key] = datesPerVariant[index];
+      return acc;
+    },
+    {} as Record<string, Date[]>,
+  );
 
-  const modifiersClassNames = variantLabels.reduce((acc, key, index) => {
-    acc[key] = variantClassnames[index]
-    return acc
-  }, {} as Record<string, string>)
+  const modifiersClassNames = variantLabels.reduce(
+    (acc, key, index) => {
+      acc[key] = variantClassnames[index];
+      return acc;
+    },
+    {} as Record<string, string>,
+  );
 
-  return [modifiers, modifiersClassNames]
+  return [modifiers, modifiersClassNames];
 }
 
 function categorizeDatesPerVariant(
   weightedDates: WeightedDateEntry[],
-  noOfVariants: number
+  noOfVariants: number,
 ) {
-  const sortedEntries = weightedDates.sort((a, b) => a.weight - b.weight)
+  const sortedEntries = weightedDates.sort((a, b) => a.weight - b.weight);
 
-  const categorizedRecord = [...Array(noOfVariants)].map(() => [] as Date[])
+  const categorizedRecord = [...Array(noOfVariants)].map(() => [] as Date[]);
 
-  const minNumber = sortedEntries[0].weight
-  const maxNumber = sortedEntries[sortedEntries.length - 1].weight
-  const range = minNumber == maxNumber ? 1 : (maxNumber - minNumber) / noOfVariants
+  const minNumber = sortedEntries[0].weight;
+  const maxNumber = sortedEntries[sortedEntries.length - 1].weight;
+  const range =
+    minNumber == maxNumber ? 1 : (maxNumber - minNumber) / noOfVariants;
 
   sortedEntries.forEach((entry) => {
     const category = Math.min(
       Math.floor((entry.weight - minNumber) / range),
-      noOfVariants - 1
-    )
-    categorizedRecord[category].push(entry.date)
-  })
+      noOfVariants - 1,
+    );
+    categorizedRecord[category].push(entry.date);
+  });
 
-  return categorizedRecord
+  return categorizedRecord;
 }
 
 function CalendarHeatmap({
@@ -91,16 +98,16 @@ function CalendarHeatmap({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
-  const noOfVariants = variantClassnames.length
+  const noOfVariants = variantClassnames.length;
 
-  weightedDates = weightedDates ?? []
+  weightedDates = weightedDates ?? [];
   datesPerVariant =
-    datesPerVariant ?? categorizeDatesPerVariant(weightedDates, noOfVariants)
+    datesPerVariant ?? categorizeDatesPerVariant(weightedDates, noOfVariants);
 
   const [modifiers, modifiersClassNames] = useModifers(
     variantClassnames,
-    datesPerVariant
-  )
+    datesPerVariant,
+  );
 
   return (
     <DayPicker
@@ -116,18 +123,19 @@ function CalendarHeatmap({
         nav: "space-x-1 flex items-center",
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
-          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
         ),
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
         table: "w-full border-collapse space-y-1",
         head_row: "flex",
-        head_cell: "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
+        head_cell:
+          "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
         cell: "h-9 w-9 text-center text-sm p-0 relative focus-within:relative focus-within:z-20",
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
+          "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
         ),
         day_range_end: "day-range-end",
         day_today: "bg-accent text-accent-foreground",
@@ -136,14 +144,16 @@ function CalendarHeatmap({
         day_hidden: "invisible",
         ...classNames,
       }}
-      components={{
-        IconLeft: () => <ChevronLeft className="h-4 w-4" />,
-        IconRight: () => <ChevronRight className="h-4 w-4" />,
-      }}
+      components={
+        {
+          IconLeft: () => <ChevronLeft className="h-4 w-4" />,
+          IconRight: () => <ChevronRight className="h-4 w-4" />,
+        } as Record<string, unknown>
+      }
       {...props}
     />
-  )
+  );
 }
-CalendarHeatmap.displayName = "CalendarHeatmap"
+CalendarHeatmap.displayName = "CalendarHeatmap";
 
-export { CalendarHeatmap }
+export { CalendarHeatmap };
