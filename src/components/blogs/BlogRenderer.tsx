@@ -27,10 +27,20 @@ export function BlogRenderer({ content }: BlogRendererProps) {
       TextStyle,
       Color,
     ],
-    content,
+    content: content ?? { type: "doc", content: [] },
     editable: false,
     immediatelyRender: false,
   });
+
+  if (!editor) return null;
+
+  if (!content || Object.keys(content).length === 0) {
+    return (
+      <p className="text-muted-foreground italic text-sm">
+        No content yet — edit this post to add content.
+      </p>
+    );
+  }
 
   return (
     <EditorContent

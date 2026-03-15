@@ -14,6 +14,8 @@ interface Blog {
   title: string;
   slug: string;
   published: boolean;
+  visibility: string;
+  category: string;
   tags: string[];
   readTime: number | null;
   createdAt: Date;
@@ -30,7 +32,7 @@ export function BlogList({ initialBlogs }: { initialBlogs: Blog[] }) {
       const res = await fetch(`/api/blogs/${blog.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ published: !blog.published }),
+        body: JSON.stringify({ visibility: blog.visibility === "PUBLIC" ? "PRIVATE" : "PUBLIC" }),
       });
       if (!res.ok) throw new Error("Failed");
       const updated = await res.json();

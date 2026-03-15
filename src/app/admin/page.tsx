@@ -9,6 +9,8 @@ async function getBlogs() {
       title: true,
       slug: true,
       published: true,
+      visibility: true,
+      category: true,
       tags: true,
       readTime: true,
       createdAt: true,
