@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditor, EditorContent } from "@tiptap/react";
+import { generateHTML } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { common, createLowlight } from "lowlight";
@@ -12,35 +12,39 @@ import TextAlign from "@tiptap/extension-text-align";
 import FontFamily from "@tiptap/extension-font-family";
 import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
+import { useMemo } from "react";
 
 const lowlight = createLowlight(common);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const extensions: any[] = [
+  StarterKit.configure({ codeBlock: false }),
+  CodeBlockLowlight.configure({ lowlight }),
+  Highlight.configure({ multicolor: true }),
+  ImageExt.configure({ allowBase64: true }),
+  Link.configure({ openOnClick: true }),
+  Underline,
+  TextAlign.configure({ types: ["heading", "paragraph"] }),
+  TextStyle,
+  Color,
+  FontFamily,
+];
 
 interface BlogRendererProps {
   content: object;
 }
 
 export function BlogRenderer({ content }: BlogRendererProps) {
-  const editor = useEditor({
-    extensions: [
-      StarterKit.configure({ codeBlock: false }),
-      CodeBlockLowlight.configure({ lowlight }),
-      Highlight.configure({ multicolor: true }),
-      ImageExt.configure({ allowBase64: true }),
-      Link.configure({ openOnClick: true }),
-      Underline,
-      TextAlign.configure({ types: ["heading", "paragraph"] }),
-      FontFamily,
-      TextStyle,
-      Color,
-    ],
-    content: content ?? { type: "doc", content: [] },
-    editable: false,
-    immediatelyRender: false,
-  });
+  const html = useMemo(() => {
+    if (!content || Object.keys(content).length === 0) return "";
+    try {
+      return generateHTML(content as Parameters<typeof generateHTML>[0], extensions);
+    } catch {
+      return "";
+    }
+  }, [content]);
 
-  if (!editor) return null;
-
-  if (!content || Object.keys(content).length === 0) {
+  if (!html) {
     return (
       <p className="text-muted-foreground italic text-sm">
         No content yet — edit this post to add content.
@@ -49,8 +53,7 @@ export function BlogRenderer({ content }: BlogRendererProps) {
   }
 
   return (
-    <EditorContent
-      editor={editor}
+    <div
       className="prose dark:prose-invert max-w-none
                  prose-headings:font-bold prose-headings:tracking-tight
                  prose-p:leading-relaxed prose-p:text-foreground/80
@@ -60,6 +63,7 @@ export function BlogRenderer({ content }: BlogRendererProps) {
                  prose-blockquote:border-l-4 prose-blockquote:border-border prose-blockquote:text-muted-foreground
                  prose-img:rounded-xl prose-img:border prose-img:border-border
                  prose-hr:border-border"
+      dangerouslySetInnerHTML={{ __html: html }}
     />
   );
 }

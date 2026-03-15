@@ -34,12 +34,12 @@ export function BlogList({ initialBlogs }: { initialBlogs: Blog[] }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ visibility: blog.visibility === "PUBLIC" ? "PRIVATE" : "PUBLIC" }),
       });
-      if (!res.ok) throw new Error("Failed");
-      const updated = await res.json();
-      setBlogs((prev) => prev.map((b) => (b.id === blog.id ? { ...b, published: updated.published } : b)));
-      toast.success(updated.published ? "Post published!" : "Post unpublished");
-    } catch {
-      toast.error("Failed to update");
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.message ?? `${res.status}`);
+      setBlogs((prev) => prev.map((b) => (b.id === blog.id ? { ...b, published: data.published, visibility: data.visibility ?? b.visibility } : b)));
+      toast.success(data.published ? "Post published!" : "Post unpublished");
+    } catch (err) {
+      toast.error(`Failed to update: ${err instanceof Error ? err.message : "unknown"}`);
     } finally {
       setLoadingId(null);
     }
@@ -50,11 +50,12 @@ export function BlogList({ initialBlogs }: { initialBlogs: Blog[] }) {
     setLoadingId(id);
     try {
       const res = await fetch(`/api/blogs/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Failed");
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.message ?? `${res.status}`);
       setBlogs((prev) => prev.filter((b) => b.id !== id));
       toast.success("Post deleted");
-    } catch {
-      toast.error("Failed to delete");
+    } catch (err) {
+      toast.error(`Failed to delete: ${err instanceof Error ? err.message : "unknown"}`);
     } finally {
       setLoadingId(null);
     }
