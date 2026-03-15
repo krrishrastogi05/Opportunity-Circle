@@ -7,6 +7,9 @@ import { common, createLowlight } from "lowlight";
 import Highlight from "@tiptap/extension-highlight";
 import ImageExt from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
+import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
+import FontFamily from "@tiptap/extension-font-family";
 import { Color } from "@tiptap/extension-color";
 import { TextStyle } from "@tiptap/extension-text-style";
 
@@ -24,6 +27,9 @@ export function BlogRenderer({ content }: BlogRendererProps) {
       Highlight.configure({ multicolor: true }),
       ImageExt.configure({ allowBase64: true }),
       Link.configure({ openOnClick: true }),
+      Underline,
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+      FontFamily,
       TextStyle,
       Color,
     ],
