@@ -108,8 +108,7 @@ export function BlogForm({ initialData }: BlogFormProps) {
         toast.success(isEdit ? "Post updated!" : "Post created!");
       }
 
-      router.push("/admin");
-      router.refresh();
+      window.location.href = "/admin";
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Something went wrong");
     } finally {
