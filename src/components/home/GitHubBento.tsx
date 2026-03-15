@@ -15,6 +15,56 @@ const githubUsername   = process.env.NEXT_PUBLIC_GITHUB_USERNAME  || "replace-me
 const leetcodeUsername = "godsownsoldier";
 
 async function fetchGitHubContributions(): Promise<Contribution[]> {
+  const token = process.env.GITHUB_TOKEN;
+
+  // --- Strategy 1: GitHub GraphQL API (requires GITHUB_TOKEN) ---
+  if (token) {
+    try {
+      const to   = new Date().toISOString();
+      const from = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString();
+      const res = await fetch("https://api.github.com/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          query: `query($username: String!, $from: DateTime!, $to: DateTime!) {
+            user(login: $username) {
+              contributionsCollection(from: $from, to: $to) {
+                contributionCalendar {
+                  weeks {
+                    contributionDays {
+                      date
+                      contributionCount
+                    }
+                  }
+                }
+              }
+            }
+          }`,
+          variables: { username: githubUsername, from, to },
+        }),
+        next: { revalidate: 3600 },
+      });
+      if (res.ok) {
+        const json = await res.json();
+        const weeks =
+          json?.data?.user?.contributionsCollection?.contributionCalendar?.weeks ?? [];
+        const contributions: Contribution[] = [];
+        for (const week of weeks) {
+          for (const day of week.contributionDays) {
+            contributions.push({ date: day.date, count: day.contributionCount, level: 0 });
+          }
+        }
+        if (contributions.length > 0) return contributions;
+      }
+    } catch {
+      // fall through to strategy 2
+    }
+  }
+
+  // --- Strategy 2: jogruber public API (no token needed, may be rate-limited) ---
   try {
     const res = await fetch(
       `https://github-contributions-api.jogruber.de/v4/${githubUsername}?y=last`,

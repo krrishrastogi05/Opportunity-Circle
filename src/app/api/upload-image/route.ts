@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { cookies } from "next/headers";
+import { verifyAdminToken, COOKIE_NAME } from "@/lib/session";
 
 // On Vercel the filesystem is read-only, so we convert to base64 data URL
 // and return it directly. The editor embeds it inline.
 // For production with heavy image use, swap this for Cloudinary / Vercel Blob.
 export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (!session) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  const token = (await cookies()).get(COOKIE_NAME)?.value;
+  if (!token || !(await verifyAdminToken(token)))
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
   try {
     const form = await req.formData();

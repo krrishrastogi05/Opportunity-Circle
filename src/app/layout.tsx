@@ -3,7 +3,6 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
-import { SessionProvider } from "@/components/layout/SessionProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "sonner";
@@ -34,14 +33,12 @@ export default function RootLayout({
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} font-sans antialiased overflow-x-hidden`}
       >
-        <SessionProvider>
-          <ThemeProvider>
-            <Navbar />
-            <main className="min-h-screen">{children}</main>
-            <Footer />
-            <Toaster richColors position="bottom-right" />
-          </ThemeProvider>
-        </SessionProvider>
+        <ThemeProvider>
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+          <Toaster richColors position="bottom-right" />
+        </ThemeProvider>
       </body>
     </html>
   );

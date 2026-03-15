@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -18,19 +17,23 @@ export default function AdminLoginPage() {
     e.preventDefault();
     setLoading(true);
 
-    const res = await signIn("credentials", {
-      username: form.username,
-      password: form.password,
-      redirect: false,
-    });
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
 
-    setLoading(false);
-
-    if (res?.error) {
-      toast.error("Invalid credentials");
-    } else {
-      router.push("/admin");
-      router.refresh();
+      if (res.ok) {
+        router.push("/admin");
+        router.refresh();
+      } else {
+        toast.error("Invalid credentials");
+      }
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -50,7 +53,7 @@ export default function AdminLoginPage() {
               type="text"
               value={form.username}
               onChange={(e) => setForm((f) => ({ ...f, username: e.target.value }))}
-              placeholder="maaz"
+              placeholder="username"
               className="mt-1.5"
               required
             />

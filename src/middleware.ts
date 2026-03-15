@@ -1,11 +1,15 @@
-import { withAuth } from "next-auth/middleware";
+import { NextRequest, NextResponse } from "next/server";
+import { verifyAdminToken, COOKIE_NAME } from "@/lib/session";
 
-// Protect all /admin routes EXCEPT /admin/login
-export default withAuth({
-  pages: {
-    signIn: "/admin/login",
-  },
-});
+export async function middleware(req: NextRequest) {
+  const token = req.cookies.get(COOKIE_NAME)?.value;
+
+  if (!token || !(await verifyAdminToken(token))) {
+    return NextResponse.redirect(new URL("/admin/login", req.url));
+  }
+
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: ["/admin/((?!login$).*)"],

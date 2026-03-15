@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { cookies } from "next/headers";
+import { verifyAdminToken, COOKIE_NAME } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import { slugify, calcReadTime } from "@/lib/utils";
 
@@ -39,8 +39,8 @@ export async function GET() {
 
 // POST /api/blogs — admin only: create new post
 export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
+  const token = (await cookies()).get(COOKIE_NAME)?.value;
+  if (!token || !(await verifyAdminToken(token))) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
