@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
@@ -42,7 +41,6 @@ const VISIBILITY_OPTIONS: { value: Visibility; label: string; desc: string; icon
 ];
 
 export function BlogForm({ initialData }: BlogFormProps) {
-  const router  = useRouter();
   const isEdit  = !!initialData;
 
   const [loading, setLoading]       = useState(false);
