@@ -23,10 +23,27 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   try {
     const blog = await prisma.blog.findUnique({
       where: { slug: params.slug },
-      select: { title: true, excerpt: true, visibility: true },
+      select: { title: true, excerpt: true, coverImage: true, visibility: true, tags: true },
     });
     if (!blog || blog.visibility === "PRIVATE") return { title: "Post not found" };
-    return { title: blog.title, description: blog.excerpt ?? undefined };
+    const ogImage = blog.coverImage ?? "/og-default.png";
+    return {
+      title: blog.title,
+      description: blog.excerpt ?? undefined,
+      keywords: blog.tags,
+      openGraph: {
+        title: blog.title,
+        description: blog.excerpt ?? undefined,
+        type: "article",
+        images: [{ url: ogImage, width: 1200, height: 630 }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: blog.title,
+        description: blog.excerpt ?? undefined,
+        images: [ogImage],
+      },
+    };
   } catch {
     return { title: "Blog" };
   }
@@ -48,8 +65,27 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   // PUBLIC
+  const siteUrl = "https://krrishrastogi.vercel.app";
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: blog.title,
+    description: blog.excerpt ?? undefined,
+    image: blog.coverImage ?? `${siteUrl}/og-default.png`,
+    url: `${siteUrl}/blogs/${blog.slug}`,
+    datePublished: blog.publishedAt?.toISOString(),
+    dateModified: blog.updatedAt.toISOString(),
+    author: { "@type": "Person", name: "Krrish Rastogi", url: siteUrl },
+    publisher: { "@type": "Person", name: "Krrish Rastogi", url: siteUrl },
+    keywords: blog.tags.join(", "),
+  };
+
   return (
     <article className="max-w-3xl mx-auto px-4 pt-28 pb-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <header className="mb-10">
         <div className="flex flex-wrap gap-1.5 mb-4">
           {blog.tags.map((tag) => <TagBadge key={tag} tag={tag} />)}
