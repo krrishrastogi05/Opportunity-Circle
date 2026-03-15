@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 import { verifyAdminToken, COOKIE_NAME } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import { calcReadTime } from "@/lib/utils";
@@ -70,6 +71,8 @@ export async function PUT(
       data: updateData,
     });
 
+    revalidatePath("/blogs");
+    revalidatePath(`/blogs/${updated.slug}`);
     return NextResponse.json(updated);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Failed to update";
@@ -87,7 +90,12 @@ export async function DELETE(
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
   try {
+    const blog = await prisma.blog.findUnique({ where: { id: params.id }, select: { slug: true } });
     await prisma.blog.delete({ where: { id: params.id } });
+    if (blog) {
+      revalidatePath("/blogs");
+      revalidatePath(`/blogs/${blog.slug}`);
+    }
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ message: "Failed to delete" }, { status: 500 });

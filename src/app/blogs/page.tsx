@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { BlogTabs } from "@/components/blogs/BlogTabs";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Blogs",
   description: "Thoughts on tech, life, and the decentralized future.",

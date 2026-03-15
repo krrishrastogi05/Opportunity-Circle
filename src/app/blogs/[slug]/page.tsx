@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { prisma } from "@/lib/prisma";
+
+export const dynamic = "force-dynamic";
 import { formatDate } from "@/lib/utils";
 import { TagBadge } from "@/components/blogs/TagBadge";
 import { UnlistedBlogView } from "@/components/blogs/UnlistedBlogView";

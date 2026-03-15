@@ -12,5 +12,6 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/((?!login$).*)"],
+  // Protect /admin and everything under /admin/* except /admin/login
+  matcher: ["/admin", "/admin/((?!login$).*)"],
 };
