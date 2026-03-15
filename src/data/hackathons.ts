@@ -80,7 +80,7 @@ export const experience: Experience[] = [
       "Improved AI-driven matchmaking accuracy by 28% through structured requirement analysis and iterative model evaluation.",
       "Identified 50+ functional issues and authored technical documentation for 10+ core platform features.",
     ],
-    logo: "/placeholder/company-logo.png",
+    logo: "/placeholder/writer.png",
   },
   {
     id: "2",

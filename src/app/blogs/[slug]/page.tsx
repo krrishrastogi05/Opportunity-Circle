@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import { prisma } from "@/lib/prisma";
-
-export const dynamic = "force-dynamic";
 import { formatDate } from "@/lib/utils";
 import { TagBadge } from "@/components/blogs/TagBadge";
 import { UnlistedBlogView } from "@/components/blogs/UnlistedBlogView";
 import { Clock } from "lucide-react";
 
-const BlogRenderer = dynamic(
+export const dynamic = "force-dynamic";
+
+const BlogRenderer = nextDynamic(
   () => import("@/components/blogs/BlogRenderer").then((m) => m.BlogRenderer),
   { ssr: false, loading: () => <div className="h-64 animate-pulse bg-muted rounded-xl" /> }
 );
