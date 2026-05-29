@@ -277,18 +277,6 @@ export default function OpenSourcePage() {
         </p>
       </div>
 
-      {/* ── Why open source callout ── */}
-      <div className="rounded-2xl border border-border bg-card px-5 py-4 mb-8 space-y-2">
-        <p className="text-sm font-semibold text-foreground flex items-center gap-2">
-          <Lightbulb className="w-4 h-4 text-yellow-500" /> Why open source matters for your career
-        </p>
-        <ul className="text-xs text-muted-foreground space-y-1.5 leading-relaxed">
-          <li className="flex gap-2"><ChevronRight className="w-3.5 h-3.5 shrink-0 mt-0.5 text-muted-foreground/50" />GSoC and LFX on your resume are immediately recognised by Google, Meta, Amazon, and top startups as strong signals of real engineering ability.</li>
-          <li className="flex gap-2"><ChevronRight className="w-3.5 h-3.5 shrink-0 mt-0.5 text-muted-foreground/50" />Open source contributions give you production-grade code experience at projects used by millions — something internships rarely offer this early.</li>
-          <li className="flex gap-2"><ChevronRight className="w-3.5 h-3.5 shrink-0 mt-0.5 text-muted-foreground/50" />Many programs pay $3,000–$7,000 USD — competitive with or better than most Indian internship stipends.</li>
-          <li className="flex gap-2"><ChevronRight className="w-3.5 h-3.5 shrink-0 mt-0.5 text-muted-foreground/50" />For off-campus candidates, open source is the single most effective resume differentiator.</li>
-        </ul>
-      </div>
 
       {/* ── Filter tabs ── */}
       <div className="flex gap-2 mb-8 flex-wrap items-center">
@@ -487,6 +475,19 @@ export default function OpenSourcePage() {
       </div>
 
       {/* ── Quick comparison table ── */}
+      {/* ── Why open source matters (moved below cards) ── */}
+      <div className="rounded-2xl border border-border bg-card px-5 py-4 mb-8 space-y-2">
+        <p className="text-sm font-semibold text-foreground flex items-center gap-2">
+          <Lightbulb className="w-4 h-4 text-yellow-500" /> Why open source matters for your career
+        </p>
+        <ul className="text-xs text-muted-foreground space-y-1.5 leading-relaxed">
+          <li className="flex gap-2"><ChevronRight className="w-3.5 h-3.5 shrink-0 mt-0.5 text-muted-foreground/50" />GSoC and LFX on your resume are immediately recognised by Google, Meta, Amazon, and top startups as strong signals of real engineering ability.</li>
+          <li className="flex gap-2"><ChevronRight className="w-3.5 h-3.5 shrink-0 mt-0.5 text-muted-foreground/50" />Open source contributions give you production-grade code experience at projects used by millions — something internships rarely offer this early.</li>
+          <li className="flex gap-2"><ChevronRight className="w-3.5 h-3.5 shrink-0 mt-0.5 text-muted-foreground/50" />Many programs pay $3,000–$7,000 USD — competitive with or better than most Indian internship stipends.</li>
+          <li className="flex gap-2"><ChevronRight className="w-3.5 h-3.5 shrink-0 mt-0.5 text-muted-foreground/50" />For off-campus candidates, open source is the single most effective resume differentiator.</li>
+        </ul>
+      </div>
+
       <div className="mt-12 mb-2">
         <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-4">
           Quick Comparison

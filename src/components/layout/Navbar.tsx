@@ -6,13 +6,12 @@ import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { Sun, Moon, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { SearchTrigger } from "./GlobalSearch";
 
 const links = [
   { href: "/companies",     label: "Companies" },
   { href: "/opportunities", label: "Opportunities" },
   { href: "/open-source",   label: "Open Source" },
-  { href: "/skills",        label: "Skills" },
-  { href: "/guides",        label: "Guides" },
 ];
 
 export function Navbar({ offset = false }: { offset?: boolean }) {
@@ -71,8 +70,10 @@ export function Navbar({ offset = false }: { offset?: boolean }) {
               <Moon className="h-4 w-4 hidden dark:block" />
             </button>
 
+            <SearchTrigger />
+
             <Link href="/companies"
-              className="hidden md:inline-flex items-center gap-1 px-4 py-1.5 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/85 transition-colors">
+              className="hidden md:inline-flex items-center gap-1 px-4 py-1.5 rounded-md text-sm font-medium border border-border/60 text-muted-foreground hover:text-foreground hover:border-border transition-colors">
               Explore
             </Link>
 

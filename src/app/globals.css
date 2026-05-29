@@ -47,6 +47,12 @@
     --border: 244 22% 13%;
     --input: 244 22% 13%;
     --ring: 36 72% 58%;
+
+    /* Semantic status tokens */
+    --status-active: 142 71% 45%;
+    --status-urgent: 0 84% 60%;
+    --status-upcoming: 45 93% 47%;
+    --status-ended: var(--muted-foreground);
   }
 }
 
@@ -128,4 +134,27 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: shimmer 4s linear infinite;
+}
+
+/* ── Page transition ─────────────────────────────────── */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-page-in {
+  animation: page-in 0.3s ease-out both;
+}
+
+/* ── Ticker mobile speed ─────────────────────────────── */
+@media (max-width: 640px) {
+  .ticker-scroll-inner {
+    animation-duration: 25s !important;
+  }
+}
+
+/* ── Semantic status colours ─────────────────────────── */
+:root {
+  --status-active:   142 71% 45%;
+  --status-urgent:   0   84% 60%;
+  --status-upcoming: 45  93% 47%;
 }

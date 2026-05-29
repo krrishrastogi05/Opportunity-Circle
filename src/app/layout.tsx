@@ -43,7 +43,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <SiteHeader />
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen animate-page-in">{children}</main>
           <Footer />
           <Toaster richColors position="bottom-right" />
         </ThemeProvider>

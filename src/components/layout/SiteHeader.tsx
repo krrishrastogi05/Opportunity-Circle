@@ -7,6 +7,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { AnnouncementBanner } from "./AnnouncementBanner";
 import { Navbar } from "./Navbar";
+import { GlobalSearch } from "./GlobalSearch";
 
 export function SiteHeader() {
   const [bannerVisible, setBannerVisible] = useState(false);
@@ -22,6 +23,7 @@ export function SiteHeader() {
     <>
       {bannerVisible && <AnnouncementBanner onDismiss={onDismiss} />}
       <Navbar offset={bannerVisible} />
+      <GlobalSearch />
     </>
   );
 }

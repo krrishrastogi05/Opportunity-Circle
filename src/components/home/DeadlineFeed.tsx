@@ -216,6 +216,11 @@ export function DeadlineFeed() {
     <section className="w-full py-20 px-4 sm:px-6">
       <div className="max-w-3xl mx-auto">
 
+        {/* ── Emotional bridge ── */}
+        <p className="text-sm text-muted-foreground mb-8 border-l-2 border-primary/40 pl-4 italic">
+          {liveCount} opportunities are open right now. Are you applying?
+        </p>
+
         {/* ── Header ── */}
         <div className="flex items-end justify-between mb-8 gap-4">
           <div>
