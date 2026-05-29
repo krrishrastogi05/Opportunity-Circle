@@ -30,8 +30,8 @@ const deadlines: DeadlineEntry[] = [
     type: "Hackathon",
     internalLink: "/opportunities",
     externalLink: "https://unstop.com/hackathons/amazon-hackon",
-    opensAt: "2026-05-15",
-    closesAt: "2026-06-10",
+    opensAt: "2026-06-01",
+    closesAt: "2026-07-15",
     note: "Coding challenge open. All team members must individually clear the OA.",
     ppi: true,
   },
@@ -44,8 +44,8 @@ const deadlines: DeadlineEntry[] = [
     type: "Hackathon",
     internalLink: "/opportunities",
     externalLink: "https://www.goldmansachs.com/careers",
-    opensAt: "2026-05-01",
-    closesAt: "2026-06-05",
+    opensAt: "2026-06-01",
+    closesAt: "2026-07-10",
     note: "12-hour challenge on HackerRank. CS + Quant tracks both open.",
     ppi: true,
   },
@@ -58,8 +58,8 @@ const deadlines: DeadlineEntry[] = [
     type: "Open Source",
     internalLink: "/open-source/lfx",
     externalLink: "https://mentorship.lfx.linuxfoundation.org/",
-    opensAt: "2026-05-01",
-    closesAt: "2026-06-15",
+    opensAt: "2026-06-01",
+    closesAt: "2026-07-20",
     note: "CNCF, OpenSSF, Hyperledger projects. Complete prerequisite tasks first.",
     ppi: false,
   },
@@ -87,8 +87,8 @@ const deadlines: DeadlineEntry[] = [
     internalLink: "/opportunities",
     externalLink: "https://unstop.com/hackathons/flipkart-grid",
     opensAt: "2026-06-20",
-    closesAt: "2026-07-25",
-    note: "Expected June. Level 1 quiz + prototype submission. Level 2+ = PPI eligible.",
+    closesAt: "2026-08-10",
+    note: "Level 1 quiz + prototype submission. Level 2+ = PPI eligible.",
     ppi: true,
   },
   {
@@ -100,8 +100,8 @@ const deadlines: DeadlineEntry[] = [
     type: "Open Source",
     internalLink: "/open-source/gssoc",
     externalLink: "https://gssoc.girlscript.tech/",
-    opensAt: "2026-05-01",
-    closesAt: "2026-07-31",
+    opensAt: "2026-06-01",
+    closesAt: "2026-08-31",
     note: "Contribution period live. Merge PRs to earn points on the leaderboard.",
     ppi: false,
   },
@@ -172,14 +172,14 @@ const ORDER: Record<Status, number> = {
 
 type Filter = "all" | "hackathon" | "open-source" | "internship";
 
-/* ─── CountdownBlock (HH MM) ────────────────────────────────── */
+/* ─── CountdownBlock ────────────────────────────────────────── */
 function CountdownBlock({ label, value }: { label: string; value: number }) {
   return (
-    <div className="flex flex-col items-center">
-      <span className="text-2xl font-black tabular-nums leading-none text-red-500">
+    <div className="flex flex-col items-center min-w-[32px]">
+      <span className="text-xl sm:text-2xl font-black tabular-nums leading-none text-red-500">
         {String(value).padStart(2, "0")}
       </span>
-      <span className="text-[9px] uppercase tracking-widest text-red-400/70 font-semibold mt-0.5">{label}</span>
+      <span className="text-[8px] uppercase tracking-widest text-red-400/70 font-semibold mt-0.5">{label}</span>
     </div>
   );
 }
@@ -213,7 +213,7 @@ export function DeadlineFeed() {
   const liveCount     = entries.filter((e) => ["live","closing-soon","rolling"].includes(e.status)).length;
 
   return (
-    <section className="w-full py-20 px-4 sm:px-6">
+    <section className="w-full py-14 sm:py-20 px-4 sm:px-6">
       <div className="max-w-3xl mx-auto">
 
         {/* ── Emotional bridge ── */}
@@ -232,12 +232,12 @@ export function DeadlineFeed() {
               </span>
               <span className="text-[10px] font-bold uppercase tracking-widest text-red-500">Live updates</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight leading-none">
+            <h2 className="text-2xl sm:text-4xl font-black tracking-tight leading-none">
               What&apos;s Open<br />
               <span className="text-muted-foreground font-light">Right Now</span>
             </h2>
             <p className="text-sm text-muted-foreground mt-2">
-              <span className="font-semibold text-foreground">{liveCount}</span> active · deadlines auto-sorted by urgency
+              <span className="font-semibold text-foreground">{liveCount}</span> active · sorted by urgency
             </p>
           </div>
           <Link href="/opportunities"
@@ -259,44 +259,52 @@ export function DeadlineFeed() {
               {urgentEntries.map((entry) => {
                 const { d, h, m } = getCountdownParts(entry.closesAt!);
                 return (
-                  <div key={entry.id} className="px-4 py-4 flex items-center gap-4">
-                    {/* Mark */}
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ring-1 ring-red-500/20"
-                      style={{ backgroundColor: entry.orgColor }}>
-                      <span style={{ color:"#fff", fontSize: entry.mark.length > 2 ? 9 : 13, fontWeight:800, fontFamily:"sans-serif" }}>
-                        {entry.mark}
-                      </span>
-                    </div>
-                    {/* Info */}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold text-foreground truncate">{entry.name}</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">{entry.note}</p>
-                      {entry.ppi && (
-                        <span className="inline-flex items-center gap-1 mt-1 text-[10px] font-semibold text-amber-600 dark:text-amber-400">
-                          ⚡ PPI Available
+                  <div key={entry.id} className="px-4 py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+
+                    {/* Top row: icon + info + countdown (mobile) / icon + info (desktop) */}
+                    <div className="flex items-start sm:items-center gap-3 flex-1 min-w-0">
+                      {/* Mark */}
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ring-1 ring-red-500/20"
+                        style={{ backgroundColor: entry.orgColor }}>
+                        <span style={{ color:"#fff", fontSize: entry.mark.length > 2 ? 9 : 13, fontWeight:800, fontFamily:"sans-serif" }}>
+                          {entry.mark}
                         </span>
-                      )}
+                      </div>
+                      {/* Info */}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-bold text-foreground">{entry.name}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{entry.note}</p>
+                        {entry.ppi && (
+                          <span className="inline-flex items-center gap-1 mt-1 text-[10px] font-semibold text-amber-600 dark:text-amber-400">
+                            ⚡ PPI Available
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    {/* Countdown */}
-                    <div className="shrink-0 flex items-center gap-1.5">
-                      <CountdownBlock label="days" value={d} />
-                      <span className="text-red-400 font-black text-lg mb-1">:</span>
-                      <CountdownBlock label="hrs" value={h} />
-                      <span className="text-red-400 font-black text-lg mb-1">:</span>
-                      <CountdownBlock label="min" value={m} />
-                    </div>
-                    {/* Links */}
-                    <div className="flex gap-1 shrink-0">
-                      {entry.internalLink && (
-                        <Link href={entry.internalLink}
-                          className="px-3 py-1.5 rounded-lg bg-red-500 text-white text-xs font-bold hover:bg-red-600 transition-colors">
-                          Guide →
-                        </Link>
-                      )}
-                      <a href={entry.externalLink} target="_blank" rel="noopener noreferrer"
-                        className="p-1.5 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 transition-colors">
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+
+                    {/* Bottom row on mobile: countdown + buttons side by side */}
+                    <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4 pl-13 sm:pl-0">
+                      {/* Countdown */}
+                      <div className="flex items-center gap-1 sm:gap-1.5">
+                        <CountdownBlock label="days" value={d} />
+                        <span className="text-red-400 font-black text-base sm:text-lg pb-1">:</span>
+                        <CountdownBlock label="hrs" value={h} />
+                        <span className="text-red-400 font-black text-base sm:text-lg pb-1">:</span>
+                        <CountdownBlock label="min" value={m} />
+                      </div>
+                      {/* Buttons */}
+                      <div className="flex gap-1.5 shrink-0">
+                        {entry.internalLink && (
+                          <Link href={entry.internalLink}
+                            className="px-3 py-1.5 rounded-lg bg-red-500 text-white text-xs font-bold hover:bg-red-600 transition-colors whitespace-nowrap">
+                            Guide →
+                          </Link>
+                        )}
+                        <a href={entry.externalLink} target="_blank" rel="noopener noreferrer"
+                          className="p-1.5 rounded-lg border border-red-500/30 text-red-500 hover:bg-red-500/10 transition-colors">
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
                     </div>
                   </div>
                 );
@@ -337,7 +345,7 @@ export function DeadlineFeed() {
 
             return (
               <div key={entry.id}
-                className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl border transition-all duration-150 ${
+                className={`group relative flex items-center gap-3 px-3 sm:px-4 py-3 rounded-xl border transition-all duration-150 ${
                   isEnded
                     ? "opacity-40 border-border bg-transparent"
                     : "border-border hover:border-foreground/25 bg-card hover:shadow-sm"
@@ -364,7 +372,6 @@ export function DeadlineFeed() {
                   <div className="flex flex-wrap items-center gap-1.5">
                     <span className="text-sm font-semibold text-foreground">{entry.name}</span>
 
-                    {/* Status pill */}
                     {isLive && (
                       <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
                         <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
@@ -385,16 +392,13 @@ export function DeadlineFeed() {
                     {isEnded && (
                       <span className="px-1.5 py-0.5 rounded-full text-[10px] font-medium border border-border text-muted-foreground">Ended</span>
                     )}
-
-                    {/* PPI */}
                     {entry.ppi && !isEnded && (
                       <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400">
                         ⚡ PPI
                       </span>
                     )}
-
-                    {/* Type */}
-                    <span className="px-1.5 py-0.5 rounded-md text-[10px] border border-border text-muted-foreground">
+                    {/* Type — hidden on xs */}
+                    <span className="hidden sm:inline px-1.5 py-0.5 rounded-md text-[10px] border border-border text-muted-foreground">
                       {entry.type}
                     </span>
                   </div>
@@ -421,12 +425,13 @@ export function DeadlineFeed() {
                   </div>
                 </div>
 
-                {/* Actions */}
-                <div className="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                {/* Actions — always visible on mobile, hover on desktop */}
+                <div className="flex items-center gap-1 shrink-0 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                   {entry.internalLink && (
                     <Link href={entry.internalLink}
-                      className="inline-flex items-center gap-0.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-foreground text-background hover:opacity-80 transition-opacity">
-                      Guide <ArrowUpRight className="w-3 h-3" />
+                      className="inline-flex items-center gap-0.5 px-2 sm:px-2.5 py-1 rounded-lg text-xs font-semibold bg-foreground text-background hover:opacity-80 transition-opacity">
+                      <span className="hidden sm:inline">Guide</span>
+                      <ArrowUpRight className="w-3 h-3" />
                     </Link>
                   )}
                   <a href={entry.externalLink} target="_blank" rel="noopener noreferrer"
@@ -440,12 +445,12 @@ export function DeadlineFeed() {
         </div>
 
         {/* ── Footer ── */}
-        <div className="mt-6 pt-5 border-t border-border flex items-center justify-between">
+        <div className="mt-6 pt-5 border-t border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <p className="text-[10px] text-muted-foreground/50">
             Dates verified each season. Always check official platforms before applying.
           </p>
           <Link href="/opportunities"
-            className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 font-medium">
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 font-medium whitespace-nowrap">
             All opportunities <ChevronRight className="w-3 h-3" />
           </Link>
         </div>

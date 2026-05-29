@@ -6,11 +6,11 @@ import { X, Zap } from "lucide-react";
 
 /* ── Ticker items ──────────────────────────────────────────── */
 const ITEMS = [
-  { id: "gs",      label: "Goldman Sachs India Hackathon", closesAt: "2026-06-05", ppi: true,  href: "/opportunities" },
-  { id: "hackon",  label: "HackOn with Amazon",            closesAt: "2026-06-10", ppi: true,  href: "/opportunities" },
-  { id: "lfx",     label: "LFX Mentorship — Summer Term",  closesAt: "2026-06-15", ppi: false, href: "/open-source/lfx" },
-  { id: "gssoc",   label: "GSSoC Contribution Period",     closesAt: "2026-07-31", ppi: false, href: "/open-source/gssoc" },
-  { id: "grid",    label: "Flipkart GRiD 7.0",             closesAt: "2026-07-25", ppi: true,  href: "/opportunities" },
+  { id: "gs",      label: "Goldman Sachs India Hackathon", closesAt: "2026-07-10", ppi: true,  href: "/opportunities" },
+  { id: "hackon",  label: "HackOn with Amazon",            closesAt: "2026-07-15", ppi: true,  href: "/opportunities" },
+  { id: "lfx",     label: "LFX Mentorship — Summer Term",  closesAt: "2026-07-20", ppi: false, href: "/open-source/lfx" },
+  { id: "gssoc",   label: "GSSoC Contribution Period",     closesAt: "2026-08-31", ppi: false, href: "/open-source/gssoc" },
+  { id: "grid",    label: "Flipkart GRiD 7.0",             closesAt: "2026-08-10", ppi: true,  href: "/opportunities" },
   { id: "gsoc",    label: "GSoC Coding Period",            closesAt: "2026-09-08", ppi: false, href: "/open-source/gsoc" },
   { id: "mlh",     label: "MLH Fellowship",                closesAt: null,         ppi: false, href: "/open-source/mlh-fellowship" },
   { id: "out",     label: "Outreachy — December Cohort",   closesAt: "2026-09-20", ppi: false, href: "/open-source/outreachy" },

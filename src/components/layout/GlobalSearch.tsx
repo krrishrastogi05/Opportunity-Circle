@@ -17,43 +17,43 @@ type SearchItem = {
 
 const INDEX: SearchItem[] = [
   /* Companies */
-  { id: "amazon",     label: "Amazon",     sublabel: "Big Tech · DSA + LP",                     href: "/companies/amazon",     category: "company",      tags: "aws cloud ecommerce", hot: true },
-  { id: "google",     label: "Google",     sublabel: "Big Tech · Pure DSA · STEP Intern",        href: "/companies/google",     category: "company",      tags: "search cloud gsoc step" },
-  { id: "microsoft",  label: "Microsoft",  sublabel: "Big Tech · DSA + CS Fundamentals",         href: "/companies/microsoft",  category: "company",      tags: "azure cloud engage" },
-  { id: "uber",       label: "Uber",       sublabel: "Real-time Systems · LLD + HLD",            href: "/companies/uber",       category: "company",      tags: "rides maps star engineer" },
-  { id: "flipkart",   label: "Flipkart",   sublabel: "Indian E-commerce · Machine Coding",       href: "/companies/flipkart",   category: "company",      tags: "grid hackathon ecommerce", hot: true },
-  { id: "swiggy",     label: "Swiggy",     sublabel: "Food Delivery · Machine Coding",           href: "/companies/swiggy",     category: "company",      tags: "food delivery bangalore" },
-  { id: "zomato",     label: "Zomato",     sublabel: "Food Tech · DSA + DBMS",                   href: "/companies/zomato",     category: "company",      tags: "food blinkit gurugram" },
-  { id: "phonepe",    label: "PhonePe",    sublabel: "UPI Fintech · LLD + Concurrency",          href: "/companies/phonepe",    category: "company",      tags: "payments upi bangalore" },
-  { id: "meesho",     label: "Meesho",     sublabel: "Social Commerce · AI Screening",           href: "/companies/meesho",     category: "company",      tags: "social ecommerce bangalore" },
-  { id: "razorpay",   label: "Razorpay",   sublabel: "Payments Fintech · CS Fundamentals",       href: "/companies/razorpay",   category: "company",      tags: "payments fintech" },
-  { id: "rippling",   label: "Rippling",   sublabel: "HR Tech SaaS · LLD-Heavy",                 href: "/companies/rippling",   category: "company",      tags: "hr saas lld" },
-  { id: "atlassian",  label: "Atlassian",  sublabel: "Dev Tools · Code Quality Focus",           href: "/companies/atlassian",  category: "company",      tags: "jira confluence devtools" },
-  { id: "freshworks", label: "Freshworks", sublabel: "Indian SaaS · Accessible DSA",             href: "/companies/freshworks", category: "company",      tags: "crm saas chennai" },
+  { id: "amazon",     label: "Amazon",     sublabel: "Big Tech · DSA + LP",                     href: "/companies/amazon",     category: "company",       tags: "aws cloud ecommerce", hot: true },
+  { id: "google",     label: "Google",     sublabel: "Big Tech · Pure DSA · STEP Intern",        href: "/companies/google",     category: "company",       tags: "search cloud gsoc step" },
+  { id: "microsoft",  label: "Microsoft",  sublabel: "Big Tech · DSA + CS Fundamentals",         href: "/companies/microsoft",  category: "company",       tags: "azure cloud engage" },
+  { id: "uber",       label: "Uber",       sublabel: "Real-time Systems · LLD + HLD",            href: "/companies/uber",       category: "company",       tags: "rides maps star engineer" },
+  { id: "flipkart",   label: "Flipkart",   sublabel: "Indian E-commerce · Machine Coding",       href: "/companies/flipkart",   category: "company",       tags: "grid hackathon ecommerce", hot: true },
+  { id: "swiggy",     label: "Swiggy",     sublabel: "Food Delivery · Machine Coding",           href: "/companies/swiggy",     category: "company",       tags: "food delivery bangalore" },
+  { id: "zomato",     label: "Zomato",     sublabel: "Food Tech · DSA + DBMS",                   href: "/companies/zomato",     category: "company",       tags: "food blinkit gurugram" },
+  { id: "phonepe",    label: "PhonePe",    sublabel: "UPI Fintech · LLD + Concurrency",          href: "/companies/phonepe",    category: "company",       tags: "payments upi bangalore" },
+  { id: "meesho",     label: "Meesho",     sublabel: "Social Commerce · AI Screening",           href: "/companies/meesho",     category: "company",       tags: "social ecommerce bangalore" },
+  { id: "razorpay",   label: "Razorpay",   sublabel: "Payments Fintech · CS Fundamentals",       href: "/companies/razorpay",   category: "company",       tags: "payments fintech" },
+  { id: "rippling",   label: "Rippling",   sublabel: "HR Tech SaaS · LLD-Heavy",                 href: "/companies/rippling",   category: "company",       tags: "hr saas lld" },
+  { id: "atlassian",  label: "Atlassian",  sublabel: "Dev Tools · Code Quality Focus",           href: "/companies/atlassian",  category: "company",       tags: "jira confluence devtools" },
+  { id: "freshworks", label: "Freshworks", sublabel: "Indian SaaS · Accessible DSA",             href: "/companies/freshworks", category: "company",       tags: "crm saas chennai" },
   /* Opportunities */
-  { id: "hackon",     label: "HackOn with Amazon",          sublabel: "Hackathon · PPI Available · Closes Jun 10",  href: "/opportunities", category: "opportunity", tags: "amazon hackathon ppi active", hot: true },
-  { id: "gs-hack",    label: "Goldman Sachs India Hackathon", sublabel: "Hackathon · PPI · Closes Jun 5",           href: "/opportunities", category: "opportunity", tags: "goldman sachs hackathon ppi active", hot: true },
-  { id: "flipgrid",   label: "Flipkart GRiD 7.0",           sublabel: "Hackathon · PPI Available",                  href: "/opportunities", category: "opportunity", tags: "flipkart grid hackathon ppi" },
-  { id: "ms-engage",  label: "Microsoft Engage",            sublabel: "Mentorship · PPO Pathway",                   href: "/opportunities", category: "opportunity", tags: "microsoft engage ppo" },
-  { id: "google-step",label: "Google STEP Internship",      sublabel: "1st & 2nd Year Internship",                  href: "/opportunities", category: "opportunity", tags: "google step internship" },
-  { id: "uber-star",  label: "Uber Star Engineer",          sublabel: "PPI Fast-track",                             href: "/opportunities", category: "opportunity", tags: "uber star ppi" },
+  { id: "hackon",     label: "HackOn with Amazon",           sublabel: "Hackathon · PPI Available · Closes Jul 15",  href: "/opportunities", category: "opportunity", tags: "amazon hackathon ppi active", hot: true },
+  { id: "gs-hack",    label: "Goldman Sachs India Hackathon", sublabel: "Hackathon · PPI · Closes Jul 10",           href: "/opportunities", category: "opportunity", tags: "goldman sachs hackathon ppi active", hot: true },
+  { id: "flipgrid",   label: "Flipkart GRiD 7.0",            sublabel: "Hackathon · PPI Available · Aug 2026",       href: "/opportunities", category: "opportunity", tags: "flipkart grid hackathon ppi" },
+  { id: "ms-engage",  label: "Microsoft Engage",             sublabel: "Mentorship · PPO Pathway",                   href: "/opportunities", category: "opportunity", tags: "microsoft engage ppo" },
+  { id: "google-step",label: "Google STEP Internship",       sublabel: "1st & 2nd Year Internship",                  href: "/opportunities", category: "opportunity", tags: "google step internship" },
+  { id: "uber-star",  label: "Uber Star Engineer",           sublabel: "PPI Fast-track",                             href: "/opportunities", category: "opportunity", tags: "uber star ppi" },
   /* Open Source */
-  { id: "gsoc",       label: "Google Summer of Code",       sublabel: "Open Source · Stipend · Jun–Sep",            href: "/open-source/gsoc",          category: "open-source", tags: "gsoc google stipend" },
-  { id: "lfx",        label: "LFX Mentorship",              sublabel: "Open Source · Linux Foundation · Active",    href: "/open-source/lfx",           category: "open-source", tags: "lfx linux foundation cncf" },
-  { id: "outreachy",  label: "Outreachy",                   sublabel: "Open Source · Stipend · Diversity",          href: "/open-source/outreachy",     category: "open-source", tags: "outreachy diversity stipend" },
-  { id: "gssoc",      label: "GirlScript Summer of Code",   sublabel: "Open Source · Contribution · Active",       href: "/open-source/gssoc",         category: "open-source", tags: "gssoc girlscript contribution" },
-  { id: "mlh",        label: "MLH Fellowship",              sublabel: "Open Source / Internship · Rolling",         href: "/open-source/mlh-fellowship", category: "open-source", tags: "mlh fellowship hackathon" },
+  { id: "gsoc",       label: "Google Summer of Code",        sublabel: "Open Source · Stipend · Coding Jun–Sep",     href: "/open-source/gsoc",           category: "open-source", tags: "gsoc google stipend", hot: true },
+  { id: "lfx",        label: "LFX Mentorship",               sublabel: "Open Source · Linux Foundation · Active",    href: "/open-source/lfx",            category: "open-source", tags: "lfx linux foundation cncf" },
+  { id: "outreachy",  label: "Outreachy",                    sublabel: "Open Source · Stipend · Dec Cohort Apps Aug", href: "/open-source/outreachy",      category: "open-source", tags: "outreachy diversity stipend" },
+  { id: "gssoc",      label: "GirlScript Summer of Code",    sublabel: "Open Source · Contribution · Active Now",    href: "/open-source/gssoc",          category: "open-source", tags: "gssoc girlscript contribution", hot: true },
+  { id: "mlh",        label: "MLH Fellowship",               sublabel: "Open Source / Internship · Rolling",         href: "/open-source/mlh-fellowship", category: "open-source", tags: "mlh fellowship hackathon" },
 ];
 
 const CATEGORY_ICONS = {
-  company:      <Building2 className="w-3.5 h-3.5" />,
-  opportunity:  <Trophy className="w-3.5 h-3.5" />,
-  "open-source":<Code2 className="w-3.5 h-3.5" />,
+  company:       <Building2 className="w-3.5 h-3.5" />,
+  opportunity:   <Trophy className="w-3.5 h-3.5" />,
+  "open-source": <Code2 className="w-3.5 h-3.5" />,
 };
 
 const CATEGORY_LABELS = {
-  company: "Company",
-  opportunity: "Opportunity",
+  company:       "Company",
+  opportunity:   "Opportunity",
   "open-source": "Open Source",
 };
 
@@ -81,7 +81,7 @@ export function GlobalSearch() {
   /* Auto-focus when opened */
   useEffect(() => {
     if (open) {
-      setTimeout(() => inputRef.current?.focus(), 50);
+      setTimeout(() => inputRef.current?.focus(), 80);
       setQuery("");
       setCursor(0);
     }
@@ -117,16 +117,16 @@ export function GlobalSearch() {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-[100] bg-background/60 backdrop-blur-sm"
+        className="fixed inset-0 z-[100] bg-background/70 backdrop-blur-sm"
         onClick={() => setOpen(false)}
       />
 
-      {/* Palette */}
-      <div className="fixed left-1/2 top-[15vh] -translate-x-1/2 z-[101] w-full max-w-lg mx-auto px-4">
-        <div className="bg-card border border-border rounded-2xl shadow-2xl overflow-hidden">
+      {/* Palette — full-screen on mobile, centered card on desktop */}
+      <div className="fixed inset-x-0 bottom-0 sm:inset-auto sm:left-1/2 sm:top-[12vh] sm:-translate-x-1/2 z-[101] sm:w-full sm:max-w-lg sm:px-4">
+        <div className="bg-card border border-border sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] sm:max-h-[75vh] rounded-t-2xl">
 
           {/* Input */}
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
+          <div className="flex items-center gap-3 px-4 py-3.5 border-b border-border shrink-0">
             <Search className="w-4 h-4 text-muted-foreground shrink-0" />
             <input
               ref={inputRef}
@@ -134,19 +134,23 @@ export function GlobalSearch() {
               onChange={(e) => { setQuery(e.target.value); setCursor(0); }}
               onKeyDown={handleKey}
               placeholder="Search companies, hackathons, programs…"
-              className="flex-1 bg-transparent text-sm placeholder:text-muted-foreground/60 outline-none text-foreground"
+              className="flex-1 bg-transparent text-sm placeholder:text-muted-foreground/60 outline-none text-foreground min-w-0"
             />
-            {query && (
-              <button onClick={() => setQuery("")} className="text-muted-foreground hover:text-foreground">
-                <X className="w-4 h-4" />
-              </button>
-            )}
+            <button
+              onClick={() => setOpen(false)}
+              className="shrink-0 p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
+              aria-label="Close search"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
 
           {/* Results */}
-          <div className="py-2 max-h-80 overflow-y-auto">
+          <div className="overflow-y-auto flex-1 py-2">
             {results.length === 0 ? (
-              <p className="text-sm text-muted-foreground text-center py-8">No results for &quot;{query}&quot;</p>
+              <p className="text-sm text-muted-foreground text-center py-10">
+                No results for &quot;{query}&quot;
+              </p>
             ) : (
               <>
                 {!query && (
@@ -154,27 +158,34 @@ export function GlobalSearch() {
                     <Zap className="w-3 h-3" /> Hot right now
                   </p>
                 )}
+                {query && (
+                  <p className="px-4 py-1.5 text-[10px] text-muted-foreground/50">
+                    {results.length} result{results.length !== 1 ? "s" : ""}
+                  </p>
+                )}
                 {results.map((item, i) => (
                   <button
                     key={item.id}
                     onClick={() => navigate(item.href)}
                     onMouseEnter={() => setCursor(i)}
-                    className={`w-full text-left flex items-center gap-3 px-4 py-2.5 transition-colors ${
+                    className={`w-full text-left flex items-center gap-3 px-4 py-3 sm:py-2.5 transition-colors active:bg-accent ${
                       cursor === i ? "bg-accent" : "hover:bg-accent/50"
                     }`}
                   >
                     <span className={`p-1.5 rounded-md shrink-0 ${
                       item.category === "company"      ? "bg-blue-500/10 text-blue-500" :
                       item.category === "opportunity"  ? "bg-amber-500/10 text-amber-500" :
-                                                         "bg-green-500/10 text-green-500"
+                                                          "bg-green-500/10 text-green-500"
                     }`}>
                       {CATEGORY_ICONS[item.category]}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 flex-wrap">
                         <span className="text-sm font-semibold text-foreground">{item.label}</span>
                         {item.hot && (
-                          <span className="px-1 py-0.5 rounded text-[9px] font-black uppercase bg-green-500/10 text-green-600 dark:text-green-400">Active</span>
+                          <span className="px-1 py-0.5 rounded text-[9px] font-black uppercase bg-green-500/10 text-green-600 dark:text-green-400">
+                            Active
+                          </span>
                         )}
                       </div>
                       <p className="text-xs text-muted-foreground truncate">{item.sublabel}</p>
@@ -189,15 +200,16 @@ export function GlobalSearch() {
             )}
           </div>
 
-          {/* Footer */}
-          <div className="px-4 py-2 border-t border-border flex items-center justify-between">
-            <span className="text-[10px] text-muted-foreground/50">
+          {/* Footer — keyboard hints hidden on mobile */}
+          <div className="px-4 py-2.5 border-t border-border flex items-center justify-between shrink-0">
+            <span className="hidden sm:flex items-center gap-1 text-[10px] text-muted-foreground/50">
               <kbd className="px-1 py-0.5 rounded border border-border bg-muted text-[9px]">↑↓</kbd> navigate
               {" · "}
               <kbd className="px-1 py-0.5 rounded border border-border bg-muted text-[9px]">↵</kbd> open
               {" · "}
               <kbd className="px-1 py-0.5 rounded border border-border bg-muted text-[9px]">Esc</kbd> close
             </span>
+            <span className="sm:hidden text-[10px] text-muted-foreground/40">Tap to open</span>
             <span className="text-[10px] text-muted-foreground/40">{INDEX.length} items indexed</span>
           </div>
         </div>
@@ -208,17 +220,31 @@ export function GlobalSearch() {
 
 /* ─── Trigger button (for navbar) ───────────────────────── */
 export function SearchTrigger() {
+  function openSearch() {
+    const e = new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true });
+    window.dispatchEvent(e);
+  }
+
   return (
-    <button
-      onClick={() => {
-        const e = new KeyboardEvent("keydown", { key: "k", ctrlKey: true, bubbles: true });
-        window.dispatchEvent(e);
-      }}
-      className="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border/60 text-xs text-muted-foreground hover:text-foreground hover:border-border transition-colors"
-    >
-      <Search className="w-3.5 h-3.5" />
-      <span>Search</span>
-      <kbd className="ml-1 px-1.5 py-0.5 rounded border border-border bg-muted text-[10px] font-mono">⌘K</kbd>
-    </button>
+    <>
+      {/* Desktop: full button with label + kbd */}
+      <button
+        onClick={openSearch}
+        className="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-border/60 text-xs text-muted-foreground hover:text-foreground hover:border-border transition-colors"
+      >
+        <Search className="w-3.5 h-3.5" />
+        <span>Search</span>
+        <kbd className="ml-1 px-1.5 py-0.5 rounded border border-border bg-muted text-[10px] font-mono">⌘K</kbd>
+      </button>
+
+      {/* Mobile: icon-only */}
+      <button
+        onClick={openSearch}
+        className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground transition-colors"
+        aria-label="Search"
+      >
+        <Search className="w-5 h-5" />
+      </button>
+    </>
   );
 }

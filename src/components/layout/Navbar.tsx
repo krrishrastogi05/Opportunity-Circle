@@ -61,6 +61,7 @@ export function Navbar({ offset = false }: { offset?: boolean }) {
           </nav>
 
           <div className="flex items-center gap-1">
+            {/* Theme toggle */}
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="p-2 rounded-md text-muted-foreground hover:text-foreground transition-colors"
@@ -70,13 +71,16 @@ export function Navbar({ offset = false }: { offset?: boolean }) {
               <Moon className="h-4 w-4 hidden dark:block" />
             </button>
 
+            {/* Search — icon on mobile, full button on desktop */}
             <SearchTrigger />
 
+            {/* Explore — desktop only */}
             <Link href="/companies"
               className="hidden md:inline-flex items-center gap-1 px-4 py-1.5 rounded-md text-sm font-medium border border-border/60 text-muted-foreground hover:text-foreground hover:border-border transition-colors">
               Explore
             </Link>
 
+            {/* Hamburger — mobile only */}
             <button
               onClick={() => setOpen(p => !p)}
               className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground"
@@ -90,7 +94,7 @@ export function Navbar({ offset = false }: { offset?: boolean }) {
         {/* Mobile menu */}
         <div className={cn(
           "md:hidden overflow-hidden transition-all duration-300",
-          open ? "max-h-80" : "max-h-0"
+          open ? "max-h-72" : "max-h-0"
         )}>
           <nav className="border-t border-border/60 bg-background/95 backdrop-blur-xl px-5 py-4 flex flex-col gap-1">
             {links.map((l) => (
@@ -104,10 +108,16 @@ export function Navbar({ offset = false }: { offset?: boolean }) {
                 {l.label}
               </Link>
             ))}
-            <Link href="/companies"
-              className="mt-2 flex items-center justify-center px-4 py-2.5 rounded-md text-sm font-medium bg-primary text-primary-foreground">
-              Start Exploring
-            </Link>
+            <div className="mt-3 pt-3 border-t border-border/40 flex gap-2">
+              <Link href="/companies"
+                className="flex-1 flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium border border-border/60 text-muted-foreground hover:text-foreground">
+                Browse Companies
+              </Link>
+              <Link href="/opportunities"
+                className="flex-1 flex items-center justify-center px-4 py-2 rounded-md text-sm font-semibold bg-primary text-primary-foreground">
+                Open Now
+              </Link>
+            </div>
           </nav>
         </div>
       </header>

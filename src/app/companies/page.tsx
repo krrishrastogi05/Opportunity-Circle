@@ -124,10 +124,6 @@ const TIERS = [
   { key: "high-growth", label: "High Growth",      desc: "Fast-scaling companies with strong engineering culture" },
 ] as const;
 
-export const metadata = {
-  title: "Company Explorer",
-  description: "Browse company profiles — hiring style, DSA expectations, opportunity types, and what each company generally looks for.",
-};
 
 export default function CompaniesPage() {
   const [query, setQuery] = useState("");
