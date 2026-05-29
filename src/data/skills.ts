@@ -1,46 +1,27 @@
-import { ComponentType } from "react";
-import {
-  SiCplusplus,
-  SiPython,
-  SiJavascript,
-  SiTypescript,
-  SiNodedotjs,
-  SiExpress,
-  SiReact,
-  SiPostgresql,
-  SiMongodb,
-  SiPrisma,
-  SiRedis,
-  SiGit,
-  SiGooglegemini,
-  SiSocketdotio,
-  SiDocker,
-  SiLinux,
-} from "react-icons/si";
-import { Database } from "lucide-react";
+// skills.ts — icon field removed; react-icons dropped to fix Next.js barrel optimizer conflict.
+// Icons can be re-added later via a "use client" wrapper if needed.
 
 export interface Skill {
   name: string;
-  icon?: ComponentType<{ size?: number; style?: React.CSSProperties }>;
   color?: string;
 }
 
 export const skills: Skill[] = [
-  { name: "C++",          icon: SiCplusplus,    color: "#00599C" },
-  { name: "Python",       icon: SiPython,       color: "#3776AB" },
-  { name: "JavaScript",   icon: SiJavascript,   color: "#F7DF1E" },
-  { name: "TypeScript",   icon: SiTypescript,   color: "#3178C6" },
-  { name: "Node.js",      icon: SiNodedotjs,    color: "#339933" },
-  { name: "Express",      icon: SiExpress,      color: "currentColor" },
-  { name: "React",        icon: SiReact,        color: "#61DAFB" },
-  { name: "PostgreSQL",   icon: SiPostgresql,   color: "#4169E1" },
-  { name: "MongoDB",      icon: SiMongodb,      color: "#47A248" },
-  { name: "Prisma",       icon: SiPrisma,       color: "#5A67D8" },
-  { name: "Redis",        icon: SiRedis,        color: "#FF4438" },
-  { name: "Socket.io",    icon: SiSocketdotio,  color: "currentColor" },
-  { name: "Gemini AI",    icon: SiGooglegemini, color: "#8E75B2" },
-  { name: "Git",          icon: SiGit,          color: "#F05032" },
-  { name: "Docker",       icon: SiDocker,       color: "#2496ED" },
-  { name: "Linux",        icon: SiLinux,        color: "#FCC624" },
-  { name: "SQL",          icon: Database as ComponentType<{ size?: number; style?: React.CSSProperties }>, color: "#336791" },
+  { name: "C++",        color: "#00599C" },
+  { name: "Python",     color: "#3776AB" },
+  { name: "JavaScript", color: "#F7DF1E" },
+  { name: "TypeScript", color: "#3178C6" },
+  { name: "Node.js",    color: "#339933" },
+  { name: "Express",    color: "#888888" },
+  { name: "React",      color: "#61DAFB" },
+  { name: "PostgreSQL", color: "#4169E1" },
+  { name: "MongoDB",    color: "#47A248" },
+  { name: "Prisma",     color: "#5A67D8" },
+  { name: "Redis",      color: "#FF4438" },
+  { name: "Socket.io",  color: "#888888" },
+  { name: "Gemini AI",  color: "#8E75B2" },
+  { name: "Git",        color: "#F05032" },
+  { name: "Docker",     color: "#2496ED" },
+  { name: "Linux",      color: "#FCC624" },
+  { name: "SQL",        color: "#336791" },
 ];

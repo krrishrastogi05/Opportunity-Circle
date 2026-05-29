@@ -1,44 +1,19 @@
-import { HeroSection } from "@/components/home/HeroSection";
-import { SkillsCarousel } from "@/components/home/SkillsCarousel";
-import { GitHubBento } from "@/components/home/GitHubBento";
-import { BlogTeaser } from "@/components/home/BlogTeaser";
+import { HeroSection }  from "@/components/home/HeroSection";
+import { WhatSection } from "@/components/home/PillarsSection";
+import { DeadlineFeed } from "@/components/home/DeadlineFeed";
 
-const personJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Krrish Rastogi",
-  url: "https://krrishrastogi.vercel.app",
-  sameAs: [
-    "https://github.com/krrishrastogi05",
-    "https://linkedin.com/in/krrishrastogi05",
-  ],
-  jobTitle: "Backend Engineer & AI/ML Student",
-  alumniOf: {
-    "@type": "EducationalOrganization",
-    name: "Birla Institute of Technology, Mesra",
-  },
-  knowsAbout: [
-    "Data Structures and Algorithms",
-    "Competitive Programming",
-    "Backend Development",
-    "Artificial Intelligence",
-    "Machine Learning",
-    "Node.js",
-    "TypeScript",
-  ],
+export const metadata = {
+  title: "OpportunityCircle — Tech Career Discovery",
+  description:
+    "The tech career map every confused student needs. Explore company profiles, opportunity types, and skill guides.",
 };
 
 export default function Home() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-      />
       <HeroSection />
-      <SkillsCarousel />
-      <GitHubBento />
-      <BlogTeaser />
+      <DeadlineFeed />
+      <WhatSection />
     </>
   );
 }
