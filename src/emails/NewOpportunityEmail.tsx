@@ -33,7 +33,7 @@ export function NewOpportunityEmail({
       <Body style={{ backgroundColor: "#f9fafb", fontFamily: "system-ui, sans-serif" }}>
         <Container style={{ maxWidth: "520px", margin: "0 auto", padding: "32px 16px" }}>
           <Text style={{ fontSize: "11px", color: "#6b7280", letterSpacing: "2px", textTransform: "uppercase" as const, marginBottom: "4px" }}>
-            New on OpportunityCircle
+            New on OpportunitySignal
           </Text>
           <Text style={{ fontSize: "22px", fontWeight: "bold", color: "#111827", marginBottom: "8px" }}>
             {title}
@@ -72,7 +72,7 @@ export function NewOpportunityEmail({
 
           <Section style={{ marginTop: "16px" }}>
             <Button
-              href="https://opportunitycircle.vercel.app/opportunities"
+              href="https://opportunitysignal.vercel.app/opportunities"
               style={{
                 backgroundColor: "transparent",
                 color: "#6b7280",
@@ -89,7 +89,7 @@ export function NewOpportunityEmail({
 
           <Hr style={{ borderColor: "#e5e7eb", marginTop: "32px" }} />
           <Text style={{ fontSize: "11px", color: "#9ca3af", lineHeight: "1.5" }}>
-            You received this because you enabled opportunity alerts on OpportunityCircle.{" "}
+            You received this because you enabled opportunity alerts on OpportunitySignal.{" "}
             <Link href={unsubscribeUrl} style={{ color: "#6b7280" }}>
               Unsubscribe
             </Link>

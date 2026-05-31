@@ -35,7 +35,7 @@ export function WeeklyDigestEmail({
             Weekly Digest
           </Text>
           <Text style={{ fontSize: "22px", fontWeight: "bold", color: "#111827", marginBottom: "16px" }}>
-            This Week on OpportunityCircle
+            This Week on OpportunitySignal
           </Text>
           <Text style={{ fontSize: "14px", color: "#374151", marginBottom: "24px" }}>
             {opportunities.length} new or upcoming opportunities this week:
@@ -70,7 +70,7 @@ export function WeeklyDigestEmail({
 
           <Section style={{ marginTop: "24px" }}>
             <Button
-              href="https://opportunitycircle.vercel.app/opportunities"
+              href="https://opportunitysignal.vercel.app/opportunities"
               style={{
                 backgroundColor: "#111827",
                 color: "#ffffff",
@@ -87,7 +87,7 @@ export function WeeklyDigestEmail({
 
           <Hr style={{ borderColor: "#e5e7eb", marginTop: "32px" }} />
           <Text style={{ fontSize: "11px", color: "#9ca3af", lineHeight: "1.5" }}>
-            You received this weekly digest from OpportunityCircle.{" "}
+            You received this weekly digest from OpportunitySignal.{" "}
             <Link href={unsubscribeUrl} style={{ color: "#6b7280" }}>
               Unsubscribe
             </Link>

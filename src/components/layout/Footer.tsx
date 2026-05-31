@@ -43,7 +43,7 @@ export function Footer() {
       </div>
 
       <div className="max-w-5xl mx-auto px-5 pb-6 text-[11px] text-muted-foreground/40 flex items-center justify-between">
-        <span>© {new Date().getFullYear()} OpportunityCircle</span>
+        <span>© {new Date().getFullYear()} OpportunitySignal</span>
         <span>Not affiliated with any company listed.</span>
       </div>
     </footer>

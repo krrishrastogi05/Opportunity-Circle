@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
           resend.emails.send({
             from: FROM_EMAIL,
             to: user.email,
-            subject: `New: ${opportunity.title} — OpportunityCircle`,
+            subject: `New: ${opportunity.title} — OpportunitySignal`,
             react: NewOpportunityEmail({
               title: opportunity.title,
               category: opportunity.category,

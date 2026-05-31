@@ -40,8 +40,8 @@ export async function GET(req: NextRequest) {
     return new NextResponse(
       `<html><body style="font-family:system-ui;text-align:center;padding:60px">
         <h2>Unsubscribed</h2>
-        <p>You've been unsubscribed from OpportunityCircle ${type === "all" ? "emails" : type}.</p>
-        <p><a href="https://opportunitycircle.vercel.app/settings">Manage preferences</a></p>
+        <p>You've been unsubscribed from OpportunitySignal ${type === "all" ? "emails" : type}.</p>
+        <p><a href="https://opportunitysignal.vercel.app/settings">Manage preferences</a></p>
       </body></html>`,
       { headers: { "Content-Type": "text/html" } }
     );

@@ -59,7 +59,7 @@ export function CtaSection() {
 
         {/* Disclaimer note */}
         <p className="mt-10 text-xs text-muted-foreground/50 max-w-lg mx-auto leading-relaxed">
-          OpportunityCircle is a career awareness platform — not a job board.
+          OpportunitySignal is a career awareness platform — not a job board.
           All information is for general awareness. Hiring patterns change
           yearly; always verify with recent, independent sources.
         </p>

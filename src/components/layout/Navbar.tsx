@@ -43,7 +43,7 @@ export function Navbar({ offset = false }: { offset?: boolean }) {
 
           {/* Wordmark */}
           <Link href="/" className="shrink-0 text-sm font-semibold tracking-tight">
-            Opportunity<span className="text-primary">Circle</span>
+            Opportunity<span className="text-primary">Signal</span>
           </Link>
 
           {/* Desktop nav */}

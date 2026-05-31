@@ -12,6 +12,6 @@ export function generateUnsubscribeUrl(
     .slice(0, 16);
 
   const base =
-    process.env.NEXTAUTH_URL || "https://opportunitycircle.vercel.app";
+    process.env.NEXTAUTH_URL || "https://opportunitysignal.vercel.app";
   return `${base}/api/email/unsubscribe?email=${encodeURIComponent(email)}&token=${token}&type=${type}`;
 }

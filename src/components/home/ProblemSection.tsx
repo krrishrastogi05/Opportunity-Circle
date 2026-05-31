@@ -66,7 +66,7 @@ export function ProblemSection() {
               <CheckCircle2 className="mt-0.5 w-5 h-5 text-primary flex-shrink-0" />
               <p className="text-sm text-foreground/80 leading-relaxed">
                 <strong className="font-semibold text-foreground">
-                  OpportunityCircle organises it all.
+                  OpportunitySignal organises it all.
                 </strong>{" "}
                 One structured map — company expectations, opportunity types,
                 skills, and what different paths usually require — written in

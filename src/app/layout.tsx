@@ -17,13 +17,13 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-const siteUrl = "https://opportunitycircle.vercel.app";
+const siteUrl = "https://opportunitysignal.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "OpportunityCircle — Tech Career Discovery",
-    template: "%s | OpportunityCircle",
+    default: "OpportunitySignal — Tech Career Discovery",
+    template: "%s | OpportunitySignal",
   },
   description:
     "The tech career map every confused student needs. Explore company profiles, opportunity types, and skill guides — structured, calm, and beginner-friendly.",

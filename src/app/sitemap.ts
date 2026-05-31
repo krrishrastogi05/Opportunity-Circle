@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const siteUrl = "https://opportunitycircle.vercel.app";
+const siteUrl = "https://opportunitysignal.vercel.app";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [

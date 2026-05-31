@@ -63,7 +63,7 @@ export async function GET(req: NextRequest) {
           resend.emails.send({
             from: FROM_EMAIL,
             to: user.email,
-            subject: `Weekly Digest: ${opportunities.length} opportunities — OpportunityCircle`,
+            subject: `Weekly Digest: ${opportunities.length} opportunities — OpportunitySignal`,
             react: WeeklyDigestEmail({
               opportunities: summaries,
               unsubscribeUrl: generateUnsubscribeUrl(user.email, "digest"),

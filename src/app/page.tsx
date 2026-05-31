@@ -7,7 +7,7 @@ import { Opportunity } from "@/models/Opportunity";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "OpportunityCircle — Tech Career Discovery",
+  title: "OpportunitySignal — Tech Career Discovery",
   description:
     "The tech career map every confused student needs. Explore company profiles, opportunity types, and skill guides.",
 };
