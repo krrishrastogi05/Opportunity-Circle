@@ -23,7 +23,7 @@ interface UserProfile {
 }
 
 export default function ProfilePage() {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const router = useRouter();
 
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -72,8 +72,10 @@ export default function ProfilePage() {
           graduationYear: graduationYear || undefined,
         }),
       });
-      if (res.ok) toast.success("Profile saved");
-      else toast.error("Failed to save");
+      if (res.ok) {
+        toast.success("Profile saved");
+        await update(); // refresh session so navbar reflects changes
+      } else toast.error("Failed to save");
     } catch {
       toast.error("Network error");
     } finally {

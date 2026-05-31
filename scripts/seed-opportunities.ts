@@ -49,7 +49,7 @@ const hackathons = [
   {
     title: "HackOn with Amazon",
     slug: "amazon-hackon",
-    category: "hackathon",
+    category: "hiring_challenge",
     description:
       "Amazon's flagship engineering hackathon. Solve real-world problems across AWS, Amazon Pay, Alexa, and Shopping — and fast-track your way to a PPI.",
     organizer: "Amazon",
@@ -96,7 +96,7 @@ const hackathons = [
   {
     title: "Goldman Sachs India Hackathon",
     slug: "gs-hackathon",
-    category: "hackathon",
+    category: "hiring_challenge",
     description:
       "12-hour individual coding and quantitative challenge on HackerRank. One of the most direct fast-tracks to a Goldman Sachs internship PPI in India.",
     organizer: "Goldman Sachs",
@@ -137,7 +137,7 @@ const hackathons = [
   {
     title: "Flipkart GRiD",
     slug: "flipkart-grid",
-    category: "hackathon",
+    category: "hiring_challenge",
     description:
       "Flipkart's annual engineering hackathon — the largest campus tech competition run by an Indian e-commerce company. Teams that reach Level 2+ become eligible for PPIs.",
     organizer: "Flipkart",
@@ -184,7 +184,7 @@ const hackathons = [
   {
     title: "Microsoft Engage",
     slug: "microsoft-engage",
-    category: "competition",
+    category: "internship",
     description:
       "Microsoft's 4-week mentorship program for second-year students. Build a real project under Microsoft engineer mentorship — strong performers are offered a PPO.",
     organizer: "Microsoft",
@@ -280,7 +280,7 @@ const hackathons = [
   {
     title: "Uber Star Engineer",
     slug: "uber-star",
-    category: "competition",
+    category: "hiring_challenge",
     description:
       "Uber's campus talent identification program. A competitive challenge that fast-tracks exceptional candidates into Uber's internship interview loop.",
     organizer: "Uber",
@@ -427,7 +427,7 @@ const openSourcePrograms = [
   {
     title: "MLH Fellowship",
     slug: "mlh-fellowship",
-    category: "open_source",
+    category: "internship",
     description:
       "12-week remote internship alternative for developers. Work on open-source projects used by real companies — rolling admissions, year-round cohorts.",
     organizer: "Major League Hacking",

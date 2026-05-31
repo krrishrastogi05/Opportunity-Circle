@@ -18,24 +18,28 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ account }) {
-      if (account?.provider === "google" && account.refresh_token) {
-        const client = await clientPromise;
-        const db = client.db();
-        await db.collection("users").updateOne(
-          { email: account.providerAccountId },
-          {
-            $set: {
-              googleRefreshToken: account.refresh_token,
-              alertsEnabled: true,
-              digestEnabled: true,
-            },
-          }
-        );
+    async signIn({ user, account }) {
+      // Store the Google refresh token for future calendar integration.
+      // Match by the adapter's user id (string id of the users doc), not
+      // providerAccountId (which is the Google sub, not an email).
+      if (account?.provider === "google" && account.refresh_token && user?.id) {
+        try {
+          const client = await clientPromise;
+          const db = client.db();
+          const { ObjectId } = await import("mongodb");
+          await db.collection("users").updateOne(
+            { _id: new ObjectId(user.id) },
+            { $set: { googleRefreshToken: account.refresh_token } }
+          );
+        } catch {
+          // non-fatal — don't block sign-in if token storage fails
+        }
       }
       return true;
     },
     async session({ session, user }) {
+      // With the MongoDB adapter (database strategy), `user` is the full
+      // users-collection document, so custom fields are already present.
       if (session.user) {
         const typedUser = session.user as {
           id?: string;
@@ -43,20 +47,15 @@ export const authOptions: NextAuthOptions = {
           branch?: string;
           graduationYear?: number;
         };
+        const dbUser = user as unknown as {
+          profileCompleted?: boolean;
+          branch?: string;
+          graduationYear?: number;
+        };
         typedUser.id = user.id;
-
-        // Fetch profile fields from DB
-        const client = await clientPromise;
-        const db = client.db();
-        const dbUser = await db
-          .collection("users")
-          .findOne({ _id: user.id as unknown as import("mongodb").ObjectId });
-
-        if (dbUser) {
-          typedUser.profileCompleted = dbUser.profileCompleted ?? false;
-          typedUser.branch = dbUser.branch;
-          typedUser.graduationYear = dbUser.graduationYear;
-        }
+        typedUser.profileCompleted = dbUser.profileCompleted ?? false;
+        typedUser.branch = dbUser.branch;
+        typedUser.graduationYear = dbUser.graduationYear;
       }
       return session;
     },

@@ -68,11 +68,10 @@ export function OpportunityList({
   }
 
   const categoryColors: Record<string, string> = {
+    hiring_challenge: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300",
     hackathon: "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300",
-    open_source: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
     internship: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
-    competition: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300",
-    fellowship: "bg-pink-100 text-pink-800 dark:bg-pink-900/30 dark:text-pink-300",
+    open_source: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
     other: "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300",
   };
 
@@ -80,13 +79,21 @@ export function OpportunityList({
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Opportunities</h1>
-        <Link
-          href="/admin/opportunities/new"
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-        >
-          <Plus className="h-4 w-4" />
-          New Opportunity
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/admin/opportunities/import"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Bulk import
+          </Link>
+          <Link
+            href="/admin/opportunities/new"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+          >
+            <Plus className="h-4 w-4" />
+            New Opportunity
+          </Link>
+        </div>
       </div>
 
       {opportunities.length === 0 ? (

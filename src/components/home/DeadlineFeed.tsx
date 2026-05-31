@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ExternalLink, ChevronRight, ArrowUpRight, Zap } from "lucide-react";
 import { BookmarkButton } from "@/components/ui/BookmarkButton";
+import { routeFromCategory } from "@/lib/opportunity-constants";
 
 type DeadlineEntry = {
   _id: string;
@@ -100,14 +101,15 @@ function CountdownBlock({ label, value }: { label: string; value: number }) {
 }
 
 function getTypeLabel(category: string): string {
-  if (category === "hackathon" || category === "competition") return "Hackathon";
+  if (category === "hiring_challenge") return "Hiring Challenge";
+  if (category === "hackathon") return "Hackathon";
   if (category === "open_source") return "Open Source";
-  return "Program";
+  if (category === "internship") return "Program";
+  return "Opportunity";
 }
 
-function getInternalLink(category: string): string {
-  if (category === "open_source") return "/open-source";
-  return "/opportunities";
+function detailLink(entry: DeadlineEntry): string {
+  return `/opportunities/${routeFromCategory(entry.category)}/${entry.slug}`;
 }
 
 export function DeadlineFeed({
@@ -127,10 +129,9 @@ export function DeadlineFeed({
     .map((d) => ({ ...d, status: getStatus(d) }))
     .filter((d) => {
       if (filter === "hackathon")
-        return d.category === "hackathon" || d.category === "competition";
+        return d.category === "hiring_challenge" || d.category === "hackathon";
       if (filter === "open-source") return d.category === "open_source";
-      if (filter === "program")
-        return d.category === "internship" || d.category === "fellowship";
+      if (filter === "program") return d.category === "internship";
       return true;
     })
     .sort((a, b) => {
@@ -251,10 +252,10 @@ export function DeadlineFeed({
                       </div>
                       <div className="flex gap-1.5 shrink-0">
                         <Link
-                          href={getInternalLink(entry.category)}
+                          href={detailLink(entry)}
                           className="px-3 py-1.5 rounded-lg bg-red-500 text-white text-xs font-bold hover:bg-red-600 transition-colors whitespace-nowrap"
                         >
-                          Guide
+                          Details
                         </Link>
                         {entry.applicationUrl && (
                           <a
@@ -279,7 +280,7 @@ export function DeadlineFeed({
           {(
             [
               { key: "all", label: "All" },
-              { key: "hackathon", label: "Hackathons" },
+              { key: "hackathon", label: "Hackathons & Hiring" },
               { key: "open-source", label: "Open Source" },
               { key: "program", label: "Programs" },
             ] as { key: Filter; label: string }[]
@@ -433,10 +434,10 @@ export function DeadlineFeed({
 
                   <div className="flex items-center gap-1 shrink-0 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                     <Link
-                      href={getInternalLink(entry.category)}
+                      href={detailLink(entry)}
                       className="inline-flex items-center gap-0.5 px-2 sm:px-2.5 py-1 rounded-lg text-xs font-semibold bg-foreground text-background hover:opacity-80 transition-opacity"
                     >
-                      <span className="hidden sm:inline">Guide</span>
+                      <span className="hidden sm:inline">Details</span>
                       <ArrowUpRight className="w-3 h-3" />
                     </Link>
                     {entry.applicationUrl && (

@@ -11,7 +11,7 @@ const currentYear = new Date().getFullYear();
 const gradYears = Array.from({ length: 7 }, (_, i) => currentYear + i - 1);
 
 export default function OnboardingPage() {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const router = useRouter();
   const [name, setName] = useState("");
   const [branch, setBranch] = useState("");
@@ -58,6 +58,7 @@ export default function OnboardingPage() {
 
       if (res.ok) {
         toast.success("Profile saved!");
+        await update(); // refresh session so navbar/redirects reflect profile
         router.push("/");
         router.refresh();
       } else {

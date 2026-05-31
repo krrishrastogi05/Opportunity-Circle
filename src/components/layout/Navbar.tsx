@@ -10,9 +10,9 @@ import { SearchTrigger } from "./GlobalSearch";
 import { SignInButton } from "@/components/auth/SignInButton";
 
 const links = [
-  { href: "/companies",     label: "Companies" },
-  { href: "/opportunities", label: "Opportunities" },
-  { href: "/open-source",   label: "Open Source" },
+  { href: "/companies",                      label: "Companies" },
+  { href: "/opportunities",                  label: "Opportunities" },
+  { href: "/opportunities/open-source",      label: "Open Source" },
 ];
 
 export function Navbar({ offset = false }: { offset?: boolean }) {

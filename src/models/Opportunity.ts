@@ -29,8 +29,10 @@ export interface IOpportunity extends Document {
   slug: string;
   category: OpportunityCategory;
   description: string;
+  longDescription?: string;
   organizer?: string;
   companySlug?: string;
+  companyUrl?: string;
   eligibility?: string;
   applicationUrl?: string;
   logoUrl?: string;
@@ -62,8 +64,10 @@ const OpportunitySchema = new Schema<IOpportunity>(
       enum: OPPORTUNITY_CATEGORIES,
     },
     description: { type: String, default: "" },
+    longDescription: String,
     organizer: String,
     companySlug: String,
+    companyUrl: String,
     eligibility: String,
     applicationUrl: String,
     logoUrl: String,

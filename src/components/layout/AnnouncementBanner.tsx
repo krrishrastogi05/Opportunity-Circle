@@ -3,18 +3,15 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { X, Zap } from "lucide-react";
+import { routeFromCategory } from "@/lib/opportunity-constants";
 
-/* ── Ticker items ──────────────────────────────────────────── */
-const ITEMS = [
-  { id: "gs",      label: "Goldman Sachs India Hackathon", closesAt: "2026-07-10", ppi: true,  href: "/opportunities" },
-  { id: "hackon",  label: "HackOn with Amazon",            closesAt: "2026-07-15", ppi: true,  href: "/opportunities" },
-  { id: "lfx",     label: "LFX Mentorship — Summer Term",  closesAt: "2026-07-20", ppi: false, href: "/open-source/lfx" },
-  { id: "gssoc",   label: "GSSoC Contribution Period",     closesAt: "2026-08-31", ppi: false, href: "/open-source/gssoc" },
-  { id: "grid",    label: "Flipkart GRiD 7.0",             closesAt: "2026-08-10", ppi: true,  href: "/opportunities" },
-  { id: "gsoc",    label: "GSoC Coding Period",            closesAt: "2026-09-08", ppi: false, href: "/open-source/gsoc" },
-  { id: "mlh",     label: "MLH Fellowship",                closesAt: null,         ppi: false, href: "/open-source/mlh-fellowship" },
-  { id: "out",     label: "Outreachy — December Cohort",   closesAt: "2026-09-20", ppi: false, href: "/open-source/outreachy" },
-];
+type TickerItem = {
+  id: string;
+  label: string;
+  closesAt: string | null;
+  ppi: boolean;
+  href: string;
+};
 
 function countdown(dateStr: string | null): string {
   if (!dateStr) return "Rolling";
@@ -25,9 +22,19 @@ function countdown(dateStr: string | null): string {
 }
 
 /* ── Component ─────────────────────────────────────────────── */
+interface ApiOpportunity {
+  _id: string;
+  title: string;
+  slug: string;
+  category: string;
+  closesAt?: string;
+  isPPIOffering: boolean;
+}
+
 export function AnnouncementBanner({ onDismiss }: { onDismiss?: () => void }) {
   const [dismissed, setDismissed] = useState(false);
   const [, tick] = useState(0);
+  const [active, setActive] = useState<TickerItem[]>([]);
 
   useEffect(() => {
     if (sessionStorage.getItem("ticker-dismissed") === "1") setDismissed(true);
@@ -38,13 +45,32 @@ export function AnnouncementBanner({ onDismiss }: { onDismiss?: () => void }) {
     return () => clearInterval(id);
   }, []);
 
-  if (dismissed) return null;
+  useEffect(() => {
+    fetch("/api/opportunities")
+      .then((r) => r.json())
+      .then((data: ApiOpportunity[]) => {
+        if (!Array.isArray(data)) return;
+        const items: TickerItem[] = data
+          // open or rolling only — drop ended
+          .filter((o) => !o.closesAt || new Date(o.closesAt).getTime() > Date.now())
+          .sort((a, b) => {
+            const ta = a.closesAt ? new Date(a.closesAt).getTime() : Infinity;
+            const tb = b.closesAt ? new Date(b.closesAt).getTime() : Infinity;
+            return ta - tb;
+          })
+          .map((o) => ({
+            id: o._id,
+            label: o.title,
+            closesAt: o.closesAt ?? null,
+            ppi: o.isPPIOffering,
+            href: `/opportunities/${routeFromCategory(o.category)}/${o.slug}`,
+          }));
+        setActive(items);
+      })
+      .catch(() => {});
+  }, []);
 
-  // Filter out closed items
-  const active = ITEMS.filter((i) => {
-    if (!i.closesAt) return true;
-    return new Date(i.closesAt).getTime() > Date.now();
-  });
+  if (dismissed || active.length === 0) return null;
 
   // Duplicate for seamless infinite scroll
   const items = [...active, ...active];

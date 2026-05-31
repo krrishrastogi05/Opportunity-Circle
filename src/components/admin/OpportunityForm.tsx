@@ -4,7 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Plus, X } from "lucide-react";
-import { OPPORTUNITY_CATEGORIES } from "@/lib/opportunity-constants";
+import {
+  OPPORTUNITY_CATEGORIES,
+  CATEGORY_META,
+} from "@/lib/opportunity-constants";
 
 interface Round {
   name: string;
@@ -30,8 +33,10 @@ interface OpportunityData {
   slug: string;
   category: string;
   description: string;
+  longDescription: string;
   organizer: string;
   companySlug: string;
+  companyUrl: string;
   eligibility: string;
   applicationUrl: string;
   logoUrl: string;
@@ -54,10 +59,12 @@ interface OpportunityData {
 const emptyForm: OpportunityData = {
   title: "",
   slug: "",
-  category: "hackathon",
+  category: "hiring_challenge",
   description: "",
+  longDescription: "",
   organizer: "",
   companySlug: "",
+  companyUrl: "",
   eligibility: "",
   applicationUrl: "",
   logoUrl: "",
@@ -183,7 +190,7 @@ export function OpportunityForm({
             >
               {OPPORTUNITY_CATEGORIES.map((c) => (
                 <option key={c} value={c}>
-                  {c.replace("_", " ")}
+                  {CATEGORY_META[c].label}
                 </option>
               ))}
             </select>
@@ -204,6 +211,17 @@ export function OpportunityForm({
             className={`${inputClass} min-h-[100px]`}
             value={form.description}
             onChange={(e) => update("description", e.target.value)}
+            placeholder="Short summary shown on cards (1-2 sentences)"
+          />
+        </div>
+
+        <div>
+          <label className={labelClass}>Long Description</label>
+          <textarea
+            className={`${inputClass} min-h-[140px]`}
+            value={form.longDescription}
+            onChange={(e) => update("longDescription", e.target.value)}
+            placeholder="Optional. Full detail shown on the opportunity's own page. Separate paragraphs with blank lines."
           />
         </div>
 
@@ -323,8 +341,10 @@ export function OpportunityForm({
         )}
       </section>
 
-      {/* Hackathon Rounds */}
-      {(form.category === "hackathon" || form.category === "competition") && (
+      {/* Rounds — for hiring challenges, hackathons, and programs */}
+      {(form.category === "hiring_challenge" ||
+        form.category === "hackathon" ||
+        form.category === "internship") && (
         <section className="space-y-4">
           <div className="flex items-center justify-between border-b border-border pb-2">
             <h2 className="text-lg font-semibold">Rounds</h2>
@@ -393,8 +413,9 @@ export function OpportunityForm({
         </section>
       )}
 
-      {/* Open Source: Steps, Timeline, Tips */}
-      {form.category === "open_source" && (
+      {/* Steps / Timeline / Tips — for open source and programs */}
+      {(form.category === "open_source" ||
+        form.category === "internship") && (
         <>
           {/* Steps */}
           <section className="space-y-4">
@@ -663,14 +684,32 @@ export function OpportunityForm({
           </label>
         </div>
 
-        <div>
-          <label className={labelClass}>Company Slug (links to company page)</label>
-          <input
-            className={inputClass}
-            placeholder="e.g. amazon, google"
-            value={form.companySlug}
-            onChange={(e) => update("companySlug", e.target.value)}
-          />
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className={labelClass}>Company Slug</label>
+            <input
+              className={inputClass}
+              placeholder="e.g. amazon, google"
+              value={form.companySlug}
+              onChange={(e) => update("companySlug", e.target.value)}
+            />
+            <p className="text-[11px] text-muted-foreground/60 mt-1">
+              Links to an internal /companies page.
+            </p>
+          </div>
+          <div>
+            <label className={labelClass}>Company Website URL</label>
+            <input
+              className={inputClass}
+              type="url"
+              placeholder="https://careers.example.com"
+              value={form.companyUrl}
+              onChange={(e) => update("companyUrl", e.target.value)}
+            />
+            <p className="text-[11px] text-muted-foreground/60 mt-1">
+              External official site.
+            </p>
+          </div>
         </div>
       </section>
 
