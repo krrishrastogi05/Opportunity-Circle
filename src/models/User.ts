@@ -6,6 +6,9 @@ export interface IUser extends Document {
   emailVerified?: Date;
   image?: string;
   googleRefreshToken?: string;
+  branch?: string;
+  graduationYear?: number;
+  profileCompleted: boolean;
   alertsEnabled: boolean;
   digestEnabled: boolean;
   createdAt: Date;
@@ -19,6 +22,9 @@ const UserSchema = new Schema<IUser>(
     emailVerified: Date,
     image: String,
     googleRefreshToken: String,
+    branch: String,
+    graduationYear: Number,
+    profileCompleted: { type: Boolean, default: false },
     alertsEnabled: { type: Boolean, default: true },
     digestEnabled: { type: Boolean, default: true },
   },

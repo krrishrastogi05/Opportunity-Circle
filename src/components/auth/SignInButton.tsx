@@ -1,48 +1,114 @@
 "use client";
 
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { LogIn, LogOut } from "lucide-react";
+import Link from "next/link";
+import { LogIn, Settings, LogOut, ChevronDown } from "lucide-react";
 
 export function SignInButton() {
   const { data: session, status } = useSession();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
   if (status === "loading") {
+    return <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />;
+  }
+
+  if (!session?.user) {
     return (
-      <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />
+      <button
+        onClick={() => signIn("google")}
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium border border-border/60 text-muted-foreground hover:text-foreground hover:border-border transition-colors"
+      >
+        <LogIn className="h-3.5 w-3.5" />
+        Sign in
+      </button>
     );
   }
 
-  if (session?.user) {
-    return (
-      <div className="flex items-center gap-2">
-        {session.user.image && (
-          <Image
-            src={session.user.image}
-            alt={session.user.name ?? "User"}
-            width={28}
-            height={28}
-            className="rounded-full"
-          />
-        )}
-        <button
-          onClick={() => signOut()}
-          className="p-2 rounded-md text-muted-foreground hover:text-foreground transition-colors"
-          aria-label="Sign out"
-        >
-          <LogOut className="h-4 w-4" />
-        </button>
-      </div>
-    );
-  }
+  const user = session.user as {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    branch?: string;
+    graduationYear?: number;
+  };
 
   return (
-    <button
-      onClick={() => signIn("google")}
-      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium border border-border/60 text-muted-foreground hover:text-foreground hover:border-border transition-colors"
-    >
-      <LogIn className="h-3.5 w-3.5" />
-      Sign in
-    </button>
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen((p) => !p)}
+        className="flex items-center gap-1.5 rounded-full hover:ring-2 hover:ring-border transition-all"
+      >
+        {user.image ? (
+          <Image
+            src={user.image}
+            alt={user.name ?? "User"}
+            width={32}
+            height={32}
+            className="rounded-full"
+          />
+        ) : (
+          <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-sm font-semibold text-primary">
+            {user.name?.[0] ?? "?"}
+          </div>
+        )}
+        <ChevronDown className="h-3 w-3 text-muted-foreground" />
+      </button>
+
+      {open && (
+        <div className="absolute right-0 mt-2 w-64 rounded-xl border border-border bg-card shadow-lg z-50 overflow-hidden">
+          {/* User info */}
+          <div className="px-4 py-3 border-b border-border">
+            <p className="text-sm font-semibold truncate">
+              {user.name ?? "User"}
+            </p>
+            <p className="text-xs text-muted-foreground truncate">
+              {user.email}
+            </p>
+            {(user.branch || user.graduationYear) && (
+              <p className="text-xs text-muted-foreground mt-1">
+                {user.branch}
+                {user.branch && user.graduationYear && " · "}
+                {user.graduationYear && `Class of ${user.graduationYear}`}
+              </p>
+            )}
+          </div>
+
+          {/* Menu items */}
+          <div className="py-1">
+            <Link
+              href="/settings"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
+            >
+              <Settings className="h-4 w-4" />
+              Settings
+            </Link>
+            <button
+              onClick={() => {
+                setOpen(false);
+                signOut();
+              }}
+              className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-muted-foreground hover:text-destructive hover:bg-accent/50 transition-colors"
+            >
+              <LogOut className="h-4 w-4" />
+              Sign out
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

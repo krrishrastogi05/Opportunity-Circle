@@ -37,7 +37,26 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, user }) {
       if (session.user) {
-        (session.user as { id?: string }).id = user.id;
+        const typedUser = session.user as {
+          id?: string;
+          profileCompleted?: boolean;
+          branch?: string;
+          graduationYear?: number;
+        };
+        typedUser.id = user.id;
+
+        // Fetch profile fields from DB
+        const client = await clientPromise;
+        const db = client.db();
+        const dbUser = await db
+          .collection("users")
+          .findOne({ _id: user.id as unknown as import("mongodb").ObjectId });
+
+        if (dbUser) {
+          typedUser.profileCompleted = dbUser.profileCompleted ?? false;
+          typedUser.branch = dbUser.branch;
+          typedUser.graduationYear = dbUser.graduationYear;
+        }
       }
       return session;
     },
