@@ -1,22 +1,25 @@
 import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI!;
-
 const globalForMongo = globalThis as unknown as {
   _mongoClientPromise: Promise<MongoClient> | undefined;
 };
 
-let clientPromise: Promise<MongoClient>;
-
-if (process.env.NODE_ENV === "development") {
-  if (!globalForMongo._mongoClientPromise) {
+// Lazy — the connection is only initiated when the promise is awaited,
+// not at module-evaluation time, so the build won't crash.
+const clientPromise: Promise<MongoClient> =
+  globalForMongo._mongoClientPromise ??
+  new Promise<MongoClient>((resolve, reject) => {
+    const uri = process.env.MONGODB_URI;
+    if (!uri) {
+      reject(new Error("MONGODB_URI environment variable is not set"));
+      return;
+    }
     const client = new MongoClient(uri);
-    globalForMongo._mongoClientPromise = client.connect();
-  }
-  clientPromise = globalForMongo._mongoClientPromise;
-} else {
-  const client = new MongoClient(uri);
-  clientPromise = client.connect();
+    client.connect().then(resolve).catch(reject);
+  });
+
+if (process.env.NODE_ENV !== "production") {
+  globalForMongo._mongoClientPromise = clientPromise;
 }
 
 export { clientPromise };

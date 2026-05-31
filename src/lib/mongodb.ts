@@ -1,13 +1,10 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI!;
-
-if (!MONGODB_URI) {
-  throw new Error("MONGODB_URI environment variable is not set");
-}
-
 const globalForMongoose = globalThis as unknown as {
-  mongoose: { conn: typeof mongoose | null; promise: Promise<typeof mongoose> | null };
+  mongoose: {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
+  };
 };
 
 const cached = globalForMongoose.mongoose ?? { conn: null, promise: null };
@@ -17,7 +14,11 @@ export async function connectDB() {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI);
+    const uri = process.env.MONGODB_URI;
+    if (!uri) {
+      throw new Error("MONGODB_URI environment variable is not set");
+    }
+    cached.promise = mongoose.connect(uri);
   }
 
   cached.conn = await cached.promise;
