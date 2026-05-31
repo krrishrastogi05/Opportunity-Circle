@@ -7,6 +7,7 @@ import { useTheme } from "next-themes";
 import { Sun, Moon, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SearchTrigger } from "./GlobalSearch";
+import { SignInButton } from "@/components/auth/SignInButton";
 
 const links = [
   { href: "/companies",     label: "Companies" },
@@ -74,11 +75,10 @@ export function Navbar({ offset = false }: { offset?: boolean }) {
             {/* Search — icon on mobile, full button on desktop */}
             <SearchTrigger />
 
-            {/* Explore — desktop only */}
-            <Link href="/companies"
-              className="hidden md:inline-flex items-center gap-1 px-4 py-1.5 rounded-md text-sm font-medium border border-border/60 text-muted-foreground hover:text-foreground hover:border-border transition-colors">
-              Explore
-            </Link>
+            {/* Sign in */}
+            <div className="hidden md:block">
+              <SignInButton />
+            </div>
 
             {/* Hamburger — mobile only */}
             <button
@@ -108,15 +108,8 @@ export function Navbar({ offset = false }: { offset?: boolean }) {
                 {l.label}
               </Link>
             ))}
-            <div className="mt-3 pt-3 border-t border-border/40 flex gap-2">
-              <Link href="/companies"
-                className="flex-1 flex items-center justify-center px-4 py-2 rounded-md text-sm font-medium border border-border/60 text-muted-foreground hover:text-foreground">
-                Browse Companies
-              </Link>
-              <Link href="/opportunities"
-                className="flex-1 flex items-center justify-center px-4 py-2 rounded-md text-sm font-semibold bg-primary text-primary-foreground">
-                Open Now
-              </Link>
+            <div className="mt-3 pt-3 border-t border-border/40 flex items-center gap-2">
+              <SignInButton />
             </div>
           </nav>
         </div>

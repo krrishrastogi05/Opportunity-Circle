@@ -4,7 +4,7 @@ import { OpportunityList } from "@/components/admin/OpportunityList";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminDashboard() {
+export default async function AdminOpportunitiesPage() {
   await connectDB();
   const opportunities = await Opportunity.find()
     .sort({ createdAt: -1 })

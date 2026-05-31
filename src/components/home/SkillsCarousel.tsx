@@ -1,9 +1,9 @@
 import { skills, type Skill } from "@/data/skills";
 
-function SkillBadge({ name, icon: Icon, color }: Skill) {
+function SkillBadge({ name, color }: Skill) {
   return (
     <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-[15px] font-medium text-foreground/80 whitespace-nowrap shadow-sm transition-colors hover:border-neutral-400 dark:hover:border-neutral-500">
-      {Icon && <Icon size={18} style={{ color }} />}
+      {color && <span className="h-3 w-3 rounded-full shrink-0" style={{ backgroundColor: color }} />}
       {name}
     </span>
   );

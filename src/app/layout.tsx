@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import { Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "sonner";
@@ -41,12 +42,14 @@ export default function RootLayout({
       <body
         className={`${GeistSans.variable} ${GeistMono.variable} ${cormorant.variable} font-sans antialiased overflow-x-hidden`}
       >
-        <ThemeProvider>
-          <SiteHeader />
-          <main className="min-h-screen animate-page-in">{children}</main>
-          <Footer />
-          <Toaster richColors position="bottom-right" />
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <SiteHeader />
+            <main className="min-h-screen animate-page-in">{children}</main>
+            <Footer />
+            <Toaster richColors position="bottom-right" />
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

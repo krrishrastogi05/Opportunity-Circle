@@ -140,26 +140,26 @@ export async function GitHubBento() {
     <section className="py-8 px-4 max-w-3xl mx-auto">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
 
-        {/* Blog card with character image — col-span-2 */}
+        {/* Opportunities card — col-span-2 */}
         <Link
-          href="/blogs"
+          href="/opportunities"
           className="col-span-2 rounded-2xl border border-border overflow-hidden relative group hover:border-foreground/20 transition-colors min-h-[200px] bg-neutral-900"
         >
           <Image
             src="/placeholder/gidd.gif"
-            alt="writer"
+            alt="opportunities"
             fill
             className="object-cover object-center"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
-            <p className="text-white/60 text-xs uppercase tracking-wider mb-1">writing</p>
+            <p className="text-white/60 text-xs uppercase tracking-wider mb-1">explore</p>
             <span className="text-white font-semibold text-base flex items-center gap-1.5">
-              My Blogs
+              Opportunities
               <ArrowUpRight className="h-4 w-4 opacity-60 group-hover:opacity-100 transition-opacity" />
             </span>
-            <p className="text-white/50 text-xs mt-0.5">thoughts, tutorials & more</p>
+            <p className="text-white/50 text-xs mt-0.5">hackathons, open source & more</p>
           </div>
         </Link>
 
