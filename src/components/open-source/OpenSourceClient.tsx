@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { BookmarkButton } from "@/components/ui/BookmarkButton";
 import {
   ExternalLink,
   ChevronDown,
@@ -167,11 +168,14 @@ export function OpenSourceClient({ programs }: { programs: Program[] }) {
                   </div>
                 </div>
 
-                <ChevronDown
-                  className={`w-4 h-4 shrink-0 mt-1 text-muted-foreground transition-transform duration-200 ${
-                    isOpen ? "rotate-180" : ""
-                  }`}
-                />
+                <div className="flex items-center gap-0.5 shrink-0">
+                  <BookmarkButton opportunityId={p._id} />
+                  <ChevronDown
+                    className={`w-4 h-4 mt-1 text-muted-foreground transition-transform duration-200 ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </div>
               </button>
 
               {isOpen && (

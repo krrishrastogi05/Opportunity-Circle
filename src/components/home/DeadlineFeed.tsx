@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ExternalLink, ChevronRight, ArrowUpRight, Zap } from "lucide-react";
+import { BookmarkButton } from "@/components/ui/BookmarkButton";
 
 type DeadlineEntry = {
   _id: string;
@@ -448,6 +449,7 @@ export function DeadlineFeed({
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
                     )}
+                    <BookmarkButton opportunityId={entry._id} />
                   </div>
                 </div>
               );

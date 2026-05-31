@@ -4,7 +4,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { LogIn, Settings, LogOut, ChevronDown } from "lucide-react";
+import { LogIn, User as UserIcon, Bookmark, LogOut, ChevronDown, AlertCircle } from "lucide-react";
 
 export function SignInButton() {
   const { data: session, status } = useSession();
@@ -43,6 +43,7 @@ export function SignInButton() {
     image?: string | null;
     branch?: string;
     graduationYear?: number;
+    profileCompleted?: boolean;
   };
 
   return (
@@ -86,15 +87,35 @@ export function SignInButton() {
             )}
           </div>
 
+          {/* Onboarding nudge */}
+          {!user.profileCompleted && (
+            <Link
+              href="/onboarding"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-amber-600 dark:text-amber-400 bg-amber-500/5 hover:bg-amber-500/10 transition-colors"
+            >
+              <AlertCircle className="h-4 w-4" />
+              Complete your profile
+            </Link>
+          )}
+
           {/* Menu items */}
           <div className="py-1">
             <Link
-              href="/settings"
+              href="/profile"
               onClick={() => setOpen(false)}
               className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
             >
-              <Settings className="h-4 w-4" />
-              Settings
+              <UserIcon className="h-4 w-4" />
+              Profile & Settings
+            </Link>
+            <Link
+              href="/saved"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors"
+            >
+              <Bookmark className="h-4 w-4" />
+              Saved Opportunities
             </Link>
             <button
               onClick={() => {

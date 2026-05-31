@@ -12,6 +12,7 @@ import {
   CircleX,
   Calendar,
 } from "lucide-react";
+import { BookmarkButton } from "@/components/ui/BookmarkButton";
 
 type Round = {
   name: string;
@@ -203,11 +204,14 @@ export function OpportunitiesClient({
                   </div>
                 </div>
 
-                <ChevronDown
-                  className={`w-4 h-4 shrink-0 mt-1 text-muted-foreground transition-transform duration-200 ${
-                    isOpen ? "rotate-180" : ""
-                  }`}
-                />
+                <div className="flex items-center gap-0.5 shrink-0">
+                  <BookmarkButton opportunityId={opp._id} />
+                  <ChevronDown
+                    className={`w-4 h-4 mt-1 text-muted-foreground transition-transform duration-200 ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </div>
               </button>
 
               {isOpen && (

@@ -11,6 +11,7 @@ export interface IUser extends Document {
   profileCompleted: boolean;
   alertsEnabled: boolean;
   digestEnabled: boolean;
+  savedOpportunities: mongoose.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -27,6 +28,7 @@ const UserSchema = new Schema<IUser>(
     profileCompleted: { type: Boolean, default: false },
     alertsEnabled: { type: Boolean, default: true },
     digestEnabled: { type: Boolean, default: true },
+    savedOpportunities: [{ type: Schema.Types.ObjectId, ref: "Opportunity" }],
   },
   { timestamps: true }
 );
