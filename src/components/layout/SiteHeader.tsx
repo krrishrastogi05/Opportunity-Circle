@@ -1,28 +1,22 @@
 "use client";
 
 /**
- * Wraps AnnouncementBanner + Navbar together so the Navbar
- * can reactively drop to top-0 when the banner is dismissed.
+ * Wraps AnnouncementBanner + Navbar together. The Navbar is only offset
+ * downward when the banner is ACTUALLY rendering content — otherwise we'd
+ * leave an empty strip at the top that page content scrolls through.
  */
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { AnnouncementBanner } from "./AnnouncementBanner";
 import { Navbar } from "./Navbar";
 import { GlobalSearch } from "./GlobalSearch";
 
 export function SiteHeader() {
-  const [bannerVisible, setBannerVisible] = useState(false);
-
-  useEffect(() => {
-    // Show banner only if not previously dismissed this session
-    setBannerVisible(sessionStorage.getItem("ticker-dismissed") !== "1");
-  }, []);
-
-  const onDismiss = useCallback(() => setBannerVisible(false), []);
+  const [bannerActive, setBannerActive] = useState(false);
 
   return (
     <>
-      {bannerVisible && <AnnouncementBanner onDismiss={onDismiss} />}
-      <Navbar offset={bannerVisible} />
+      <AnnouncementBanner onVisibilityChange={setBannerActive} />
+      <Navbar offset={bannerActive} />
       <GlobalSearch />
     </>
   );

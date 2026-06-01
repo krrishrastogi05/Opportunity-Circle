@@ -31,7 +31,11 @@ interface ApiOpportunity {
   isPPIOffering: boolean;
 }
 
-export function AnnouncementBanner({ onDismiss }: { onDismiss?: () => void }) {
+export function AnnouncementBanner({
+  onVisibilityChange,
+}: {
+  onVisibilityChange?: (visible: boolean) => void;
+}) {
   const [dismissed, setDismissed] = useState(false);
   const [, tick] = useState(0);
   const [active, setActive] = useState<TickerItem[]>([]);
@@ -39,6 +43,13 @@ export function AnnouncementBanner({ onDismiss }: { onDismiss?: () => void }) {
   useEffect(() => {
     if (sessionStorage.getItem("ticker-dismissed") === "1") setDismissed(true);
   }, []);
+
+  // Tell the header whether we're actually showing — so the navbar only
+  // reserves space when there's a real banner.
+  const isShowing = !dismissed && active.length > 0;
+  useEffect(() => {
+    onVisibilityChange?.(isShowing);
+  }, [isShowing, onVisibilityChange]);
 
   useEffect(() => {
     const id = setInterval(() => tick((n) => n + 1), 60_000);
@@ -88,7 +99,7 @@ export function AnnouncementBanner({ onDismiss }: { onDismiss?: () => void }) {
       .catch(() => {});
   }, []);
 
-  if (dismissed || active.length === 0) return null;
+  if (!isShowing) return null;
 
   // Duplicate for seamless infinite scroll
   const items = [...active, ...active];
@@ -96,7 +107,6 @@ export function AnnouncementBanner({ onDismiss }: { onDismiss?: () => void }) {
   function dismiss() {
     setDismissed(true);
     sessionStorage.setItem("ticker-dismissed", "1");
-    onDismiss?.();
   }
 
   return (

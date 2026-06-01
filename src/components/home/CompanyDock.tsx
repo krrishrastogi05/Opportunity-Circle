@@ -31,7 +31,7 @@ export function CompanyDock() {
       <p className="text-[11px] text-muted-foreground tracking-widest uppercase">
         Companies you can explore
       </p>
-      <div className="flex items-center gap-2 px-3 py-3 rounded-2xl border border-border/40 bg-card/60 backdrop-blur-md shadow-lg shadow-black/10 max-w-full overflow-x-auto no-scrollbar [&>*]:shrink-0">
+      <div className="flex items-center gap-2 px-3 py-3 rounded-2xl border border-border bg-card shadow-sm max-w-full overflow-x-auto no-scrollbar [&>*]:shrink-0">
         {companies.map((co) => {
           const isHov = hovered === co.name;
           return (

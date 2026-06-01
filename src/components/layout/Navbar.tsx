@@ -32,10 +32,10 @@ export function Navbar({ offset = false }: { offset?: boolean }) {
     <>
       <header
         className={cn(
-          "fixed inset-x-0 z-40 transition-all duration-300",
+          "fixed inset-x-0 z-50 transition-all duration-300",
           offset ? "top-9" : "top-0",
           scrolled
-            ? "border-b border-border/60 bg-background/80 backdrop-blur-xl"
+            ? "border-b border-border/60 bg-background/95 backdrop-blur-xl supports-[backdrop-filter]:bg-background/80"
             : "bg-transparent"
         )}
       >
