@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { BookmarkButton } from "@/components/ui/BookmarkButton";
 import { CompanyLogo } from "@/components/ui/CompanyLogo";
+import { LoginNudge } from "@/components/auth/LoginNudge";
 import { categoryLabel, routeFromCategory } from "@/lib/opportunity-constants";
 import {
   fmtDate,
@@ -94,6 +95,9 @@ export function OpportunityDetail({ opp }: { opp: OpportunityDetailData }) {
         <ChevronLeft className="w-3.5 h-3.5" />
         {categoryLabel(opp.category)}
       </Link>
+
+      {/* Friendly login nudge for signed-out visitors */}
+      <LoginNudge opportunityTitle={opp.title} />
 
       {/* Header */}
       <div className="flex items-start gap-4 mb-6">
