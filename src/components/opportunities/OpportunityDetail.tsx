@@ -17,6 +17,7 @@ import {
 import { BookmarkButton } from "@/components/ui/BookmarkButton";
 import { CompanyLogo } from "@/components/ui/CompanyLogo";
 import { LoginNudge } from "@/components/auth/LoginNudge";
+import { AddToCalendar } from "@/components/opportunities/AddToCalendar";
 import { categoryLabel, routeFromCategory } from "@/lib/opportunity-constants";
 import {
   fmtDate,
@@ -85,6 +86,8 @@ export function OpportunityDetail({ opp }: { opp: OpportunityDetailData }) {
   const status = getRegStatus(opp);
   const badges = getBadges(opp);
   const showCountdown = showRegistrationCountdown(opp);
+  // Prefer the registration deadline; fall back to the event date.
+  const calendarDate = opp.closesAt || opp.eventDate;
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-10 pb-24">
@@ -191,6 +194,18 @@ export function OpportunityDetail({ opp }: { opp: OpportunityDetailData }) {
             <Globe className="w-3.5 h-3.5" />
             Website
           </a>
+        )}
+        {calendarDate && (
+          <AddToCalendar
+            event={{
+              title: opp.title,
+              date: calendarDate,
+              endDate: opp.endsAt,
+              description: opp.description,
+              url: opp.applicationUrl,
+              isDeadline: !!opp.closesAt,
+            }}
+          />
         )}
       </div>
 
