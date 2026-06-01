@@ -1,3 +1,4 @@
+import { CompanyLogo } from "@/components/ui/CompanyLogo";
 import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -23,14 +24,7 @@ export default function GooglePage() {
       <header className="mb-10">
         <div className="flex items-center gap-4 mb-5">
           {/* Google G mark */}
-          <div className="w-14 h-14 rounded-2xl bg-white border border-border flex items-center justify-center shrink-0">
-            <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M43.6 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h11C34.5 31 32.9 33 30.5 34.4v4.5h6.9C41.2 35.2 43.6 30.3 43.6 24.5z" fill="#4285F4"/>
-              <path d="M24 44c5.4 0 9.9-1.8 13.2-4.8l-6.9-4.5c-1.8 1.2-4.1 1.9-6.4 1.9-4.9 0-9-3.3-10.5-7.8H6.5v4.6C9.8 39.9 16.4 44 24 44z" fill="#34A853"/>
-              <path d="M13.5 28.8c-.4-1.2-.6-2.5-.6-3.8s.2-2.6.6-3.8v-4.6H6.5C5 19.4 4 21.6 4 24s1 4.6 2.5 7.4l7-5.6z" fill="#FBBC05"/>
-              <path d="M24 10.4c2.7 0 5.1 1 7 2.8l5.2-5.2C32.9 5 28.4 3 24 3 16.4 3 9.8 7.1 6.5 13.4l7 5.6C15 14.7 19.1 10.4 24 10.4z" fill="#EA4335"/>
-            </svg>
-          </div>
+          <CompanyLogo name="Google" slug="google" size={56} rounded="rounded-2xl" />
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Google</h1>
             <p className="text-sm text-muted-foreground mt-0.5">

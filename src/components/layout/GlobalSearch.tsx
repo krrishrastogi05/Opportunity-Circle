@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Search, Building2, Code2, Trophy, X, ArrowRight, Zap } from "lucide-react";
+import { routeFromCategory, categoryLabel } from "@/lib/opportunity-constants";
+import { getRegStatus, REG_STATUS_LABEL } from "@/lib/opportunity-status";
 
 /* ─── Search index ──────────────────────────────────────── */
 type SearchItem = {
@@ -15,35 +17,36 @@ type SearchItem = {
   hot?: boolean;
 };
 
-const INDEX: SearchItem[] = [
-  /* Companies */
-  { id: "amazon",     label: "Amazon",     sublabel: "Big Tech · DSA + LP",                     href: "/companies/amazon",     category: "company",       tags: "aws cloud ecommerce", hot: true },
-  { id: "google",     label: "Google",     sublabel: "Big Tech · Pure DSA · STEP Intern",        href: "/companies/google",     category: "company",       tags: "search cloud gsoc step" },
-  { id: "microsoft",  label: "Microsoft",  sublabel: "Big Tech · DSA + CS Fundamentals",         href: "/companies/microsoft",  category: "company",       tags: "azure cloud engage" },
-  { id: "uber",       label: "Uber",       sublabel: "Real-time Systems · LLD + HLD",            href: "/companies/uber",       category: "company",       tags: "rides maps star engineer" },
-  { id: "flipkart",   label: "Flipkart",   sublabel: "Indian E-commerce · Machine Coding",       href: "/companies/flipkart",   category: "company",       tags: "grid hackathon ecommerce", hot: true },
-  { id: "swiggy",     label: "Swiggy",     sublabel: "Food Delivery · Machine Coding",           href: "/companies/swiggy",     category: "company",       tags: "food delivery bangalore" },
-  { id: "zomato",     label: "Zomato",     sublabel: "Food Tech · DSA + DBMS",                   href: "/companies/zomato",     category: "company",       tags: "food blinkit gurugram" },
-  { id: "phonepe",    label: "PhonePe",    sublabel: "UPI Fintech · LLD + Concurrency",          href: "/companies/phonepe",    category: "company",       tags: "payments upi bangalore" },
-  { id: "meesho",     label: "Meesho",     sublabel: "Social Commerce · AI Screening",           href: "/companies/meesho",     category: "company",       tags: "social ecommerce bangalore" },
-  { id: "razorpay",   label: "Razorpay",   sublabel: "Payments Fintech · CS Fundamentals",       href: "/companies/razorpay",   category: "company",       tags: "payments fintech" },
-  { id: "rippling",   label: "Rippling",   sublabel: "HR Tech SaaS · LLD-Heavy",                 href: "/companies/rippling",   category: "company",       tags: "hr saas lld" },
-  { id: "atlassian",  label: "Atlassian",  sublabel: "Dev Tools · Code Quality Focus",           href: "/companies/atlassian",  category: "company",       tags: "jira confluence devtools" },
-  { id: "freshworks", label: "Freshworks", sublabel: "Indian SaaS · Accessible DSA",             href: "/companies/freshworks", category: "company",       tags: "crm saas chennai" },
-  /* Opportunities */
-  { id: "hackon",     label: "HackOn with Amazon",           sublabel: "Hackathon · PPI Available · Closes Jul 15",  href: "/opportunities", category: "opportunity", tags: "amazon hackathon ppi active", hot: true },
-  { id: "gs-hack",    label: "Goldman Sachs India Hackathon", sublabel: "Hackathon · PPI · Closes Jul 10",           href: "/opportunities", category: "opportunity", tags: "goldman sachs hackathon ppi active", hot: true },
-  { id: "flipgrid",   label: "Flipkart GRiD 7.0",            sublabel: "Hackathon · PPI Available · Aug 2026",       href: "/opportunities", category: "opportunity", tags: "flipkart grid hackathon ppi" },
-  { id: "ms-engage",  label: "Microsoft Engage",             sublabel: "Mentorship · PPO Pathway",                   href: "/opportunities", category: "opportunity", tags: "microsoft engage ppo" },
-  { id: "google-step",label: "Google STEP Internship",       sublabel: "1st & 2nd Year Internship",                  href: "/opportunities", category: "opportunity", tags: "google step internship" },
-  { id: "uber-star",  label: "Uber Star Engineer",           sublabel: "PPI Fast-track",                             href: "/opportunities", category: "opportunity", tags: "uber star ppi" },
-  /* Open Source */
-  { id: "gsoc",       label: "Google Summer of Code",        sublabel: "Open Source · Stipend · Coding Jun–Sep",     href: "/open-source/gsoc",           category: "open-source", tags: "gsoc google stipend", hot: true },
-  { id: "lfx",        label: "LFX Mentorship",               sublabel: "Open Source · Linux Foundation · Active",    href: "/open-source/lfx",            category: "open-source", tags: "lfx linux foundation cncf" },
-  { id: "outreachy",  label: "Outreachy",                    sublabel: "Open Source · Stipend · Dec Cohort Apps Aug", href: "/open-source/outreachy",      category: "open-source", tags: "outreachy diversity stipend" },
-  { id: "gssoc",      label: "GirlScript Summer of Code",    sublabel: "Open Source · Contribution · Active Now",    href: "/open-source/gssoc",          category: "open-source", tags: "gssoc girlscript contribution", hot: true },
-  { id: "mlh",        label: "MLH Fellowship",               sublabel: "Open Source / Internship · Rolling",         href: "/open-source/mlh-fellowship", category: "open-source", tags: "mlh fellowship hackathon" },
+// Companies are static pages — safe to hardcode.
+const COMPANIES: SearchItem[] = [
+  { id: "amazon",     label: "Amazon",     sublabel: "Big Tech · DSA + LP",                href: "/companies/amazon",     category: "company", tags: "aws cloud ecommerce" },
+  { id: "google",     label: "Google",     sublabel: "Big Tech · Pure DSA · STEP Intern",  href: "/companies/google",     category: "company", tags: "search cloud gsoc step" },
+  { id: "microsoft",  label: "Microsoft",  sublabel: "Big Tech · DSA + CS Fundamentals",   href: "/companies/microsoft",  category: "company", tags: "azure cloud engage" },
+  { id: "uber",       label: "Uber",       sublabel: "Real-time Systems · LLD + HLD",      href: "/companies/uber",       category: "company", tags: "rides maps star engineer" },
+  { id: "flipkart",   label: "Flipkart",   sublabel: "Indian E-commerce · Machine Coding", href: "/companies/flipkart",   category: "company", tags: "grid hackathon ecommerce" },
+  { id: "swiggy",     label: "Swiggy",     sublabel: "Food Delivery · Machine Coding",     href: "/companies/swiggy",     category: "company", tags: "food delivery bangalore" },
+  { id: "zomato",     label: "Zomato",     sublabel: "Food Tech · DSA + DBMS",             href: "/companies/zomato",     category: "company", tags: "food blinkit gurugram" },
+  { id: "phonepe",    label: "PhonePe",    sublabel: "UPI Fintech · LLD + Concurrency",    href: "/companies/phonepe",    category: "company", tags: "payments upi bangalore" },
+  { id: "meesho",     label: "Meesho",     sublabel: "Social Commerce · AI Screening",     href: "/companies/meesho",     category: "company", tags: "social ecommerce bangalore" },
+  { id: "razorpay",   label: "Razorpay",   sublabel: "Payments Fintech · CS Fundamentals", href: "/companies/razorpay",   category: "company", tags: "payments fintech" },
+  { id: "rippling",   label: "Rippling",   sublabel: "HR Tech SaaS · LLD-Heavy",           href: "/companies/rippling",   category: "company", tags: "hr saas lld" },
+  { id: "atlassian",  label: "Atlassian",  sublabel: "Dev Tools · Code Quality Focus",     href: "/companies/atlassian",  category: "company", tags: "jira confluence devtools" },
+  { id: "freshworks", label: "Freshworks", sublabel: "Indian SaaS · Accessible DSA",       href: "/companies/freshworks", category: "company", tags: "crm saas chennai" },
 ];
+
+interface ApiOpportunity {
+  _id: string;
+  title: string;
+  slug: string;
+  category: string;
+  organizer?: string;
+  isPPIOffering: boolean;
+  opensAt?: string;
+  closesAt?: string;
+  endsAt?: string;
+  statusOverride?: string;
+  tags?: string[];
+}
 
 const CATEGORY_ICONS = {
   company:       <Building2 className="w-3.5 h-3.5" />,
@@ -62,8 +65,35 @@ export function GlobalSearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [cursor, setCursor] = useState(0);
+  const [oppItems, setOppItems] = useState<SearchItem[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  // Live opportunities from the DB → accurate, never stale.
+  useEffect(() => {
+    fetch("/api/opportunities")
+      .then((r) => r.json())
+      .then((data: ApiOpportunity[]) => {
+        if (!Array.isArray(data)) return;
+        const items: SearchItem[] = data.map((o) => {
+          const status = getRegStatus(o);
+          const isOpenSource = o.category === "open_source";
+          return {
+            id: o._id,
+            label: o.title,
+            sublabel: `${categoryLabel(o.category)} · ${REG_STATUS_LABEL[status]}${o.isPPIOffering ? " · PPI" : ""}`,
+            href: `/opportunities/${routeFromCategory(o.category)}/${o.slug}`,
+            category: isOpenSource ? "open-source" : "opportunity",
+            tags: [o.organizer, ...(o.tags ?? [])].filter(Boolean).join(" ").toLowerCase(),
+            hot: status === "registration_open",
+          };
+        });
+        setOppItems(items);
+      })
+      .catch(() => {});
+  }, []);
+
+  const INDEX: SearchItem[] = [...COMPANIES, ...oppItems];
 
   /* Keyboard shortcut — Ctrl+K / Cmd+K */
   useEffect(() => {

@@ -1,3 +1,4 @@
+import { CompanyLogo } from "@/components/ui/CompanyLogo";
 import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -22,9 +23,7 @@ export default function RazorpayPage() {
       {/* 2. Header */}
       <header className="mb-10">
         <div className="flex items-center gap-4 mb-5">
-          <div className="w-14 h-14 rounded-2xl bg-[#2EB5C0] flex items-center justify-center shrink-0">
-            <span style={{ color: "#fff", fontSize: 22, fontWeight: 800, fontFamily: "sans-serif", letterSpacing: "-1px" }}>Rp</span>
-          </div>
+          <CompanyLogo name="Razorpay" slug="razorpay" size={56} rounded="rounded-2xl" />
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Razorpay</h1>
             <p className="text-sm text-muted-foreground mt-0.5">

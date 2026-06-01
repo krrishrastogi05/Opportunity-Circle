@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { CompanyLogo } from "@/components/ui/CompanyLogo";
 import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -29,9 +29,7 @@ export default function AmazonPage() {
       <header className="mb-10">
         {/* Logo + name row */}
         <div className="flex items-center gap-4 mb-5">
-          <div className="w-14 h-14 rounded-2xl bg-white border border-border flex items-center justify-center shrink-0 overflow-hidden p-1.5">
-            <Image src="/companies/amazon.png" alt="Amazon" width={48} height={48} className="object-contain" />
-          </div>
+          <CompanyLogo name="Amazon" slug="amazon" size={56} rounded="rounded-2xl" />
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Amazon</h1>
             <p className="text-sm text-muted-foreground mt-0.5">

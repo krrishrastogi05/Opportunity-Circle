@@ -1,3 +1,4 @@
+import { CompanyLogo } from "@/components/ui/CompanyLogo";
 import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -22,15 +23,7 @@ export default function MicrosoftPage() {
       {/* 2. Header */}
       <header className="mb-10">
         <div className="flex items-center gap-4 mb-5">
-          <div className="w-14 h-14 rounded-2xl bg-white border border-border flex items-center justify-center shrink-0">
-            {/* Microsoft 4-square logo */}
-            <svg width="28" height="28" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
-              <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
-              <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
-              <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
-            </svg>
-          </div>
+          <CompanyLogo name="Microsoft" slug="microsoft" size={56} rounded="rounded-2xl" />
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Microsoft</h1>
             <p className="text-sm text-muted-foreground mt-0.5">
