@@ -1,14 +1,16 @@
-// Logo resolution with graceful fallback chain:
-//   1. explicit logoUrl on the record
-//   2. a local file we ship in /public/companies/<slug>.png
-//   3. free discovery via Clearbit (no API key)
-//   4. logo.dev (needs NEXT_PUBLIC_LOGODEV_TOKEN)
-//   5. (component falls back to a coloured initials tile)
+// Logo resolution with a graceful fallback chain. <CompanyLogo> tries each
+// candidate URL in order and advances on error, finally showing an initials
+// tile. Locally-shipped logos in /public/companies/<slug>.png are preferred,
+// so we don't hit any external service for the common companies.
+//   1. explicit logoUrl
+//   2. /public/companies/<slug>.png
+//   3. /public/companies/<slugified-name>.png
+//   4. Clearbit (free, no key)
+//   5. logo.dev (needs NEXT_PUBLIC_LOGODEV_TOKEN)
 
-// Slugs we ship a local logo for under /public/companies/<slug>.png
-export const LOCAL_LOGOS = new Set(["amazon", "rippling"]);
+import { slugify } from "./utils";
 
-// Map organizer / company name (and slug) → primary web domain.
+// Organizer / company name (and slug) → primary web domain (for remote fallback).
 const DOMAINS: Record<string, string> = {
   amazon: "amazon.com",
   google: "google.com",
@@ -24,10 +26,12 @@ const DOMAINS: Record<string, string> = {
   freshworks: "freshworks.com",
   rippling: "rippling.com",
   "goldman sachs": "goldmansachs.com",
+  "goldman-sachs": "goldmansachs.com",
   "linux foundation": "linuxfoundation.org",
   "girlscript foundation": "girlscript.tech",
   "major league hacking": "mlh.io",
   "software freedom conservancy": "outreachy.org",
+  outreachy: "outreachy.org",
   meta: "meta.com",
   netflix: "netflix.com",
 };
@@ -39,10 +43,6 @@ function domainFor(key?: string): string | undefined {
   return DOMAINS[key.toLowerCase().trim()];
 }
 
-/**
- * Ordered list of candidate image URLs. A <CompanyLogo> tries each in turn,
- * falling back to an initials tile if all fail.
- */
 export function resolveLogoCandidates(opts: {
   logoUrl?: string;
   slug?: string;
@@ -51,15 +51,20 @@ export function resolveLogoCandidates(opts: {
   const out: string[] = [];
   if (opts.logoUrl) out.push(opts.logoUrl);
 
-  if (opts.slug && LOCAL_LOGOS.has(opts.slug)) {
-    out.push(`/companies/${opts.slug}.png`);
+  if (opts.slug) out.push(`/companies/${opts.slug}.png`);
+
+  const nameSlug = opts.name ? slugify(opts.name) : "";
+  if (nameSlug && nameSlug !== opts.slug) {
+    out.push(`/companies/${nameSlug}.png`);
   }
 
   const domain = domainFor(opts.slug) || domainFor(opts.name);
   if (domain) {
     out.push(`https://logo.clearbit.com/${domain}`);
     if (LOGODEV_TOKEN) {
-      out.push(`https://img.logo.dev/${domain}?token=${LOGODEV_TOKEN}`);
+      out.push(
+        `https://img.logo.dev/${domain}?token=${LOGODEV_TOKEN}&size=128&format=png&retina=true`
+      );
     }
   }
   return out;
