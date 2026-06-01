@@ -25,7 +25,7 @@ const COMPANIES: SearchItem[] = [
   { id: "uber",       label: "Uber",       sublabel: "Real-time Systems · LLD + HLD",      href: "/companies/uber",       category: "company", tags: "rides maps star engineer" },
   { id: "flipkart",   label: "Flipkart",   sublabel: "Indian E-commerce · Machine Coding", href: "/companies/flipkart",   category: "company", tags: "grid hackathon ecommerce" },
   { id: "swiggy",     label: "Swiggy",     sublabel: "Food Delivery · Machine Coding",     href: "/companies/swiggy",     category: "company", tags: "food delivery bangalore" },
-  { id: "zomato",     label: "Zomato",     sublabel: "Food Tech · DSA + DBMS",             href: "/companies/zomato",     category: "company", tags: "food blinkit gurugram" },
+  { id: "eternal",    label: "Eternal (formerly Zomato)", sublabel: "Food Tech · Zomato · Blinkit", href: "/companies/eternal", category: "company", tags: "eternal zomato blinkit district food gurugram" },
   { id: "phonepe",    label: "PhonePe",    sublabel: "UPI Fintech · LLD + Concurrency",    href: "/companies/phonepe",    category: "company", tags: "payments upi bangalore" },
   { id: "meesho",     label: "Meesho",     sublabel: "Social Commerce · AI Screening",     href: "/companies/meesho",     category: "company", tags: "social ecommerce bangalore" },
   { id: "razorpay",   label: "Razorpay",   sublabel: "Payments Fintech · CS Fundamentals", href: "/companies/razorpay",   category: "company", tags: "payments fintech" },

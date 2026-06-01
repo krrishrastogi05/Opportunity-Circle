@@ -19,6 +19,7 @@ const DOMAINS: Record<string, string> = {
   flipkart: "flipkart.com",
   swiggy: "swiggy.com",
   zomato: "zomato.com",
+  eternal: "eternal.com",
   phonepe: "phonepe.com",
   razorpay: "razorpay.com",
   atlassian: "atlassian.com",

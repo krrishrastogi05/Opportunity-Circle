@@ -233,7 +233,7 @@ export default function FlipkartPage() {
           { name: "Amazon",  slug: "amazon" },
           { name: "Meesho",  slug: "meesho" },
           { name: "Swiggy",  slug: "swiggy" },
-          { name: "Zomato",  slug: "zomato" },
+          { name: "Eternal", slug: "eternal" },
           { name: "Nykaa",   slug: "nykaa" },
         ]} />
       </section>

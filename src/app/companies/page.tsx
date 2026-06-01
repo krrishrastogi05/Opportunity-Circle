@@ -22,7 +22,7 @@ const companies: CompanyEntry[] = [
   /* ── Indian Unicorns ── */
   { slug: "flipkart", name: "Flipkart", tier: "unicorn", hiring: true, tags: "Indian E-commerce · Machine Coding Round · Campus-Heavy" },
   { slug: "swiggy", name: "Swiggy", tier: "unicorn", tags: "Food Delivery · Quick Commerce · Machine Coding · Bangalore" },
-  { slug: "zomato", name: "Zomato", tier: "unicorn", tags: "Food Tech · Blinkit · Engineering Intuition · DSA + DBMS · Gurugram" },
+  { slug: "eternal", name: "Eternal (formerly Zomato)", tier: "unicorn", tags: "Food Tech · Zomato · Blinkit · District · DSA + DBMS · Gurugram" },
   { slug: "phonepe", name: "PhonePe", tier: "unicorn", tags: "UPI & Payments · Fintech · High DSA Bar · LLD + Concurrency · Bangalore" },
   { slug: "meesho", name: "Meesho", tier: "unicorn", tags: "Social Commerce · AI Screening · Machine Coding · Bangalore" },
   /* ── High Growth ── */

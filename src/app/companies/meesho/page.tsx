@@ -222,7 +222,7 @@ export default function MeeshoPage() {
         <SimilarCompanies companies={[
           { name: "Flipkart",  slug: "flipkart" },
           { name: "Swiggy",   slug: "swiggy" },
-          { name: "Zomato",   slug: "zomato" },
+          { name: "Eternal", slug: "eternal" },
           { name: "PhonePe",  slug: "phonepe" },
           { name: "Razorpay", slug: "razorpay" },
         ]} />

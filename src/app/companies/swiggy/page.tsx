@@ -217,7 +217,7 @@ export default function SwiggyPage() {
       <section className="mb-10">
         <SectionLabel>Similar Companies to Explore</SectionLabel>
         <SimilarCompanies companies={[
-          { name: "Zomato",   slug: "zomato" },
+          { name: "Eternal", slug: "eternal" },
           { name: "Meesho",   slug: "meesho" },
           { name: "Flipkart", slug: "flipkart" },
           { name: "Uber",     slug: "uber" },

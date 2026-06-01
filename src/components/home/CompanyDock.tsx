@@ -16,7 +16,7 @@ const companies = [
   { name: "Uber", slug: "uber" },
   { name: "Flipkart", slug: "flipkart" },
   { name: "Swiggy", slug: "swiggy" },
-  { name: "Zomato", slug: "zomato" },
+  { name: "Eternal", slug: "eternal" },
   { name: "PhonePe", slug: "phonepe" },
   { name: "Razorpay", slug: "razorpay" },
   { name: "Atlassian", slug: "atlassian" },
