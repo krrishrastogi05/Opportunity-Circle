@@ -231,7 +231,7 @@ export async function GitHubBento() {
           className="col-span-1 rounded-2xl border border-border bg-blue-500/10 hover:bg-blue-500/20 transition-colors p-4 flex flex-col items-center justify-center gap-2 group"
         >
           <Twitter className="h-7 w-7 text-[#1DA1F2]" />
-          <span className="text-xs text-muted-foreground text-center">thoughts 🗿</span>
+          <span className="text-xs text-muted-foreground text-center">thoughts</span>
         </Link>
 
         {/* LinkedIn */}

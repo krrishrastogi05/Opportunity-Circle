@@ -62,24 +62,24 @@ export default function FreshworksPage() {
           Freshworks is the right company for engineers who want product depth, customer-facing impact, and a genuinely accessible interview process.
         </p>
         <div>
-          <DiffBox icon="🇮🇳" title="India's leading SaaS success story">
+          <DiffBox title="India's leading SaaS success story">
             Freshworks was founded in Chennai in 2010 and grew to a $1B+ ARR NASDAQ-listed company
             without moving its engineering headquarters. The Chennai and Bangalore teams build the core
             product. Engineers here work on real enterprise software used by 65,000+ businesses globally —
             Freshdesk (helpdesk), Freshsales (CRM), Freshservice (ITSM), and Freshchat.
           </DiffBox>
-          <DiffBox icon="📊" title="Accessible bar — quality over extreme algorithmic complexity">
+          <DiffBox title="Accessible bar — quality over extreme algorithmic complexity">
             Freshworks&apos; DSA difficulty is Easy to Medium — genuinely more accessible than Amazon, Uber,
             or PhonePe. They prioritise candidates who write clean code, understand product engineering
             fundamentals, and can reason about real customer-facing systems. Knowing their products
             and demonstrating product thinking is a meaningful edge.
           </DiffBox>
-          <DiffBox icon="🏗️" title="Take-home assignments for some roles">
+          <DiffBox title="Take-home assignments for some roles">
             For some SDE roles (especially backend or full-stack), Freshworks uses a take-home challenge
             (12–24 hours) to build a small feature or API. This tests practical engineering ability,
             code organisation, and attention to edge cases — not just whiteboard performance under pressure.
           </DiffBox>
-          <DiffBox icon="📚" title="OOP and DBMS are directly tested">
+          <DiffBox title="OOP and DBMS are directly tested">
             OOP principles (abstraction, inheritance, encapsulation, polymorphism), DBMS (SQL queries,
             normalisation, indexing), and sometimes basic networking/API concepts appear across OA and
             interview rounds. Freshworks builds enterprise software — they care about well-structured,

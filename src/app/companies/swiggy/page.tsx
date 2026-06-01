@@ -68,22 +68,22 @@ export default function SwiggyPage() {
           Swiggy&apos;s process stands out in the Indian product company landscape. These four factors shape what you need to prepare.
         </p>
         <div>
-          <DiffBox icon="🍕" title="Domain problems are real">
+          <DiffBox title="Domain problems are real">
             Swiggy&apos;s interview problems are often inspired by their actual product: Snake and Ladder game (as a model
             for state management), Splitwise, parking systems, real-time delivery assignment. Understanding Swiggy&apos;s
             product — food delivery + Instamart quick commerce — helps frame design answers.
           </DiffBox>
-          <DiffBox icon="🏗️" title="Machine Coding is a decisive round">
+          <DiffBox title="Machine Coding is a decisive round">
             Similar to Flipkart and Meesho, Swiggy has a dedicated Machine Coding round. Given 60–120 minutes to build
             a working, extensible application. Clean OOP code, modular architecture, and mandatory/optional feature
             handling are all evaluated.
           </DiffBox>
-          <DiffBox icon="⚡" title="Real-time system scale">
+          <DiffBox title="Real-time system scale">
             Swiggy handles millions of concurrent orders, real-time delivery tracking, and surge demand. System design
             questions (for SDE-1) focus on building scalable, available systems under real-time constraints. Think about
             Kafka, Redis, and database sharding.
           </DiffBox>
-          <DiffBox icon="🎯" title="Clean code standard">
+          <DiffBox title="Clean code standard">
             Swiggy explicitly evaluates code quality in machine coding rounds — not just &ldquo;does it run&rdquo; but
             &ldquo;is it maintainable, readable, and extensible?&rdquo; Variable naming, structure, and handling of
             optional vs mandatory requirements all matter.

@@ -68,16 +68,16 @@ export default function FlipkartPage() {
           Flipkart&apos;s process stands out in the Indian startup hiring landscape. These four factors shape what you need to prepare.
         </p>
         <div>
-          <DiffBox icon="🏗️" title="Machine Coding Round is non-negotiable">
+          <DiffBox title="Machine Coding Round is non-negotiable">
             90-min round to build a console application (e.g., Splitwise, Food Delivery, Parking Lot) from scratch.
             Evaluated on OOP design, code structure, SOLID principles, edge case handling. Many strong DSA candidates
             fail here due to poor LLD preparation.
           </DiffBox>
-          <DiffBox icon="🛒" title="India-first product thinking">
+          <DiffBox title="India-first product thinking">
             As India&apos;s largest e-commerce platform, Flipkart values candidates who can think about scale,
             reliability, and affordability at Indian internet scale. HM rounds often include product sense discussions.
           </DiffBox>
-          <DiffBox icon="📁" title="Hackathon access via Flipkart GRID">
+          <DiffBox title="Hackathon access via Flipkart GRID">
             Flipkart GRID is a flagship annual hackathon on Unstop that acts as an additional off-campus hiring funnel.
             Top performers get shortlisted for the intern/SDE interview process.{" "}
             <a href="https://unstop.com/hackathons/flipkart-grid" target="_blank" rel="noopener noreferrer"
@@ -85,7 +85,7 @@ export default function FlipkartPage() {
               Flipkart GRID on Unstop <ExternalLink className="w-3 h-3 inline" />
             </a>
           </DiffBox>
-          <DiffBox icon="⚡" title="PPO culture is strong">
+          <DiffBox title="PPO culture is strong">
             High-performing interns are regularly converted to full-time SDE-1 through the PPO route.
             The internship is a genuine evaluation period.
           </DiffBox>

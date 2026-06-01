@@ -67,22 +67,22 @@ export default function RipplingPage() {
           Rippling is not a typical Big Tech or product startup hire. Understanding these differences will help you prepare correctly.
         </p>
         <div>
-          <DiffBox icon="🏗️" title="LLD is a mandatory, standalone round">
+          <DiffBox title="LLD is a mandatory, standalone round">
             At Amazon, LLD is uncommon for interns. At Rippling, Low-Level Design is a dedicated round for
             both interns and SDEs. Expect to design real systems — Employee Access Manager, Rate Limiter,
             Notification Engine — using OOP, SOLID principles, and clean extensible class structures.
           </DiffBox>
-          <DiffBox icon="📁" title="Project depth over behavioral stories">
+          <DiffBox title="Project depth over behavioral stories">
             The Hiring Manager round is not LP-style storytelling. It&apos;s a deep technical interrogation of
             your past projects — why you chose the stack, what broke in production, what trade-offs you made,
             and what you&apos;d redesign. Vague projects fail here.
           </DiffBox>
-          <DiffBox icon="⚡" title="Product-context problems">
+          <DiffBox title="Product-context problems">
             Interview problems are often inspired by Rippling&apos;s own product domain — employee records,
             payroll flows, onboarding pipelines, permissions engines. Knowing what Rippling does gives you
             an edge in framing your design answers.
           </DiffBox>
-          <DiffBox icon="🎯" title="Strong PPO culture">
+          <DiffBox title="Strong PPO culture">
             Rippling&apos;s 3-month internship (typically May–August) has a strong Pre-Placement Offer (PPO)
             track. High-performing interns are frequently converted to full-time SDE-1 roles.
           </DiffBox>

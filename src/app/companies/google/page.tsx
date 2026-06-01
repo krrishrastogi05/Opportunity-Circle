@@ -66,21 +66,21 @@ export default function GooglePage() {
           Google's hiring process is uniquely focused and different from every other company on this list.
         </p>
         <div>
-          <DiffBox icon="📐" title="Pure DSA — no machine coding, minimal LLD">
+          <DiffBox title="Pure DSA — no machine coding, minimal LLD">
             Unlike Flipkart or Rippling, Google does not have a dedicated Machine Coding or LLD round for most intern and entry-level SWE roles.
             Every round is algorithmic. You write code on a shared Google Doc (no IDE, no compiler) and think through edge cases verbally.
             The focus is on your problem-solving methodology, not OOP design.
           </DiffBox>
-          <DiffBox icon="🧠" title="Googleyness — culture is a formal eval criterion">
+          <DiffBox title="Googleyness — culture is a formal eval criterion">
             Every Google interview round has a &ldquo;Googleyness&rdquo; component — interviewers formally rate you on collaboration, intellectual humility, intellectual curiosity, and how you respond to hints.
             Being technically correct but communicating poorly or being rigid will still get you rejected.
           </DiffBox>
-          <DiffBox icon="📝" title="No IDE — shared document coding">
+          <DiffBox title="No IDE — shared document coding">
             Google interviews are conducted on a shared document (Google Docs or a similar tool), not an IDE.
             You must write syntactically clean code mentally, without autocomplete or compiler support.
             Practicing on paper or a plain text editor is genuinely useful preparation.
           </DiffBox>
-          <DiffBox icon="🎓" title="STEP Internship for first/second-year students">
+          <DiffBox title="STEP Internship for first/second-year students">
             Google runs the{" "}
             <strong className="font-semibold text-foreground">STEP (Student Training in Engineering Program)</strong> for
             first and second-year students — a unique early-career pathway not offered by most Big Tech companies.

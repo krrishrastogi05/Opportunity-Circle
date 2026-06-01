@@ -68,19 +68,19 @@ export default function UberPage() {
           Uber Bangalore operates at global engineering scale. These factors set its hiring bar apart from typical Indian product companies.
         </p>
         <div>
-          <DiffBox icon="⚡" title="Near-perfect OA scores required">
+          <DiffBox title="Near-perfect OA scores required">
             Uber&apos;s OA (often on CodeSignal) is highly competitive. Even a single failing test case can eliminate
             a candidate. The bar is set close to perfect — clean, optimal, edge-case-aware code is expected from the start.
           </DiffBox>
-          <DiffBox icon="🗺️" title="Real-world system context">
+          <DiffBox title="Real-world system context">
             Interview problems are often inspired by Uber&apos;s product: ride matching, surge pricing, driver-rider allocation,
             notification systems. Understanding what Uber does as a platform helps frame design answers.
           </DiffBox>
-          <DiffBox icon="🏗️" title="LLD is a standard round">
+          <DiffBox title="LLD is a standard round">
             Machine Coding / Low-Level Design is part of the standard Uber loop. Expect to design components like
             Rate Limiter, Notification Engine, Cab Booking system, or Movie Rating System.
           </DiffBox>
-          <DiffBox icon="🌏" title="Bangalore is a global engineering hub">
+          <DiffBox title="Bangalore is a global engineering hub">
             Uber Bangalore works on core platform problems (maps, matching algorithms, safety systems). Engineers here
             work on the same codebase as the US team. The hiring bar reflects that.
           </DiffBox>

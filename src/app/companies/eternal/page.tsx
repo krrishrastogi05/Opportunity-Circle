@@ -69,24 +69,24 @@ export default function EternalPage() {
           Eternal is distinct for its emphasis on engineering intuition and product-aware design thinking — not just raw algorithmic ability.
         </p>
         <div>
-          <DiffBox icon="🧠" title="Engineering intuition over algorithmic complexity">
+          <DiffBox title="Engineering intuition over algorithmic complexity">
             Interviewers care more about how you think than whether you know a specific algorithm.
             They value candidates who clarify requirements, discuss trade-offs out loud, and arrive at
             good-enough solutions systematically — rather than silently producing perfect code.
             Pseudocode and logical walk-throughs are explicitly valued here.
           </DiffBox>
-          <DiffBox icon="🍕" title="Product-inspired system design">
+          <DiffBox title="Product-inspired system design">
             System design questions are drawn from the real products: food delivery tracking,
             restaurant rating systems, Blinkit inventory allocation, shuffle/recommendation algorithms.
             Understanding how Zomato and Blinkit actually work — order lifecycle, delivery partner assignment,
             restaurant discovery — gives you concrete language for design discussions.
           </DiffBox>
-          <DiffBox icon="🗄️" title="DBMS is a first-class topic">
+          <DiffBox title="DBMS is a first-class topic">
             Unlike Big Tech interviews where DBMS is a follow-up, here it&apos;s a primary topic.
             Database schema design (restaurants, orders, managers), SQL vs NoSQL trade-offs, ACID properties,
             indexing, and concurrency control are all directly asked — applied to food-tech scenarios.
           </DiffBox>
-          <DiffBox icon="⚡" title="Blinkit = 10-minute delivery engineering">
+          <DiffBox title="Blinkit = 10-minute delivery engineering">
             Blinkit engineers work on 10-minute grocery delivery infrastructure: sub-second inventory updates,
             real-time warehouse routing, and extreme reliability requirements.
             Understanding these constraints gives your system design answers concrete real-world grounding.

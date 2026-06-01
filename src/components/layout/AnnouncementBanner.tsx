@@ -146,7 +146,7 @@ export function AnnouncementBanner({
               {/* PPI */}
               {item.ppi && (
                 <span className="px-1.5 py-0.5 rounded-full text-[9px] font-black bg-primary text-primary-foreground">
-                  ⚡ PPI
+                  PPI
                 </span>
               )}
 

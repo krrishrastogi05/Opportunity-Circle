@@ -67,22 +67,22 @@ export default function AtlassianPage() {
           Atlassian prioritizes code craftsmanship and cultural alignment over pure algorithmic horsepower.
         </p>
         <div>
-          <DiffBox icon="✅" title="Production-ready code is the standard">
+          <DiffBox title="Production-ready code is the standard">
             Atlassian explicitly expects interviewees to write code as if it were going to production.
             Use meaningful variable names, handle edge cases, add comments where helpful, and structure
             your code modularly. Hacky code that just passes test cases is a red flag here.
           </DiffBox>
-          <DiffBox icon="🏛️" title="Managerial & Values (M&V) is a dedicated, non-skippable round">
+          <DiffBox title="Managerial & Values (M&V) is a dedicated, non-skippable round">
             Atlassian has a formal M&amp;V round that evaluates alignment with their five core values:
             Open company no BS, Build with heart and balance, Don&apos;t #@!% the customer, Play as a team, and Be the change you seek.
             You must come with concrete stories mapped to these values — generic behavioral answers fail this round.
           </DiffBox>
-          <DiffBox icon="🔍" title="OA on HackerRank — 3 problems in 90 min">
+          <DiffBox title="OA on HackerRank — 3 problems in 90 min">
             Atlassian&apos;s OA is well-known: 3 coding problems across 90 minutes on HackerRank, ranging
             Easy to Hard. Speed and accuracy both matter — the OA is eliminatory and shortlisting is competitive,
             especially for off-campus applicants.
           </DiffBox>
-          <DiffBox icon="🌐" title="TEAM Anywhere — distributed-first company">
+          <DiffBox title="TEAM Anywhere — distributed-first company">
             Atlassian operates as a distributed-first company with no required in-office days.
             The Bangalore engineering team contributes to the same global codebase as Sydney and New York.
             This culture means engineers are expected to communicate exceptionally well in writing and async formats.

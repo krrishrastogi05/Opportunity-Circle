@@ -93,13 +93,13 @@ export function SkillBar({
 
 /* ── "What makes this company different" item ───── */
 export function DiffBox({
-  icon, title, children,
+  title, children,
 }: {
-  icon: string; title: string; children: React.ReactNode;
+  icon?: string; title: string; children: React.ReactNode;
 }) {
   return (
     <div className="flex gap-3 py-4 border-b border-border last:border-0">
-      <span className="text-lg shrink-0 mt-0.5">{icon}</span>
+      <span className="w-1 self-stretch shrink-0 rounded-full bg-primary/50" aria-hidden />
       <div>
         <p className="text-sm font-semibold text-foreground mb-0.5">{title}</p>
         <p className="text-sm text-muted-foreground leading-relaxed">{children}</p>

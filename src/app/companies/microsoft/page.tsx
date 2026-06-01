@@ -66,22 +66,22 @@ export default function MicrosoftPage() {
           Microsoft is often described as the most well-rounded Big Tech hire — it tests DSA, CS fundamentals, LLD, and behavioral all in one loop.
         </p>
         <div>
-          <DiffBox icon="📚" title="CS fundamentals are formally tested">
+          <DiffBox title="CS fundamentals are formally tested">
             Microsoft is one of the few Big Tech companies where OS, DBMS, and OOP concepts are directly asked — not just as follow-ups.
             Expect questions on process scheduling, memory management, database indexing, transaction isolation, and OOP design principles across technical rounds.
           </DiffBox>
-          <DiffBox icon="🌱" title="Growth Mindset is a formal eval criterion">
+          <DiffBox title="Growth Mindset is a formal eval criterion">
             Every round includes a behavioral component called &ldquo;Growth Mindset&rdquo; evaluation — how you handle feedback,
             approach problems you don&apos;t know, and respond to making mistakes during the interview.
             Being collaborative and intellectually humble matters here in a way it doesn&apos;t at Amazon or Google.
           </DiffBox>
-          <DiffBox icon="🎓" title="Microsoft Engage & Mentorship programs">
+          <DiffBox title="Microsoft Engage & Mentorship programs">
             Microsoft runs{" "}
             <strong className="font-semibold text-foreground">Microsoft Engage</strong> (formerly Engage Mentorship) — a 4-week
             program for second-year students that often leads to intern/PPO opportunities.
             This is a unique early-career pathway separate from standard campus placement.
           </DiffBox>
-          <DiffBox icon="🌐" title="Hyderabad campus is one of the largest outside the US">
+          <DiffBox title="Hyderabad campus is one of the largest outside the US">
             Microsoft India Development Center (MSIDC) in Hyderabad is one of the largest Microsoft engineering campuses globally.
             Engineers here work on Azure, Microsoft 365, Visual Studio, and core platform products.
             The work is product-grade and impactful from day one.

@@ -62,25 +62,25 @@ export default function PhonePePage() {
           PhonePe sits at the intersection of Big Tech rigor and Indian fintech urgency — a demanding but fast-moving engineering culture.
         </p>
         <div>
-          <DiffBox icon="💸" title="Payment reliability is non-negotiable">
+          <DiffBox title="Payment reliability is non-negotiable">
             PhonePe processes billions of UPI transactions. A 99.99% uptime requirement shapes the entire
             engineering culture. Interviews often probe reliability thinking: idempotency in payment APIs,
             distributed transaction management, and graceful degradation under load. This is not just domain
             trivia — it&apos;s a lens through which all design questions are evaluated.
           </DiffBox>
-          <DiffBox icon="⚡" title="OA difficulty is among the highest in Indian startups">
+          <DiffBox title="OA difficulty is among the highest in Indian startups">
             PhonePe&apos;s OA (3–4 problems, 80–90 minutes) consistently features Medium–Hard problems
             comparable to Codeforces 1500–2000 ratings. Solving 2–3 questions fully is typically enough
             to advance, but the bar for full solutions is high. Graph algorithms (Dijkstra&apos;s, multi-source BFS),
             DP, and Trees dominate.
           </DiffBox>
-          <DiffBox icon="🏗️" title="LLD round tests concurrency & thread safety">
+          <DiffBox title="LLD round tests concurrency & thread safety">
             PhonePe&apos;s Machine Coding / LLD round goes beyond simple OOP design — problems often involve
             concurrent operations (e.g., two users buying the last item simultaneously, idempotent payment
             retries, notification deduplication). Handling thread safety and concurrent-safe data structures
             is expected at a level above most other companies on this list.
           </DiffBox>
-          <DiffBox icon="🎓" title="Flipkart heritage — similar process DNA">
+          <DiffBox title="Flipkart heritage — similar process DNA">
             PhonePe spun out of Flipkart and shares hiring process DNA — strong emphasis on clean code,
             LLD design, and project depth. If you&apos;ve prepared for Flipkart&apos;s Machine Coding round,
             you&apos;re well-positioned for PhonePe&apos;s LLD round as well.

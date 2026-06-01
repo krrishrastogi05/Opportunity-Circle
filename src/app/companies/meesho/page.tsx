@@ -68,23 +68,23 @@ export default function MeeshoPage() {
           Meesho&apos;s process stands out in the Indian startup hiring landscape. These four factors shape what you need to prepare.
         </p>
         <div>
-          <DiffBox icon="🤖" title="AI-based screening round first">
+          <DiffBox title="AI-based screening round first">
             Unlike any other company on this platform, Meesho starts with an AI-evaluated screening round (often via
             NextLevel platform). It includes MCQs on DSA, OS, CN, DBMS and AI-evaluated verbal/speaking questions.
             This round eliminates a large portion of applicants. Do not skip it — most candidates treat it as a
             formality and get eliminated here.
           </DiffBox>
-          <DiffBox icon="🏗️" title="Machine Coding is a critical round">
+          <DiffBox title="Machine Coding is a critical round">
             Meesho has a dedicated Machine Coding (LLD) round where you build a working system in 60–90 minutes.
             Common problems: Inventory Management System, Car Pooling System, Ride Sharing app. Evaluated on OOP
             design, modularity, SOLID principles, and clean code.
           </DiffBox>
-          <DiffBox icon="📦" title="Social commerce domain knowledge helps">
+          <DiffBox title="Social commerce domain knowledge helps">
             Meesho&apos;s product serves small Indian merchants (resellers) and Tier-2/3 consumers. Understanding
             reseller economics, catalog management, and why social commerce is uniquely valuable in India gives you
             a genuine edge in HM and project discussions.
           </DiffBox>
-          <DiffBox icon="⚡" title="Fast growth = early ownership">
+          <DiffBox title="Fast growth = early ownership">
             Meesho is in a rapid growth phase. Engineers take ownership of features from early in their career.
             The HM round evaluates initiative, bias-to-action, and ability to handle ambiguity — not just technical depth.
           </DiffBox>

@@ -65,23 +65,23 @@ export default function RazorpayPage() {
           Razorpay sits between Big Tech and Indian product startups — a balanced process with a fintech twist.
         </p>
         <div>
-          <DiffBox icon="💳" title="Fintech domain awareness is a real edge">
+          <DiffBox title="Fintech domain awareness is a real edge">
             Razorpay builds payment gateways, UPI infrastructure, payroll systems, and banking APIs.
             Interviewers genuinely value candidates who understand transaction consistency, idempotency,
             distributed locks, and why payment systems require special reliability guarantees.
             A basic understanding of how payment flows work will set you apart.
           </DiffBox>
-          <DiffBox icon="📁" title="Project discussion is as important as DSA">
+          <DiffBox title="Project discussion is as important as DSA">
             Every technical round at Razorpay includes a project discussion segment.
             Interviewers probe the architecture, trade-offs, and reasoning behind your resume projects.
             Listing a project you can&apos;t defend technically is a fast elimination path.
           </DiffBox>
-          <DiffBox icon="🗄️" title="DBMS and OS are directly tested">
+          <DiffBox title="DBMS and OS are directly tested">
             Like Microsoft, Razorpay directly asks CS fundamentals — not just as follow-ups.
             DBMS (indexing, transactions, ACID properties, SQL), OS (process scheduling, semaphores, deadlocks),
             and OOPs are standard OA and interview components.
           </DiffBox>
-          <DiffBox icon="⚡" title="Fast-paced, impact-driven culture">
+          <DiffBox title="Fast-paced, impact-driven culture">
             Razorpay moves fast. Engineers own features end-to-end from early in their career.
             The HM round evaluates not just culture-fit but whether you&apos;re comfortable with ambiguity,
             rapid iteration, and making technical calls independently.
