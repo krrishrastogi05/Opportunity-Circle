@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { Calendar, Trophy, Sparkles } from "lucide-react";
 import { BookmarkButton } from "@/components/ui/BookmarkButton";
+import { CompanyLogo } from "@/components/ui/CompanyLogo";
 import { routeFromCategory } from "@/lib/opportunity-constants";
 import {
-  orgColor,
-  orgMark,
   fmtDate,
   getRegStatus,
   getBadges,
@@ -22,6 +21,7 @@ export interface OpportunityCardData {
   category: string;
   description: string;
   organizer?: string;
+  companySlug?: string;
   logoUrl?: string;
   isPPIOffering: boolean;
   isDiversity?: boolean;
@@ -39,8 +39,6 @@ export interface OpportunityCardData {
 }
 
 export function OpportunityCard({ opp }: { opp: OpportunityCardData }) {
-  const color = orgColor(opp.organizer);
-  const mark = orgMark(opp.organizer);
   const status = getRegStatus(opp);
   const badges = getBadges(opp);
   const showCountdown = showRegistrationCountdown(opp);
@@ -65,22 +63,12 @@ export function OpportunityCard({ opp }: { opp: OpportunityCardData }) {
       )}
 
       <div className="relative z-10 flex items-start gap-3 pointer-events-none">
-        <div
-          className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-          style={{ backgroundColor: color }}
-        >
-          <span
-            style={{
-              color: "#fff",
-              fontSize: mark.length > 2 ? 10 : 13,
-              fontWeight: 800,
-              fontFamily: "sans-serif",
-              letterSpacing: "-0.5px",
-            }}
-          >
-            {mark}
-          </span>
-        </div>
+        <CompanyLogo
+          name={opp.organizer}
+          slug={opp.companySlug}
+          logoUrl={opp.logoUrl}
+          size={44}
+        />
 
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-1.5 mb-1">

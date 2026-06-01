@@ -2,23 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { CompanyLogo } from "@/components/ui/CompanyLogo";
 
 /**
  * Only companies that actually have a profile page under /companies/<slug>.
- * Uniform style: solid brand-coloured tile + white initials. No mixed
- * icon/image/blank states — keeps the dock clean and consistent.
+ * Real logos are resolved (local → Clearbit → logo.dev) with a coloured
+ * initials tile as the final fallback, so the dock stays consistent.
  */
 const companies = [
-  { name: "Amazon", slug: "amazon", mark: "a", bg: "#FF9900" },
-  { name: "Google", slug: "google", mark: "G", bg: "#4285F4" },
-  { name: "Microsoft", slug: "microsoft", mark: "MS", bg: "#0078D4" },
-  { name: "Uber", slug: "uber", mark: "U", bg: "#10131A" },
-  { name: "Flipkart", slug: "flipkart", mark: "F", bg: "#2874F0" },
-  { name: "Swiggy", slug: "swiggy", mark: "S", bg: "#FC8019" },
-  { name: "Zomato", slug: "zomato", mark: "Z", bg: "#E23744" },
-  { name: "PhonePe", slug: "phonepe", mark: "Pe", bg: "#5F259F" },
-  { name: "Razorpay", slug: "razorpay", mark: "R", bg: "#0C2451" },
-  { name: "Atlassian", slug: "atlassian", mark: "A", bg: "#0052CC" },
+  { name: "Amazon", slug: "amazon" },
+  { name: "Google", slug: "google" },
+  { name: "Microsoft", slug: "microsoft" },
+  { name: "Uber", slug: "uber" },
+  { name: "Flipkart", slug: "flipkart" },
+  { name: "Swiggy", slug: "swiggy" },
+  { name: "Zomato", slug: "zomato" },
+  { name: "PhonePe", slug: "phonepe" },
+  { name: "Razorpay", slug: "razorpay" },
+  { name: "Atlassian", slug: "atlassian" },
 ];
 
 const TOTAL_COMPANIES = 13;
@@ -48,21 +49,8 @@ export function CompanyDock() {
               >
                 {co.name}
               </span>
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center transition-transform duration-150 hover:scale-110"
-                style={{ backgroundColor: co.bg }}
-              >
-                <span
-                  style={{
-                    color: "#fff",
-                    fontSize: co.mark.length > 1 ? 12 : 16,
-                    fontWeight: 800,
-                    fontFamily: "sans-serif",
-                    letterSpacing: "-0.5px",
-                  }}
-                >
-                  {co.mark}
-                </span>
+              <div className="transition-transform duration-150 hover:scale-110">
+                <CompanyLogo name={co.name} slug={co.slug} size={40} />
               </div>
             </Link>
           );

@@ -12,6 +12,7 @@ const nextConfig = {
       { protocol: "https", hostname: "ghchart.rshah.org" },
       { protocol: "https", hostname: "**.vercel.app" },
       { protocol: "https", hostname: "logo.clearbit.com" },
+      { protocol: "https", hostname: "img.logo.dev" },
       { protocol: "https", hostname: "cdn.brandfetch.io" },
     ],
   },

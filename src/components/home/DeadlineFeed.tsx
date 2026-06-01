@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ExternalLink, ChevronRight, ArrowUpRight, Zap } from "lucide-react";
 import { BookmarkButton } from "@/components/ui/BookmarkButton";
+import { CompanyLogo } from "@/components/ui/CompanyLogo";
 import { routeFromCategory } from "@/lib/opportunity-constants";
 import { getRegStatus } from "@/lib/opportunity-status";
 
@@ -13,6 +14,8 @@ type DeadlineEntry = {
   slug: string;
   category: string;
   organizer?: string;
+  companySlug?: string;
+  logoUrl?: string;
   applicationUrl?: string;
   opensAt?: string;
   closesAt?: string;
@@ -61,32 +64,6 @@ const ORDER: Record<Status, number> = {
   ended: 4,
 };
 
-const orgColors: Record<string, string> = {
-  Amazon: "#FF9900",
-  "Goldman Sachs": "#1A6CF4",
-  "Linux Foundation": "#003399",
-  Google: "#4285F4",
-  Flipkart: "#2874F0",
-  "GirlScript Foundation": "#F97316",
-  "Major League Hacking": "#E31337",
-  "Software Freedom Conservancy": "#6E40C9",
-  Microsoft: "#00A4EF",
-  Uber: "#000000",
-};
-
-const orgMarks: Record<string, string> = {
-  Amazon: "a",
-  "Goldman Sachs": "GS",
-  "Linux Foundation": "LF",
-  Google: "G",
-  Flipkart: "F",
-  "GirlScript Foundation": "GS",
-  "Major League Hacking": "MLH",
-  "Software Freedom Conservancy": "O",
-  Microsoft: "MS",
-  Uber: "U",
-};
-
 type Filter = "all" | "hackathon" | "open-source" | "program";
 
 function CountdownBlock({ label, value }: { label: string; value: number }) {
@@ -116,8 +93,10 @@ function detailLink(entry: DeadlineEntry): string {
 
 export function DeadlineFeed({
   opportunities,
+  excludeId,
 }: {
   opportunities: DeadlineEntry[];
+  excludeId?: string;
 }) {
   const [, tick] = useState(0);
   const [filter, setFilter] = useState<Filter>("all");
@@ -128,6 +107,7 @@ export function DeadlineFeed({
   }, []);
 
   const entries = opportunities
+    .filter((d) => d._id !== excludeId)
     .map((d) => ({ ...d, status: getStatus(d) }))
     .filter((d) => {
       if (filter === "hackathon")
@@ -200,32 +180,18 @@ export function DeadlineFeed({
             <div className="divide-y divide-red-500/10">
               {urgentEntries.map((entry) => {
                 const { d, h, m } = getCountdownParts(entry.closesAt!);
-                const color = orgColors[entry.organizer ?? ""] ?? "#666";
-                const mark =
-                  orgMarks[entry.organizer ?? ""] ??
-                  entry.organizer?.[0] ??
-                  "?";
                 return (
                   <div
                     key={entry._id}
                     className="px-4 py-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4"
                   >
                     <div className="flex items-start sm:items-center gap-3 flex-1 min-w-0">
-                      <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ring-1 ring-red-500/20"
-                        style={{ backgroundColor: color }}
-                      >
-                        <span
-                          style={{
-                            color: "#fff",
-                            fontSize: mark.length > 2 ? 9 : 13,
-                            fontWeight: 800,
-                            fontFamily: "sans-serif",
-                          }}
-                        >
-                          {mark}
-                        </span>
-                      </div>
+                      <CompanyLogo
+                        name={entry.organizer}
+                        slug={entry.companySlug}
+                        logoUrl={entry.logoUrl}
+                        size={40}
+                      />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-bold text-foreground">
                           {entry.title}
@@ -322,11 +288,6 @@ export function DeadlineFeed({
               const isRolling = entry.status === "rolling";
               const isUpcoming = entry.status === "upcoming";
               const isEnded = entry.status === "ended";
-              const color = orgColors[entry.organizer ?? ""] ?? "#666";
-              const mark =
-                orgMarks[entry.organizer ?? ""] ??
-                entry.organizer?.[0] ??
-                "?";
 
               return (
                 <div
@@ -349,20 +310,14 @@ export function DeadlineFeed({
                     }`}
                   />
 
-                  <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ml-1"
-                    style={{ backgroundColor: color }}
-                  >
-                    <span
-                      style={{
-                        color: "#fff",
-                        fontSize: mark.length > 2 ? 8 : 11,
-                        fontWeight: 800,
-                        fontFamily: "sans-serif",
-                      }}
-                    >
-                      {mark}
-                    </span>
+                  <div className="ml-1">
+                    <CompanyLogo
+                      name={entry.organizer}
+                      slug={entry.companySlug}
+                      logoUrl={entry.logoUrl}
+                      size={32}
+                      rounded="rounded-lg"
+                    />
                   </div>
 
                   <div className="flex-1 min-w-0">

@@ -15,10 +15,9 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import { BookmarkButton } from "@/components/ui/BookmarkButton";
+import { CompanyLogo } from "@/components/ui/CompanyLogo";
 import { categoryLabel, routeFromCategory } from "@/lib/opportunity-constants";
 import {
-  orgColor,
-  orgMark,
   fmtDate,
   getRegStatus,
   getBadges,
@@ -82,8 +81,6 @@ export function OpportunityDetail({ opp }: { opp: OpportunityDetailData }) {
     opp.steps.length ? "steps" : opp.timeline.length ? "timeline" : "tips"
   );
 
-  const color = orgColor(opp.organizer);
-  const mark = orgMark(opp.organizer);
   const status = getRegStatus(opp);
   const badges = getBadges(opp);
   const showCountdown = showRegistrationCountdown(opp);
@@ -100,20 +97,13 @@ export function OpportunityDetail({ opp }: { opp: OpportunityDetailData }) {
 
       {/* Header */}
       <div className="flex items-start gap-4 mb-6">
-        <div
-          className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0"
-          style={{ backgroundColor: color }}
-        >
-          <span
-            style={{
-              color: "#fff",
-              fontSize: mark.length > 2 ? 13 : 18,
-              fontWeight: 800,
-            }}
-          >
-            {mark}
-          </span>
-        </div>
+        <CompanyLogo
+          name={opp.organizer}
+          slug={opp.companySlug}
+          logoUrl={opp.logoUrl}
+          size={56}
+          rounded="rounded-2xl"
+        />
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
             <h1 className="text-2xl font-bold tracking-tight">{opp.title}</h1>

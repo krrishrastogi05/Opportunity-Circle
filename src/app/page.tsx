@@ -21,6 +21,8 @@ interface SerializedOpp {
   category: string;
   description: string;
   organizer?: string;
+  companySlug?: string;
+  logoUrl?: string;
   applicationUrl?: string;
   closesAt?: string;
   opensAt?: string;
@@ -28,6 +30,7 @@ interface SerializedOpp {
   statusOverride?: string;
   recurringMonth?: string;
   isPPIOffering: boolean;
+  featured?: boolean;
 }
 
 export default async function Home() {
@@ -38,31 +41,37 @@ export default async function Home() {
 
   const serialized: SerializedOpp[] = JSON.parse(JSON.stringify(opportunities));
 
-  // Soonest opportunity still open for registration → the live countdown.
-  const urgent = serialized
+  const openByDeadline = serialized
     .filter((o) => o.closesAt && getRegStatus(o) === "registration_open")
     .sort(
       (a, b) =>
         new Date(a.closesAt!).getTime() - new Date(b.closesAt!).getTime()
-    )[0];
+    );
+
+  // Spotlight priority:
+  //   1. a featured opp that's still open (→ featured + live countdown combo)
+  //   2. any featured opp (→ animated showcase, no timer)
+  //   3. the soonest closing open opp (→ plain live countdown)
+  const featuredOpen = openByDeadline.find((o) => o.featured);
+  const featuredAny = serialized.find((o) => o.featured);
+  const urgent = openByDeadline[0];
+  const spotlight = featuredOpen ?? featuredAny ?? urgent;
+
+  const spotlightCounting =
+    !!spotlight?.closesAt && getRegStatus(spotlight) === "registration_open";
+  const spotlightFeatured = !!spotlight?.featured;
 
   return (
     <>
       <HeroSection />
-      {urgent && (
+      {spotlight && (
         <UrgentCountdown
-          opp={{
-            _id: urgent._id,
-            title: urgent.title,
-            slug: urgent.slug,
-            category: urgent.category,
-            organizer: urgent.organizer,
-            closesAt: urgent.closesAt!,
-            isPPIOffering: urgent.isPPIOffering,
-          }}
+          opp={spotlight}
+          showCountdown={spotlightCounting}
+          featured={spotlightFeatured}
         />
       )}
-      <DeadlineFeed opportunities={serialized} />
+      <DeadlineFeed opportunities={serialized} excludeId={spotlight?._id} />
       <WhatSection />
     </>
   );

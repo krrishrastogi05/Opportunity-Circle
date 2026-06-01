@@ -35,27 +35,26 @@ export default async function OpportunitiesHubPage() {
     byCategory.get(cat)!.push(opp);
   }
 
-  // Soonest registration-open opportunity for the big countdown
-  const urgent = serialized
+  const openByDeadline = serialized
     .filter((o) => o.closesAt && getRegStatus(o) === "registration_open")
     .sort(
       (a, b) =>
         new Date(a.closesAt!).getTime() - new Date(b.closesAt!).getTime()
-    )[0];
+    );
+  const spotlight =
+    openByDeadline.find((o) => o.featured) ??
+    serialized.find((o) => o.featured) ??
+    openByDeadline[0];
+  const spotlightCounting =
+    !!spotlight?.closesAt && getRegStatus(spotlight) === "registration_open";
 
   return (
     <div className="pb-24">
-      {urgent && (
+      {spotlight && (
         <UrgentCountdown
-          opp={{
-            _id: urgent._id,
-            title: urgent.title,
-            slug: urgent.slug,
-            category: urgent.category,
-            organizer: urgent.organizer,
-            closesAt: urgent.closesAt!,
-            isPPIOffering: urgent.isPPIOffering,
-          }}
+          opp={spotlight}
+          showCountdown={spotlightCounting}
+          featured={!!spotlight.featured}
         />
       )}
 
