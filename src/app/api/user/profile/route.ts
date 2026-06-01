@@ -17,7 +17,7 @@ export async function GET() {
   try {
     await connectDB();
     const user = await User.findOne({ email: session.user.email })
-      .select("name email image branch graduationYear profileCompleted alertsEnabled digestEnabled")
+      .select("name email image branch graduationYear gender profileCompleted alertsEnabled digestEnabled")
       .lean();
 
     if (!user) {
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
 
   try {
     await connectDB();
-    const { name, branch, graduationYear } = await req.json();
+    const { name, branch, graduationYear, gender } = await req.json();
 
     if (!name?.trim()) {
       return NextResponse.json(
@@ -76,6 +76,7 @@ export async function POST(req: NextRequest) {
           name: name.trim(),
           ...(branch && { branch }),
           ...(graduationYear && { graduationYear }),
+          ...(gender !== undefined && { gender }),
           profileCompleted: true,
         },
       },
@@ -90,6 +91,7 @@ export async function POST(req: NextRequest) {
       name: user.name,
       branch: user.branch,
       graduationYear: user.graduationYear,
+      gender: user.gender,
       profileCompleted: user.profileCompleted,
     });
   } catch {

@@ -4,7 +4,7 @@ import { CompanyDock } from "@/components/home/CompanyDock";
 
 export function HeroSection() {
   return (
-    <section className="noise relative isolate min-h-[92vh] flex flex-col items-center justify-center overflow-hidden px-5">
+    <section className="noise relative isolate min-h-[88vh] sm:min-h-[92vh] flex flex-col items-center justify-center overflow-hidden px-5 py-16">
 
       {/* Mesh gradient background */}
       <div className="pointer-events-none absolute inset-0 -z-10">

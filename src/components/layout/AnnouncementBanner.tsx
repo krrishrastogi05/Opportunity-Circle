@@ -4,22 +4,17 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { X, Zap } from "lucide-react";
 import { routeFromCategory } from "@/lib/opportunity-constants";
+import { getRegStatus } from "@/lib/opportunity-status";
 
 type TickerItem = {
   id: string;
   label: string;
-  closesAt: string | null;
+  note: string; // countdown / status text
+  urgent: boolean;
   ppi: boolean;
   href: string;
+  sortKey: number;
 };
-
-function countdown(dateStr: string | null): string {
-  if (!dateStr) return "Rolling";
-  const d = Math.ceil((new Date(dateStr).getTime() - Date.now()) / 86_400_000);
-  if (d <= 0)  return "Closed";
-  if (d === 1) return "1 day left";
-  return `${d} days left`;
-}
 
 /* ── Component ─────────────────────────────────────────────── */
 interface ApiOpportunity {
@@ -27,7 +22,12 @@ interface ApiOpportunity {
   title: string;
   slug: string;
   category: string;
+  opensAt?: string;
   closesAt?: string;
+  endsAt?: string;
+  eventDate?: string;
+  statusOverride?: string;
+  recurringMonth?: string;
   isPPIOffering: boolean;
 }
 
@@ -51,20 +51,38 @@ export function AnnouncementBanner({ onDismiss }: { onDismiss?: () => void }) {
       .then((data: ApiOpportunity[]) => {
         if (!Array.isArray(data)) return;
         const items: TickerItem[] = data
-          // open or rolling only — drop ended
-          .filter((o) => !o.closesAt || new Date(o.closesAt).getTime() > Date.now())
-          .sort((a, b) => {
-            const ta = a.closesAt ? new Date(a.closesAt).getTime() : Infinity;
-            const tb = b.closesAt ? new Date(b.closesAt).getTime() : Infinity;
-            return ta - tb;
+          .map((o) => {
+            const status = getRegStatus(o);
+            if (status === "ended") return null;
+            let note = "";
+            let urgent = false;
+            let sortKey = Infinity;
+            if (status === "registration_open" && o.closesAt) {
+              const d = Math.ceil(
+                (new Date(o.closesAt).getTime() - Date.now()) / 86_400_000
+              );
+              note = d <= 1 ? "Closing today" : `${d} days left`;
+              urgent = d <= 7;
+              sortKey = new Date(o.closesAt).getTime();
+            } else if (status === "ongoing") {
+              note = "Ongoing";
+              sortKey = Date.now() + 1e10;
+            } else if (status === "upcoming") {
+              note = o.recurringMonth ? `Opens ${o.recurringMonth}` : "Opening soon";
+              sortKey = Date.now() + 2e10;
+            }
+            return {
+              id: o._id,
+              label: o.title,
+              note,
+              urgent,
+              ppi: o.isPPIOffering,
+              href: `/opportunities/${routeFromCategory(o.category)}/${o.slug}`,
+              sortKey,
+            } as TickerItem;
           })
-          .map((o) => ({
-            id: o._id,
-            label: o.title,
-            closesAt: o.closesAt ?? null,
-            ppi: o.isPPIOffering,
-            href: `/opportunities/${routeFromCategory(o.category)}/${o.slug}`,
-          }));
+          .filter((x): x is TickerItem => x !== null)
+          .sort((a, b) => a.sortKey - b.sortKey);
         setActive(items);
       })
       .catch(() => {});
@@ -103,42 +121,37 @@ export function AnnouncementBanner({ onDismiss }: { onDismiss?: () => void }) {
             width: "max-content",
           }}
         >
-          {items.map((item, i) => {
-            const cd = countdown(item.closesAt);
-            const isUrgent = item.closesAt
-              ? Math.ceil((new Date(item.closesAt).getTime() - Date.now()) / 86_400_000) <= 7
-              : false;
+          {items.map((item, i) => (
+            <Link
+              key={`${item.id}-${i}`}
+              href={item.href}
+              className="inline-flex items-center gap-2 px-5 text-xs hover:opacity-70 transition-opacity"
+            >
+              {/* Separator dot */}
+              <span className="text-background/30 text-base leading-none">·</span>
 
-            return (
-              <Link
-                key={`${item.id}-${i}`}
-                href={item.href}
-                className="inline-flex items-center gap-2 px-5 text-xs hover:opacity-70 transition-opacity"
-              >
-                {/* Separator dot */}
-                <span className="text-background/30 text-base leading-none">·</span>
+              {/* Name */}
+              <span className="font-semibold text-background">{item.label}</span>
 
-                {/* Name */}
-                <span className="font-semibold text-background">{item.label}</span>
+              {/* PPI */}
+              {item.ppi && (
+                <span className="px-1.5 py-0.5 rounded-full text-[9px] font-black bg-primary text-primary-foreground">
+                  ⚡ PPI
+                </span>
+              )}
 
-                {/* PPI */}
-                {item.ppi && (
-                  <span className="px-1.5 py-0.5 rounded-full text-[9px] font-black bg-primary text-primary-foreground">
-                    ⚡ PPI
-                  </span>
-                )}
-
-                {/* Countdown */}
+              {/* Status / countdown */}
+              {item.note && (
                 <span
                   className={`font-bold text-[11px] ${
-                    isUrgent ? "text-red-400" : "text-background/60"
+                    item.urgent ? "text-red-400" : "text-background/60"
                   }`}
                 >
-                  — {cd}
+                  — {item.note}
                 </span>
-              </Link>
-            );
-          })}
+              )}
+            </Link>
+          ))}
         </div>
       </div>
 

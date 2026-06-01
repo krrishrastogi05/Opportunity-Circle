@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 import path from "path";
 import mongoose from "mongoose";
 
-// Load .env.local first, then .env as fallback
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
@@ -18,16 +17,23 @@ const OpportunitySchema = new mongoose.Schema(
     slug: { type: String, unique: true },
     category: String,
     description: String,
+    longDescription: String,
     organizer: String,
     companySlug: String,
+    companyUrl: String,
     eligibility: String,
     applicationUrl: String,
     logoUrl: String,
     opensAt: Date,
     closesAt: Date,
+    endsAt: Date,
     eventDate: Date,
+    recurringMonth: String,
+    statusOverride: { type: String, default: "" },
     isPPIOffering: { type: Boolean, default: false },
     ppiDetails: String,
+    isDiversity: { type: Boolean, default: false },
+    isFemaleOnly: { type: Boolean, default: false },
     prizes: String,
     stipend: String,
     rounds: [{ name: String, description: String, timeline: String }],
@@ -45,450 +51,254 @@ const Opportunity =
   mongoose.models.Opportunity ||
   mongoose.model("Opportunity", OpportunitySchema);
 
-const hackathons = [
+const opportunities = [
+  // ── 1. HackOn with Amazon 6.0 ──────────────────────────────
   {
-    title: "HackOn with Amazon",
-    slug: "amazon-hackon",
+    title: "HackOn with Amazon 6.0",
+    slug: "amazon-hackon-6",
     category: "hiring_challenge",
-    description:
-      "Amazon's flagship engineering hackathon. Solve real-world problems across AWS, Amazon Pay, Alexa, and Shopping — and fast-track your way to a PPI.",
     organizer: "Amazon",
     companySlug: "amazon",
+    companyUrl: "https://unstop.com/hackathons/crp-hackon-with-amazon-60-amazon-1682652",
+    applicationUrl: "https://unstop.com/hackathons/crp-hackon-with-amazon-60-amazon-1682652",
+    description:
+      "Amazon India's flagship engineering hackathon — coding, GenAI, and scalable systems with a ₹2.25L prize pool and PPI opportunities for top performers.",
+    longDescription:
+      "HackOn with Amazon 6.0 is Amazon India's flagship annual hackathon for engineering students, simulating real-world product development. Teams identify customer problems, build working solutions, and present scalable ideas to Amazon leaders. The 2026 edition focuses heavily on Generative AI (GenAI), software development, cloud, and scalable architecture.\n\nBeyond cash prizes, the biggest draw is mentorship from Amazon engineers and Pre-Placement Interview (PPI) opportunities for internship and SDE roles. Registrations closed on 28 May 2026; the competition runs through the Grand Finale on 7 July 2026.",
     eligibility:
-      "B.Tech / M.Tech / MCA students. Teams of 2–3. Minimum CGPA 6.5. Only eligible colleges as recognised by Amazon.",
-    applicationUrl: "https://unstop.com/hackathons/amazon-hackon",
+      "B.Tech / M.Tech / MCA / Integrated Dual Degree students graduating in 2027 or 2028. Minimum CGPA 6.5. Teams of 2-3 (cross-college and cross-specialization allowed). Open to CS, IT, Electrical/Electronics, Data Science, AI/ML, Cyber Security, ECE, and E&I branches.",
+    closesAt: new Date("2026-05-28T23:59:00+05:30"),
+    endsAt: new Date("2026-07-07T23:59:00+05:30"),
+    eventDate: new Date("2026-07-07T10:00:00+05:30"),
     isPPIOffering: true,
     ppiDetails:
-      "Top finalists receive a PPI for Amazon internship/FTE roles, bypassing the OA screening round.",
-    prizes: "Up to ₹2.25 Lakhs + swag + Amazon goodies",
-    opensAt: new Date("2026-06-01"),
-    closesAt: new Date("2026-07-15"),
-    tags: ["AWS", "Alexa", "Amazon Pay", "Shopping"],
-    rounds: [
-      {
-        name: "Round 1 — Coding Challenge",
-        description:
-          "Every team member must individually complete a proctored test. Includes DSA coding problems (Medium–Hard) + MCQs covering CS fundamentals and GenAI-based questions.",
-        timeline: "Individual · Proctored",
-      },
-      {
-        name: "Round 2 — Idea & Prototype Submission",
-        description:
-          "Shortlisted teams submit a project idea targeting a real Amazon business problem. Then build and submit a working prototype with demo video, documentation, and a GitHub repository.",
-        timeline: "Team · Async",
-      },
-      {
-        name: "Round 3 — Mentorship & Refinement",
-        description:
-          "Top prototype teams are paired with Amazon tech leaders for mentorship sessions. Teams refine their solution based on feedback before the finale.",
-        timeline: "Team · Guided",
-      },
-      {
-        name: "Grand Finale",
-        description:
-          "Finalists present to a jury of Amazon leaders. Judged on problem impact, technical depth, scalability, and presentation. Winners receive cash prizes and PPI opportunities.",
-        timeline: "Team · In-person / Virtual",
-      },
-    ],
+      "Top-performing participants receive Pre-Placement Interview (PPI) opportunities for internship or SDE roles at Amazon, plus mentorship from Amazon leaders and an 'A Day at Amazon' experience for finalists.",
+    prizes: "₹2.25 Lakh total pool (₹1L / ₹75K / ₹50K)",
     featured: true,
     published: true,
+    tags: ["GenAI", "AWS", "Scalable Systems", "AI/ML", "Unstop"],
+    rounds: [
+      {
+        name: "Round 1 — Coding Challenge (Proctored)",
+        timeline: "30 May 2026 · 100 minutes · Individual",
+        description:
+          "Online proctored assessment every team member must clear individually: DSA coding problems, logical reasoning, and GenAI/LLM-based MCQs. Focus on LeetCode medium DSA (Arrays, Trees, Graphs, DP) and GenAI fundamentals.",
+      },
+      {
+        name: "Round 2 — Virtual 48-Hour Hackathon",
+        timeline: "12–15 June 2026 · Team",
+        description:
+          "Kickoff webinar (12 June) shares the problem statements. Teams build a working prototype solving a real customer problem and submit a project document, demo video, and prototype. Documentation and presentation quality matter.",
+      },
+      {
+        name: "Round 3 — Mentorship Round",
+        timeline: "29 June – 3 July 2026 · Team",
+        description:
+          "Selected teams receive mentorship from Amazon engineers and tech leaders to improve system architecture, product thinking, scalability, and presentation clarity.",
+      },
+      {
+        name: "Round 4 — Grand Finale (In-Person)",
+        timeline: "7 July 2026 · In-person",
+        description:
+          "Top teams present to a jury from AWS, Amazon Devices, and Amazon Pay. Judged on technical quality, innovation, customer impact, scalability, and presentation. Winners receive cash prizes and PPI opportunities.",
+      },
+    ],
+    tips: [
+      "Every team member must individually clear the Round 1 Coding Challenge for the team to advance.",
+      "Brush up GenAI basics and prompt engineering alongside DSA.",
+      "Invest in documentation and demo quality — many teams underestimate it.",
+    ],
   },
+
+  // ── 2. Goldman Sachs India Hackathon 2026 ──────────────────
   {
-    title: "Goldman Sachs India Hackathon",
-    slug: "gs-hackathon",
+    title: "Goldman Sachs India Hackathon 2026",
+    slug: "goldman-sachs-india-hackathon-2026",
     category: "hiring_challenge",
-    description:
-      "12-hour individual coding and quantitative challenge on HackerRank. One of the most direct fast-tracks to a Goldman Sachs internship PPI in India.",
     organizer: "Goldman Sachs",
     companySlug: "goldman-sachs",
+    companyUrl:
+      "https://www.goldmansachs.com/careers/students/programs-and-internships/india/hackathon",
+    applicationUrl:
+      "https://www.goldmansachs.com/careers/students/programs-and-internships/india/hackathon",
+    description:
+      "A 12-hour CS & Quant coding challenge across 2 days. Top performers are fast-tracked to a Pre-Placement Interview with Goldman Sachs.",
+    longDescription:
+      "Goldman Sachs India Hackathon (GSIH) is a 12-hour coding challenge spread across two days, with separate Computer Science (CS) and Quantitative (Quant) tracks — compete in either or both. Solve real-world financial and technological problems, showcase analytical and programming skills, and stand a chance to win prizes and a Pre-Placement Interview (PPI) with Goldman Sachs.\n\nShortlisted candidates attend a mentorship session in June and the finale event at the Goldman Sachs campus. Applications were open 22 April – 10 May 2026.",
     eligibility:
-      "B.E. / B.Tech students (pre-final or final year) from eligible colleges. Individual participation only.",
-    applicationUrl: "https://www.goldmansachs.com/careers",
+      "Students from engineering courses graduating in 2027 & 2028 from eligible colleges. Individual participation only — each participant needs a HackerRank profile.",
+    closesAt: new Date("2026-05-10T23:59:00+05:30"),
+    endsAt: new Date("2026-06-30T23:59:00+05:30"),
     isPPIOffering: true,
     ppiDetails:
-      "Outstanding performers are directly offered a PPI for GS engineering or quant internship roles.",
-    prizes: "PPI + mentorship + GS campus event invite",
-    opensAt: new Date("2026-06-01"),
-    closesAt: new Date("2026-07-10"),
-    tags: ["CS Track", "Quant Track", "Finance + Tech", "Individual"],
+      "Outstanding performers are fast-tracked to a Pre-Placement Interview (PPI) with Goldman Sachs for engineering or quant roles, plus mentorship and career guidance from GS experts.",
+    prizes:
+      "1st: MacBook Air M5 · 2nd: iPhone 17 · 3rd: iPad Air + PPI for top performers",
+    published: true,
+    tags: ["CS Track", "Quant Track", "Finance + Tech", "HackerRank", "Individual"],
     rounds: [
       {
-        name: "Round 1 — 12-Hour Online Challenge",
+        name: "12-Hour Online Challenge",
+        timeline: "23 May (Quant) · 24 May (CS) 2026 · 9 AM–9 PM IST",
         description:
-          "12-hour competitive challenge hosted on HackerRank. Two tracks: CS Track (DSA, algorithms, optimization) and Quant Track (probability, statistics, calculus, linear algebra).",
-        timeline: "Individual · HackerRank",
+          "Online individual challenge on HackerRank with real-world/simulated datasets. CS track covers DSA, algorithms, optimization; Quant track covers probability, statistics, calculus, and linear algebra. Attempt one or both.",
       },
       {
-        name: "Round 2 — Mentorship & Shortlisting",
+        name: "Mentorship Session",
+        timeline: "June 2026 · By invite",
         description:
-          "Top performers from the challenge are invited to a mentorship session with Goldman Sachs engineers and quant professionals.",
-        timeline: "Individual · By invite",
+          "Shortlisted candidates attend a mentorship session with Goldman Sachs professionals — also the evaluation stage for PPI candidates.",
       },
       {
-        name: "Round 3 — Finale Event",
+        name: "Finale Event",
+        timeline: "June 2026 · GS Campus",
         description:
-          "Finalists are invited to a Finale at the Goldman Sachs India office. Top performers are extended PPI offers for engineering or quantitative internship roles.",
-        timeline: "Individual · GS Campus",
+          "Finalists are invited to the Goldman Sachs campus. Top performers are extended PPI offers for engineering or quantitative roles.",
       },
     ],
-    featured: true,
-    published: true,
+    tips: [
+      "Create and complete your HackerRank profile before registering.",
+      "The Quant track rewards strong probability, statistics, and linear algebra — not just DSA.",
+      "Watch your registered email for the participation invite and reminders.",
+    ],
   },
+
+  // ── 3. Flipkart Gridlock 2.0 (general hackathon) ───────────
   {
-    title: "Flipkart GRiD",
-    slug: "flipkart-grid",
-    category: "hiring_challenge",
-    description:
-      "Flipkart's annual engineering hackathon — the largest campus tech competition run by an Indian e-commerce company. Teams that reach Level 2+ become eligible for PPIs.",
+    title: "Flipkart Gridlock 2.0",
+    slug: "flipkart-gridlock-2",
+    category: "hackathon",
     organizer: "Flipkart",
     companySlug: "flipkart",
-    eligibility:
-      "B.Tech / B.E. / M.Tech / M.S. students. Teams of 1–3. Cross-campus and cross-year allowed.",
-    applicationUrl: "https://unstop.com/hackathons/flipkart-grid",
-    isPPIOffering: true,
-    ppiDetails:
-      "Teams advancing to Level 2 (Prototype round) and above are eligible for Flipkart PPIs for internship and SDE-1 roles.",
-    prizes: "₹ cash prizes + Flipkart swag + direct PPI pathway",
-    opensAt: new Date("2026-06-20"),
-    closesAt: new Date("2026-08-10"),
-    tags: ["E-commerce", "Tech + Product", "India Scale", "Cross-campus teams"],
-    rounds: [
-      {
-        name: "Level 1 — Qualifier Quiz",
-        description:
-          "All team members must individually clear an MCQ quiz covering e-commerce trivia, technology awareness, and CS fundamentals.",
-        timeline: "Individual · MCQ",
-      },
-      {
-        name: "Level 2 — Prototype Submission",
-        description:
-          "Qualifying teams receive a problem statement and build a working prototype. Teams advancing here become PPI-eligible.",
-        timeline: "Team · Async",
-      },
-      {
-        name: "Level 3 — Video Submission / Presentation",
-        description:
-          "Shortlisted teams create a video demonstration of their solution, presenting the problem, approach, architecture, and impact.",
-        timeline: "Team · Async",
-      },
-      {
-        name: "National Finale",
-        description:
-          "Top teams present live to a Flipkart engineering jury at their Bangalore HQ. Winners receive cash prizes and PPI fast-track.",
-        timeline: "Team · In-person at Flipkart HQ",
-      },
-    ],
-    featured: true,
-    published: true,
-  },
-  {
-    title: "Microsoft Engage",
-    slug: "microsoft-engage",
-    category: "internship",
+    companyUrl: "https://gridlock2point0.hackerearth.com/",
+    applicationUrl: "https://gridlock2point0.hackerearth.com/",
     description:
-      "Microsoft's 4-week mentorship program for second-year students. Build a real project under Microsoft engineer mentorship — strong performers are offered a PPO.",
-    organizer: "Microsoft",
-    companySlug: "microsoft",
+      "Flipkart × Bengaluru Traffic Police × HackerEarth — build AI/ML models on real Bengaluru traffic data. ₹5,00,000 prize pool, open to all of India.",
+    longDescription:
+      "Gridlock Hackathon 2.0 is Flipkart's call to India's sharpest AI/ML minds to build real solutions on real Bengaluru traffic data — with a real shot at going live on the city's roads. Teams design AI models that classify congestion, detect violations, identify movement patterns, and support smarter mobility decisions, using authentic data from the Bengaluru Traffic Police (ASTraM) and MapMyIndia — not simulations.\n\nOpen to students and professionals anywhere in India, solo or in teams of up to 4. Three phases: an online ML challenge, prototype development with exclusive datasets, and an onsite finale at Flipkart HQ Bengaluru.",
     eligibility:
-      "B.Tech / B.E. students specifically in their 2nd year. Open to students from a broad range of institutes.",
-    applicationUrl: "https://careers.microsoft.com/",
+      "Open to students and professionals from anywhere in India — no specific city, academic background, or credential required. Solo builders or teams of up to 4.",
+    opensAt: new Date("2026-05-26T00:00:00+05:30"),
+    closesAt: new Date("2026-06-07T23:59:00+05:30"),
+    endsAt: new Date("2026-07-03T23:59:00+05:30"),
+    eventDate: new Date("2026-07-03T10:00:00+05:30"),
     isPPIOffering: false,
-    ppiDetails:
-      "Strong performers receive a PPO (Pre-Placement Offer) for the SDE internship — even more direct than a PPI.",
-    prizes: "PPO for Microsoft SDE Internship + Microsoft swag + certificate",
-    tags: [
-      "2nd Year Only",
-      "PPO Pathway",
-      "Azure",
-      "4 Weeks",
-      "Mentored Project",
-    ],
-    rounds: [
-      {
-        name: "Stage 1 — Application & Resume Screening",
-        description:
-          "Submit your application with resume and academic details. No OA required at this stage.",
-        timeline: "Individual · Online",
-      },
-      {
-        name: "Stage 2 — Coding Assessment (some editions)",
-        description:
-          "Some editions include a coding assessment. Easy–Medium difficulty DSA problems.",
-        timeline: "Individual · Optional",
-      },
-      {
-        name: "Stage 3 — 4-Week Mentorship Program",
-        description:
-          "Selected students are paired with Microsoft engineers. Work on a real project over 4 weeks with weekly check-ins.",
-        timeline: "Individual · Virtual / Hybrid",
-      },
-      {
-        name: "Stage 4 — Project Demo & PPO Decision",
-        description:
-          "Submit and demo your final project. High-performing participants are extended PPO for the Microsoft SDE internship.",
-        timeline: "Individual · Final evaluation",
-      },
-    ],
+    prizes: "₹5,00,000 total (₹2.25L / ₹1.75L / ₹1L)",
     featured: true,
     published: true,
+    tags: ["AI/ML", "Computer Vision", "Open to All", "HackerEarth", "Bengaluru"],
+    rounds: [
+      {
+        name: "Phase 1 — Online ML Challenge",
+        timeline: "26 May – 7 June 2026 · Online (HackerEarth)",
+        description:
+          "Register solo or as a team of up to 4 and compete on a live ML challenge with a real-time leaderboard. Up to 50 submissions per participant/team — refine your model and climb the ranking.",
+      },
+      {
+        name: "Phase 2 — Prototype Development",
+        timeline: "8–21 June 2026 · Online",
+        description:
+          "Shortlisted teams build prototypes on real Bengaluru traffic challenges using localized datasets from Bengaluru Traffic Police and partner resources. Evaluated by an expert panel on feasibility, relevance, innovation, and real-world impact.",
+      },
+      {
+        name: "Phase 3 — Onsite Finale",
+        timeline: "3 July 2026 · Flipkart HQ, Bengaluru",
+        description:
+          "Top 10 teams pitch live at Flipkart HQ before subject-matter experts and Bengaluru Traffic Police leadership. In-person attendance is mandatory to remain prize-eligible. Top 3 are felicitated by the Head of Bengaluru Traffic Police and Flipkart leadership.",
+      },
+    ],
+    tips: [
+      "The leaderboard rewards early effort — start Phase 1 as soon as it opens.",
+      "You get up to 50 submissions; iterate aggressively on your model.",
+      "Finalists must attend onsite at Flipkart HQ to stay prize-eligible.",
+    ],
   },
+
+  // ── 4. Google Cloud Rapid Agent Hackathon (international) ───
   {
-    title: "Google STEP Internship",
-    slug: "google-step",
-    category: "internship",
-    description:
-      "Google's early-career internship for 1st and 2nd year students. Not a hackathon — a direct internship application with a focused technical interview loop.",
+    title: "Google Cloud Rapid Agent Hackathon",
+    slug: "google-cloud-rapid-agent-hackathon",
+    category: "hackathon",
     organizer: "Google",
     companySlug: "google",
+    companyUrl: "https://devpost.com/",
+    applicationUrl: "https://devpost.com/",
+    description:
+      "Build AI agents that reason, plan, and act — powered by Gemini 3 and Google Cloud Agent Builder. $60,000 in cash across six partner tracks. International, on Devpost.",
+    longDescription:
+      "Building Agents for Real-World Challenges is your chance to move beyond the chatbot and build agents that accomplish tasks. Built with Gemini's advanced reasoning and technology-partner solutions, you create agents that reason, plan, and execute under your oversight.\n\nSix partner tracks are live (Arize, Elastic, Fivetran, GitLab, MongoDB, Dynatrace). Each has its own prize bucket — you compete within the partner technology you used via its MCP server. Example domains: 2026 World Cup logistics, financial services, and brick-and-mortar retail. Managed by Devpost.",
     eligibility:
-      "B.Tech students in 1st or 2nd year only. Apply via careers.google.com/programs/step/.",
-    applicationUrl: "https://careers.google.com/programs/step/",
+      "Above the legal age of majority in your country of residence. Some countries/territories excluded (see official rules). International — open worldwide.",
+    closesAt: new Date("2026-06-12T02:30:00+05:30"),
     isPPIOffering: false,
-    ppiDetails:
-      "Completing STEP successfully often fast-tracks you to a standard Google SWE internship interview in your pre-final year.",
-    prizes:
-      "Paid internship at Google India + mentorship + strong SWE internship pathway",
-    tags: [
-      "1st & 2nd Year",
-      "Paid Internship",
-      "Not a Hackathon",
-      "Direct Apply",
-    ],
+    prizes: "$60,000 total — per partner bucket: $5,000 / $3,000 / $2,000",
+    published: true,
+    tags: ["Gemini", "AI Agents", "Google Cloud", "International", "Devpost"],
     rounds: [
       {
-        name: "Round 1 — Resume Screening",
+        name: "Pick a Partner Track",
+        timeline: "Arize · Elastic · Fivetran · GitLab · MongoDB · Dynatrace",
         description:
-          "Apply at careers.google.com/programs/step/. No OA — selection is based on resume, academic performance, and demonstrated technical interest.",
-        timeline: "Individual · Online",
+          "Choose the partner technology that best fits the mission you want to accomplish. You'll be judged within that partner's bucket.",
       },
       {
-        name: "Round 2 — Technical Interview × 1–2",
+        name: "Build Your Agent",
+        timeline: "Online · Gemini 3 + Google Cloud Agent Builder",
         description:
-          "DSA-focused interviews calibrated for 1st/2nd year students. Arrays, Strings, Trees, Graphs, basic DP.",
-        timeline: "Individual · 45 min each",
+          "Build an agent with Gemini 3 using Google Cloud Agent Builder, integrating the partner's Model Context Protocol (MCP) server. It must use tools to accomplish multi-step tasks — not just answer questions.",
       },
       {
-        name: "STEP Internship (10–12 weeks)",
+        name: "Submit on Devpost",
+        timeline: "Deadline 12 June 2026",
         description:
-          "Selected students complete a 10–12 week paid internship at Google India. Paired with a mentor. Work on a real codebase.",
-        timeline: "Individual · Summer",
+          "Submit a hosted project URL, a public open-source repo (with a visible license), a ~3-minute demo video, and your selected track via the Devpost submission form.",
       },
     ],
-    featured: true,
-    published: true,
-  },
-  {
-    title: "Uber Star Engineer",
-    slug: "uber-star",
-    category: "hiring_challenge",
-    description:
-      "Uber's campus talent identification program. A competitive challenge that fast-tracks exceptional candidates into Uber's internship interview loop.",
-    organizer: "Uber",
-    companySlug: "uber",
-    eligibility:
-      "B.Tech / M.Tech students (pre-final year). Check official Uber Careers and Unstop for current edition eligibility.",
-    applicationUrl: "https://www.uber.com/in/en/careers/",
-    isPPIOffering: true,
-    ppiDetails:
-      "Top performers receive a fast-track PPI into Uber's internship interview loop — skipping the standard OA.",
-    prizes: "PPI fast-track + Uber swag + recognition",
-    tags: ["Fast-track PPI", "OA Bypass", "Competitive", "Campus"],
-    rounds: [
-      {
-        name: "Round 1 — Online Coding Challenge",
-        description:
-          "Competitive DSA challenge. Medium–Hard problems: Graphs, DP, Trees, Arrays. Near-perfect performance expected.",
-        timeline: "Individual · Competitive",
-      },
-      {
-        name: "Round 2 — Technical Evaluation",
-        description:
-          "Top performers undergo a technical evaluation round. Assessed on problem-solving depth, code quality, and communication.",
-        timeline: "Individual · Live / Async",
-      },
-      {
-        name: "PPI Fast-track",
-        description:
-          "Outstanding candidates enter Uber's internship interview loop without the standard OA gate.",
-        timeline: "By invite only",
-      },
+    tips: [
+      "Pick one partner track early and lean into its MCP server's strengths.",
+      "Show a multi-step mission where the agent plans and executes, not just chats.",
+      "Your repo must be public with a detectable open-source license at submission.",
     ],
-    featured: true,
-    published: true,
   },
-];
 
-const openSourcePrograms = [
-  {
-    title: "Google Summer of Code",
-    slug: "gsoc",
-    category: "open_source",
-    description:
-      "The world's most prestigious open-source program. 3 months of paid coding with a mentoring organization — and a global community behind you.",
-    organizer: "Google",
-    applicationUrl: "https://summerofcode.withgoogle.com/",
-    stipend: "~$1,500 – $3,300",
-    tags: ["Google Backed", "Global", "Paid", "Any year", "Any background"],
-    opensAt: new Date("2026-06-02"),
-    closesAt: new Date("2026-09-08"),
-    steps: [
-      { step: 1, title: "Find an org early (Jan–Feb)", description: "Browse the org list at summerofcode.withgoogle.com. Pick 2–3 orgs whose tech stack you know or want to learn." },
-      { step: 2, title: "Join the community & contribute", description: "Join the org's Slack / Discord / mailing list. Pick a 'good first issue' and submit a PR." },
-      { step: 3, title: "Write a strong proposal (Mar–Apr)", description: "Include clear deliverables, a week-by-week timeline, your background, and evidence you've engaged with the community." },
-      { step: 4, title: "Submit (April deadline)", description: "Submit on the GSoC platform. You can submit up to 3 proposals across different orgs." },
-      { step: 5, title: "Community Bonding → Coding → Evaluations", description: "3–4 weeks of community bonding, then the coding period. Pass midterm and final evaluations." },
-    ],
-    timeline: [
-      { phase: "Org applications", period: "January – February", description: "Watch the GSoC blog for org list announcement" },
-      { phase: "Contributor applications", period: "March – April", description: "Start contributing in January, not March" },
-      { phase: "Accepted projects announced", period: "May", description: "" },
-      { phase: "Community Bonding", period: "May – June", description: "Meet your mentor, read the codebase" },
-      { phase: "Coding Period", period: "June – September", description: "Weekly syncs with mentor. Commit regularly." },
-      { phase: "Final results", period: "November", description: "" },
-    ],
-    tips: [
-      "Pick orgs where you've already used the software.",
-      "Submit at least one real PR before the application deadline.",
-      "Write your proposal for a technical reader who doesn't know your background.",
-      "Don't wait for March to start — the best contributors are already active in January.",
-      "You can apply to up to 3 orgs — diversify your bets.",
-    ],
-    featured: true,
-    published: true,
-  },
-  {
-    title: "LFX Mentorship",
-    slug: "lfx",
-    category: "open_source",
-    description:
-      "Linux Foundation's structured mentorship across CNCF, OpenSSF, and 50+ top open-source projects. Three terms a year.",
-    organizer: "Linux Foundation",
-    applicationUrl: "https://mentorship.lfx.linuxfoundation.org/",
-    stipend: "$3,000 – $6,600",
-    opensAt: new Date("2026-06-01"),
-    closesAt: new Date("2026-07-20"),
-    tags: ["Linux Foundation", "CNCF", "Kubernetes", "Cloud Native", "3 terms/year"],
-    steps: [
-      { step: 1, title: "Create your LFX profile", description: "Sign up at mentorship.lfx.linuxfoundation.org. Fill in GitHub, LinkedIn, and upload resume." },
-      { step: 2, title: "Browse open projects", description: "Filter by 'Accepting Applications'. CNCF projects are most popular." },
-      { step: 3, title: "Read the project and join the community", description: "Join the project's Slack channel. Read recent PRs and issues." },
-      { step: 4, title: "Complete prerequisite tasks", description: "Many projects require a specific task during the application window — these are eliminatory." },
-      { step: 5, title: "Write your Statement of Purpose", description: "Tailored cover letter explaining what the project does and why you're qualified." },
-    ],
-    timeline: [
-      { phase: "Spring Term", period: "February", description: "Term runs March – May" },
-      { phase: "Summer Term", period: "May", description: "Term runs June – August" },
-      { phase: "Fall Term", period: "July – August", description: "Term runs September – November" },
-      { phase: "Mentor reviews", period: "~2 weeks after close", description: "Complete prerequisite tasks before this" },
-      { phase: "Coding period", period: "12 weeks", description: "Weekly syncs. Midterm eval at week 6." },
-    ],
-    tips: [
-      "CNCF projects are the most resume-relevant.",
-      "The prerequisite task is non-negotiable.",
-      "Apply to 3–5 projects and tailor each application.",
-      "LFX is less competitive than GSoC.",
-      "Look at merged PRs to understand the code style.",
-    ],
-    featured: true,
-    published: true,
-  },
+  // ── 5. Outreachy (open source · diversity) ─────────────────
   {
     title: "Outreachy",
     slug: "outreachy",
     category: "open_source",
-    description:
-      "Paid remote internships for underrepresented people in tech. $7,000 USD stipend. Focus on the contribution period.",
     organizer: "Software Freedom Conservancy",
+    companyUrl: "https://www.outreachy.org/",
     applicationUrl: "https://www.outreachy.org/",
-    stipend: "$7,000 USD",
-    tags: ["Underrepresented in tech", "$7K stipend", "Beginner-friendly", "Remote", "2 cohorts/year"],
+    description:
+      "Paid, remote, 3-month open-source internships ($7,000 USD) for people who face underrepresentation, systemic bias, or discrimination in tech.",
+    longDescription:
+      "Outreachy provides paid, remote internships in open source to anyone from any background who faces underrepresentation, systemic bias, or discrimination in the tech industry where they live. Projects span programming, research, UX, documentation, design, data science, and more.\n\nIt runs two cohorts a year (May–August and December–March). Selection is contribution-based: after your initial application is approved, you enter a contribution period where you actively contribute to projects, and mentors select interns from there. Note: past GSoC contributors are not eligible. Outreachy is a diversity initiative of the Software Freedom Conservancy.",
+    eligibility:
+      "Anyone who faces underrepresentation, systemic bias, or discrimination in the tech industry of their country. Must be available full-time (30–40 hrs/week). NOT open to past Outreachy interns or past GSoC contributors.",
+    stipend: "$7,000 USD + up to $500 travel stipend",
+    recurringMonth: "February (May cohort) & August (Dec cohort)",
+    statusOverride: "upcoming",
+    isDiversity: true,
+    isPPIOffering: false,
+    published: true,
+    tags: ["Underrepresented in tech", "$7K stipend", "Remote", "Beginner-friendly", "2 cohorts/year"],
     steps: [
-      { step: 1, title: "Check eligibility carefully", description: "Must face underrepresentation in your country's tech industry. NOT a past GSoC contributor." },
-      { step: 2, title: "Submit initial application with essays", description: "Essay questions about your background and experiences with systemic bias." },
-      { step: 3, title: "Enter the contribution period", description: "Choose 1–2 projects. Join community, make contributions. This is where selection happens." },
-      { step: 4, title: "Submit final application", description: "Describe contributions and plan for the internship. Mentors select based on contribution quality." },
+      { step: 1, title: "Check eligibility carefully", description: "You must face underrepresentation in your country's tech industry, be available full-time, and not be a past GSoC/Outreachy participant. Read outreachy.org/eligibility." },
+      { step: 2, title: "Submit the initial application", description: "Answer essay questions about your background and experiences with systemic bias or underrepresentation. Be genuine and specific." },
+      { step: 3, title: "Enter the contribution period", description: "If approved, choose 1–2 projects, join their community, and make real contributions. This is where selection actually happens." },
+      { step: 4, title: "Submit your final application", description: "For each project, describe your contributions and your internship plan. Mentors select primarily on contribution quality." },
     ],
     timeline: [
-      { phase: "Initial applications", period: "January (May cohort) / August (Dec cohort)", description: "Check outreachy.org for exact dates" },
-      { phase: "Contribution period", period: "February – March (May cohort)", description: "This is where selection really happens" },
-      { phase: "Interns announced", period: "March / October", description: "" },
-      { phase: "Internship starts", period: "May or December", description: "" },
+      { phase: "Initial applications (May cohort)", period: "Feb 6 – Feb 13", description: "Dec cohort applications open early–mid August" },
+      { phase: "Contribution period", period: "Mar 17 – Apr 15", description: "Where selection really happens — contribute actively" },
+      { phase: "Interns announced", period: "Late April / October", description: "" },
+      { phase: "Internship runs", period: "May 18 – Aug 17 (or Dec–Mar)", description: "3 months, remote, full-time" },
     ],
     tips: [
-      "The contribution period is where selection actually happens — not your essays.",
+      "The contribution period decides selection — not your essays. Contribute early and in public.",
       "Pick projects where you can start contributing within the first week.",
-      "Communicate in public (mailing lists, GitHub issues) not just DMs.",
-      "Quality over quantity on contributions.",
       "Past GSoC contributors are ineligible — this is strictly enforced.",
     ],
-    featured: true,
-    published: true,
-  },
-  {
-    title: "MLH Fellowship",
-    slug: "mlh-fellowship",
-    category: "internship",
-    description:
-      "12-week remote internship alternative for developers. Work on open-source projects used by real companies — rolling admissions, year-round cohorts.",
-    organizer: "Major League Hacking",
-    applicationUrl: "https://fellowship.mlh.io/",
-    stipend: "Up to $5,000",
-    tags: ["Rolling admissions", "Year-round", "Open source track", "Startup track", "Explorer track"],
-    steps: [
-      { step: 1, title: "Choose your track", description: "Open Source, Explorer, or Startup. Open Source has the best resume value." },
-      { step: 2, title: "Submit your application", description: "Include your GitHub profile — it's evaluated seriously." },
-      { step: 3, title: "Behavioral interview", description: "About your background, motivation, and how you collaborate." },
-      { step: 4, title: "Technical interview", description: "Standard DSA problems (Easy–Medium) and discussion of past projects." },
-      { step: 5, title: "Program & weekly structure", description: "20–30 hours/week. Weekly standups, code reviews, and cohort events." },
-    ],
-    timeline: [
-      { phase: "Applications", period: "Rolling", description: "Opens a few weeks before each batch" },
-      { phase: "Interviews", period: "Within 2 weeks of applying", description: "Apply early — spots fill before the deadline" },
-      { phase: "Cohort starts", period: "Every 3 months year-round", description: "" },
-      { phase: "12-week program", period: "Full cohort period", description: "20–30 hrs/week" },
-    ],
-    tips: [
-      "Apply at least 4–6 weeks before a cohort start date.",
-      "Clean up your GitHub before applying. Pin 3–4 strong projects.",
-      "The Open Source track is the most valuable for engineering resumes.",
-      "Prepare for DSA (Easy–Medium LeetCode) for the technical interview.",
-      "Read about the specific OSS projects in your chosen track before the interview.",
-    ],
-    featured: true,
-    published: true,
-  },
-  {
-    title: "GirlScript Summer of Code",
-    slug: "gssoc",
-    category: "open_source",
-    description:
-      "India's largest open-source program. No stipend — but certificates, LORs, internship opportunities, and leaderboard recognition.",
-    organizer: "GirlScript Foundation",
-    applicationUrl: "https://gssoc.girlscript.tech/",
-    stipend: "No stipend",
-    opensAt: new Date("2026-06-01"),
-    closesAt: new Date("2026-08-31"),
-    tags: ["India", "No stipend", "Certificate", "LOR for top 25", "Beginner-friendly", "Open to all"],
-    steps: [
-      { step: 1, title: "Register as a contributor", description: "Sign up at gssoc.girlscript.tech. Registration is free and open to all." },
-      { step: 2, title: "Pick 2–3 projects", description: "Choose projects in your tech stack. Don't spread too thin." },
-      { step: 3, title: "Find issues and contribute", description: "Look for issues labelled 'GSSoC', 'good first issue', or 'help wanted'. Submit PRs for points." },
-      { step: 4, title: "Track your points on the leaderboard", description: "Level 1 (10 pts), Level 2 (25 pts), Level 3 (45 pts). 60+ points = certificate. Top 25 = LOR." },
-    ],
-    timeline: [
-      { phase: "Program registration", period: "March – April", description: "Watch gssoc.girlscript.tech for announcements" },
-      { phase: "Coding period", period: "May – July", description: "3 months of contributing" },
-      { phase: "Results & certificates", period: "August", description: "LORs sent to top 25 contributors" },
-    ],
-    tips: [
-      "GSSoC is the best first open-source program — use it before GSoC or LFX.",
-      "Focus on Level 2–3 issues, not just Level 1.",
-      "Quality matters — maintainers can reject low-effort PRs.",
-      "Use GSSoC as a stepping stone and reference contributions in your GSoC proposal.",
-      "Even without a stipend, a LOR from a project maintainer is valuable.",
-    ],
-    featured: true,
-    published: true,
   },
 ];
 
@@ -500,17 +310,11 @@ async function seed() {
   console.log("Clearing existing opportunities...");
   await Opportunity.deleteMany({});
 
-  console.log("Seeding hackathons...");
-  await Opportunity.insertMany(hackathons);
-  console.log(`  Inserted ${hackathons.length} hackathons`);
+  console.log("Seeding real opportunities...");
+  await Opportunity.insertMany(opportunities);
+  console.log(`  Inserted ${opportunities.length} opportunities`);
 
-  console.log("Seeding open-source programs...");
-  await Opportunity.insertMany(openSourcePrograms);
-  console.log(`  Inserted ${openSourcePrograms.length} open-source programs`);
-
-  console.log(
-    `Done! Total: ${hackathons.length + openSourcePrograms.length} opportunities`
-  );
+  console.log("Done!");
   await mongoose.disconnect();
 }
 

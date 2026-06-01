@@ -1,52 +1,13 @@
-export const BRANCH_GROUPS = [
-  {
-    label: "Computer Science & Allied",
-    branches: [
-      "CSE",
-      "CSE (AI/ML)",
-      "CSE (Data Science)",
-      "CSE (Cyber Security)",
-      "CSE (IoT)",
-      "CSE (Cloud Computing)",
-      "Information Technology",
-      "Software Engineering",
-    ],
-  },
-  {
-    label: "Electronics & Communication",
-    branches: [
-      "ECE",
-      "ECE (VLSI)",
-      "Electronics & Instrumentation",
-    ],
-  },
-  {
-    label: "Electrical & Power",
-    branches: [
-      "Electrical Engineering",
-      "Electrical & Electronics (EEE)",
-    ],
-  },
-  {
-    label: "Core Engineering",
-    branches: [
-      "Mechanical Engineering",
-      "Civil Engineering",
-      "Chemical Engineering",
-      "Aerospace Engineering",
-      "Biotechnology",
-    ],
-  },
-  {
-    label: "Other",
-    branches: [
-      "Mathematics & Computing",
-      "Applied Sciences",
-      "MCA",
-      "BCA",
-      "Other",
-    ],
-  },
+// Simplified, pooled branch list — easier to maintain and filter on.
+// CS-family is one option, electronics-family one, etc.
+export const BRANCHES = [
+  "Computer Science & related (CSE, IT, AI/ML, Data Science, Cyber Security)",
+  "Electronics & related (ECE, EEE, E&I, VLSI)",
+  "Electrical",
+  "Mechanical / Civil / Core",
+  "Other / Non-circuital",
 ] as const;
 
-export const ALL_BRANCHES = BRANCH_GROUPS.flatMap((g) => g.branches);
+export type Branch = (typeof BRANCHES)[number];
+
+export const ALL_BRANCHES: readonly string[] = BRANCHES;

@@ -8,6 +8,7 @@ export interface IUser extends Document {
   googleRefreshToken?: string;
   branch?: string;
   graduationYear?: number;
+  gender?: string;
   profileCompleted: boolean;
   alertsEnabled: boolean;
   digestEnabled: boolean;
@@ -25,6 +26,7 @@ const UserSchema = new Schema<IUser>(
     googleRefreshToken: String,
     branch: String,
     graduationYear: Number,
+    gender: String,
     profileCompleted: { type: Boolean, default: false },
     alertsEnabled: { type: Boolean, default: true },
     digestEnabled: { type: Boolean, default: true },

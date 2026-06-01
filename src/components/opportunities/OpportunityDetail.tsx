@@ -16,7 +16,16 @@ import {
 } from "lucide-react";
 import { BookmarkButton } from "@/components/ui/BookmarkButton";
 import { categoryLabel, routeFromCategory } from "@/lib/opportunity-constants";
-import { orgColor, orgMark, fmtDate } from "@/lib/opportunity-status";
+import {
+  orgColor,
+  orgMark,
+  fmtDate,
+  getRegStatus,
+  getBadges,
+  showRegistrationCountdown,
+  REG_STATUS_LABEL,
+  REG_STATUS_CLASS,
+} from "@/lib/opportunity-status";
 
 interface Round {
   name: string;
@@ -49,9 +58,14 @@ export interface OpportunityDetailData {
   logoUrl?: string;
   opensAt?: string;
   closesAt?: string;
+  endsAt?: string;
   eventDate?: string;
+  recurringMonth?: string;
+  statusOverride?: string;
   isPPIOffering: boolean;
   ppiDetails?: string;
+  isDiversity?: boolean;
+  isFemaleOnly?: boolean;
   prizes?: string;
   stipend?: string;
   rounds: Round[];
@@ -70,6 +84,9 @@ export function OpportunityDetail({ opp }: { opp: OpportunityDetailData }) {
 
   const color = orgColor(opp.organizer);
   const mark = orgMark(opp.organizer);
+  const status = getRegStatus(opp);
+  const badges = getBadges(opp);
+  const showCountdown = showRegistrationCountdown(opp);
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-10 pb-24">
@@ -100,11 +117,19 @@ export function OpportunityDetail({ opp }: { opp: OpportunityDetailData }) {
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
             <h1 className="text-2xl font-bold tracking-tight">{opp.title}</h1>
-            {opp.isPPIOffering && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-foreground text-background text-[10px] font-semibold">
-                <CircleCheck className="w-2.5 h-2.5" /> PPI
+            <span
+              className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${REG_STATUS_CLASS[status]}`}
+            >
+              {REG_STATUS_LABEL[status]}
+            </span>
+            {badges.map((b) => (
+              <span
+                key={b.label}
+                className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${b.className}`}
+              >
+                {b.label}
               </span>
-            )}
+            ))}
           </div>
           <p className="text-sm text-muted-foreground">
             {opp.organizer} · {categoryLabel(opp.category)}
@@ -115,10 +140,22 @@ export function OpportunityDetail({ opp }: { opp: OpportunityDetailData }) {
 
       {/* Meta row */}
       <div className="flex flex-wrap gap-4 mb-6 text-xs text-muted-foreground">
-        {opp.closesAt && (
+        {showCountdown && opp.closesAt && (
           <span className="flex items-center gap-1">
             <Calendar className="w-3.5 h-3.5" />
-            Closes {fmtDate(opp.closesAt)}
+            Registration closes {fmtDate(opp.closesAt)}
+          </span>
+        )}
+        {!showCountdown && opp.endsAt && status === "ongoing" && (
+          <span className="flex items-center gap-1">
+            <Calendar className="w-3.5 h-3.5" />
+            Runs until {fmtDate(opp.endsAt)}
+          </span>
+        )}
+        {opp.recurringMonth && !opp.closesAt && (
+          <span className="flex items-center gap-1">
+            <Calendar className="w-3.5 h-3.5" />
+            Usually opens {opp.recurringMonth}
           </span>
         )}
         {(opp.prizes || opp.stipend) && (

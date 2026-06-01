@@ -145,6 +145,36 @@
   animation: page-in 0.3s ease-out both;
 }
 
+/* ── Featured opportunity glow ───────────────────────── */
+@keyframes featured-glow {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.0), 0 0 16px 0 hsl(var(--primary) / 0.12); }
+  50%      { box-shadow: 0 0 0 1px hsl(var(--primary) / 0.35), 0 0 26px 2px hsl(var(--primary) / 0.22); }
+}
+.featured-card {
+  animation: featured-glow 3s ease-in-out infinite;
+}
+.featured-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 30%, hsl(var(--primary) / 0.08) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: featured-shimmer 3.5s linear infinite;
+}
+@keyframes featured-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .featured-card, .featured-card::after { animation: none; }
+}
+
+/* ── Hide scrollbar (horizontal docks/scrollers) ─────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
 /* ── Ticker mobile speed ─────────────────────────────── */
 @media (max-width: 640px) {
   .ticker-scroll-inner {

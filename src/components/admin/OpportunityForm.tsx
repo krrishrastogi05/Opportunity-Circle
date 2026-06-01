@@ -42,9 +42,14 @@ interface OpportunityData {
   logoUrl: string;
   opensAt: string;
   closesAt: string;
+  endsAt: string;
   eventDate: string;
+  recurringMonth: string;
+  statusOverride: string;
   isPPIOffering: boolean;
   ppiDetails: string;
+  isDiversity: boolean;
+  isFemaleOnly: boolean;
   prizes: string;
   stipend: string;
   rounds: Round[];
@@ -70,9 +75,14 @@ const emptyForm: OpportunityData = {
   logoUrl: "",
   opensAt: "",
   closesAt: "",
+  endsAt: "",
   eventDate: "",
+  recurringMonth: "",
+  statusOverride: "",
   isPPIOffering: false,
   ppiDetails: "",
+  isDiversity: false,
+  isFemaleOnly: false,
   prizes: "",
   stipend: "",
   rounds: [],
@@ -108,6 +118,7 @@ export function OpportunityForm({
       ...initial,
       opensAt: toDateInput(initial.opensAt as string),
       closesAt: toDateInput(initial.closesAt as string),
+      endsAt: toDateInput(initial.endsAt as string),
       eventDate: toDateInput(initial.eventDate as string),
       rounds: (initial.rounds as Round[]) || [],
       steps: (initial.steps as Step[]) || [],
@@ -272,22 +283,58 @@ export function OpportunityForm({
             />
           </div>
           <div>
-            <label className={labelClass}>Closes At</label>
+            <label className={labelClass}>Registration Closes</label>
             <input
               className={inputClass}
               type="datetime-local"
               value={form.closesAt}
               onChange={(e) => update("closesAt", e.target.value)}
             />
+            <p className="text-[11px] text-muted-foreground/60 mt-1">
+              The countdown target.
+            </p>
           </div>
           <div>
-            <label className={labelClass}>Event Date</label>
+            <label className={labelClass}>Ends / Final Date</label>
             <input
               className={inputClass}
               type="datetime-local"
-              value={form.eventDate}
-              onChange={(e) => update("eventDate", e.target.value)}
+              value={form.endsAt}
+              onChange={(e) => update("endsAt", e.target.value)}
             />
+            <p className="text-[11px] text-muted-foreground/60 mt-1">
+              Stays &quot;Ongoing&quot; until this date.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className={labelClass}>Status</label>
+            <select
+              className={inputClass}
+              value={form.statusOverride}
+              onChange={(e) => update("statusOverride", e.target.value)}
+            >
+              <option value="">Auto (from dates)</option>
+              <option value="upcoming">Opening soon</option>
+              <option value="registration_open">Registration open</option>
+              <option value="registration_closed">Registration closed</option>
+              <option value="ongoing">Ongoing</option>
+              <option value="ended">Ended</option>
+            </select>
+          </div>
+          <div>
+            <label className={labelClass}>Recurring Month</label>
+            <input
+              className={inputClass}
+              placeholder="e.g. February (for yearly programs)"
+              value={form.recurringMonth}
+              onChange={(e) => update("recurringMonth", e.target.value)}
+            />
+            <p className="text-[11px] text-muted-foreground/60 mt-1">
+              Shown for recurring programs like LFX, Outreachy.
+            </p>
           </div>
         </div>
       </section>
@@ -339,6 +386,27 @@ export function OpportunityForm({
             />
           </div>
         )}
+
+        <div className="flex flex-wrap items-center gap-6 pt-1">
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={form.isDiversity}
+              onChange={(e) => update("isDiversity", e.target.checked)}
+              className="h-4 w-4 rounded border-border"
+            />
+            Diversity badge
+          </label>
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={form.isFemaleOnly}
+              onChange={(e) => update("isFemaleOnly", e.target.checked)}
+              className="h-4 w-4 rounded border-border"
+            />
+            Women-only badge
+          </label>
+        </div>
       </section>
 
       {/* Rounds — for hiring challenges, hackathons, and programs */}

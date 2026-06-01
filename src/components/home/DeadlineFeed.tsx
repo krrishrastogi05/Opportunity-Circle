@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ExternalLink, ChevronRight, ArrowUpRight, Zap } from "lucide-react";
 import { BookmarkButton } from "@/components/ui/BookmarkButton";
 import { routeFromCategory } from "@/lib/opportunity-constants";
+import { getRegStatus } from "@/lib/opportunity-status";
 
 type DeadlineEntry = {
   _id: string;
@@ -15,6 +16,9 @@ type DeadlineEntry = {
   applicationUrl?: string;
   opensAt?: string;
   closesAt?: string;
+  endsAt?: string;
+  statusOverride?: string;
+  recurringMonth?: string;
   description: string;
   isPPIOffering: boolean;
 };
@@ -22,17 +26,15 @@ type DeadlineEntry = {
 type Status = "closing-soon" | "live" | "rolling" | "upcoming" | "ended";
 
 function getStatus(e: DeadlineEntry): Status {
-  const now = Date.now();
-  if (!e.opensAt && !e.closesAt) return "rolling";
-  const opens = e.opensAt ? new Date(e.opensAt).getTime() : null;
-  const closes = e.closesAt ? new Date(e.closesAt).getTime() : null;
-  if (closes && now > closes) return "ended";
-  if (opens && now < opens) return "upcoming";
-  if (closes) {
-    const days = (closes - now) / 86_400_000;
-    return days <= 7 ? "closing-soon" : "live";
+  const reg = getRegStatus(e);
+  if (reg === "upcoming") return "upcoming";
+  if (reg === "registration_open") {
+    const closes = e.closesAt ? new Date(e.closesAt).getTime() : null;
+    if (closes && (closes - Date.now()) / 86_400_000 <= 7) return "closing-soon";
+    return "live";
   }
-  return "live";
+  if (reg === "ongoing") return "rolling"; // active, registration closed
+  return "ended"; // registration_closed (no event window) or ended
 }
 
 function getCountdownParts(dateStr: string) {
@@ -377,7 +379,7 @@ export function DeadlineFeed({
                       {isRolling && (
                         <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
                           <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
-                          Rolling
+                          {entry.endsAt ? "Ongoing" : "Rolling"}
                         </span>
                       )}
                       {isUpcoming && (
@@ -413,7 +415,9 @@ export function DeadlineFeed({
                       )}
                       {isRolling && (
                         <span className="text-xs text-muted-foreground">
-                          No hard deadline
+                          {entry.endsAt
+                            ? `Registration closed · runs until ${fmt(entry.endsAt)}`
+                            : "No hard deadline"}
                         </span>
                       )}
                       {isUpcoming && entry.opensAt && (

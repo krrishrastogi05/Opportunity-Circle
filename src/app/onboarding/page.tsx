@@ -5,10 +5,11 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Image from "next/image";
-import { BRANCH_GROUPS } from "@/lib/branches";
+import { BRANCHES } from "@/lib/branches";
 
 const currentYear = new Date().getFullYear();
 const gradYears = Array.from({ length: 7 }, (_, i) => currentYear + i - 1);
+const GENDERS = ["Female", "Male", "Non-binary", "Prefer not to say"];
 
 export default function OnboardingPage() {
   const { data: session, status, update } = useSession();
@@ -16,6 +17,7 @@ export default function OnboardingPage() {
   const [name, setName] = useState("");
   const [branch, setBranch] = useState("");
   const [graduationYear, setGraduationYear] = useState<number | "">("");
+  const [gender, setGender] = useState("");
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -53,6 +55,7 @@ export default function OnboardingPage() {
           name: name.trim(),
           branch,
           graduationYear: Number(graduationYear),
+          gender,
         }),
       });
 
@@ -132,14 +135,10 @@ export default function OnboardingPage() {
               <option value="" disabled>
                 Select your branch
               </option>
-              {BRANCH_GROUPS.map((group) => (
-                <optgroup key={group.label} label={group.label}>
-                  {group.branches.map((b) => (
-                    <option key={b} value={b}>
-                      {b}
-                    </option>
-                  ))}
-                </optgroup>
+              {BRANCHES.map((b) => (
+                <option key={b} value={b}>
+                  {b}
+                </option>
               ))}
             </select>
           </div>
@@ -164,6 +163,28 @@ export default function OnboardingPage() {
                 </option>
               ))}
             </select>
+          </div>
+
+          {/* Gender — optional */}
+          <div>
+            <label className="block text-sm font-medium mb-1.5">
+              Gender <span className="text-muted-foreground font-normal">(optional)</span>
+            </label>
+            <select
+              className={inputClass}
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+            >
+              <option value="">Prefer not to specify</option>
+              {GENDERS.map((g) => (
+                <option key={g} value={g}>
+                  {g}
+                </option>
+              ))}
+            </select>
+            <p className="text-[11px] text-muted-foreground/60 mt-1">
+              Only used to surface diversity &amp; women-only opportunities you&apos;re eligible for. Never shown publicly.
+            </p>
           </div>
 
           {/* Email — read-only from Google */}

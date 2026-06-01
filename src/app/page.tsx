@@ -4,7 +4,7 @@ import { DeadlineFeed } from "@/components/home/DeadlineFeed";
 import { UrgentCountdown } from "@/components/home/UrgentCountdown";
 import { connectDB } from "@/lib/mongodb";
 import { Opportunity } from "@/models/Opportunity";
-import { getStatus } from "@/lib/opportunity-status";
+import { getRegStatus } from "@/lib/opportunity-status";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +24,9 @@ interface SerializedOpp {
   applicationUrl?: string;
   closesAt?: string;
   opensAt?: string;
+  endsAt?: string;
+  statusOverride?: string;
+  recurringMonth?: string;
   isPPIOffering: boolean;
 }
 
@@ -35,8 +38,9 @@ export default async function Home() {
 
   const serialized: SerializedOpp[] = JSON.parse(JSON.stringify(opportunities));
 
+  // Soonest opportunity still open for registration → the live countdown.
   const urgent = serialized
-    .filter((o) => o.closesAt && getStatus(o) === "closing-soon")
+    .filter((o) => o.closesAt && getRegStatus(o) === "registration_open")
     .sort(
       (a, b) =>
         new Date(a.closesAt!).getTime() - new Date(b.closesAt!).getTime()

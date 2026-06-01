@@ -1,10 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { CircleCheck, Calendar, Trophy } from "lucide-react";
+import { Calendar, Trophy, Sparkles } from "lucide-react";
 import { BookmarkButton } from "@/components/ui/BookmarkButton";
 import { routeFromCategory } from "@/lib/opportunity-constants";
-import { orgColor, orgMark, getStatus, fmtDate } from "@/lib/opportunity-status";
+import {
+  orgColor,
+  orgMark,
+  fmtDate,
+  getRegStatus,
+  getBadges,
+  showRegistrationCountdown,
+  REG_STATUS_LABEL,
+  REG_STATUS_CLASS,
+} from "@/lib/opportunity-status";
 
 export interface OpportunityCardData {
   _id: string;
@@ -15,25 +24,45 @@ export interface OpportunityCardData {
   organizer?: string;
   logoUrl?: string;
   isPPIOffering: boolean;
+  isDiversity?: boolean;
+  isFemaleOnly?: boolean;
   prizes?: string;
   stipend?: string;
   opensAt?: string;
   closesAt?: string;
+  endsAt?: string;
+  eventDate?: string;
+  recurringMonth?: string;
+  statusOverride?: string;
+  featured?: boolean;
   tags?: string[];
 }
 
 export function OpportunityCard({ opp }: { opp: OpportunityCardData }) {
   const color = orgColor(opp.organizer);
   const mark = orgMark(opp.organizer);
-  const status = getStatus({ opensAt: opp.opensAt, closesAt: opp.closesAt });
+  const status = getRegStatus(opp);
+  const badges = getBadges(opp);
+  const showCountdown = showRegistrationCountdown(opp);
   const href = `/opportunities/${routeFromCategory(opp.category)}/${opp.slug}`;
 
   return (
-    <div className="group relative border border-border rounded-2xl p-4 hover:border-foreground/20 hover:shadow-sm transition-all bg-card">
-      {/* Full-card click target (kept behind interactive elements) */}
+    <div
+      className={`group relative rounded-2xl p-4 transition-all bg-card ${
+        opp.featured
+          ? "featured-card border border-primary/40"
+          : "border border-border hover:border-foreground/20 hover:shadow-sm"
+      }`}
+    >
       <Link href={href} className="absolute inset-0 z-0" aria-label={opp.title}>
         <span className="sr-only">{opp.title}</span>
       </Link>
+
+      {opp.featured && (
+        <span className="absolute -top-2 left-4 z-20 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary text-primary-foreground text-[9px] font-bold uppercase tracking-wide shadow">
+          <Sparkles className="w-2.5 h-2.5" /> Featured
+        </span>
+      )}
 
       <div className="relative z-10 flex items-start gap-3 pointer-events-none">
         <div
@@ -54,26 +83,25 @@ export function OpportunityCard({ opp }: { opp: OpportunityCardData }) {
         </div>
 
         <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-center gap-2 mb-1">
+          <div className="flex flex-wrap items-center gap-1.5 mb-1">
             <span className="font-semibold text-sm text-foreground group-hover:underline underline-offset-2">
               {opp.title}
             </span>
-            {opp.isPPIOffering && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-foreground text-background text-[10px] font-semibold">
-                <CircleCheck className="w-2.5 h-2.5" /> PPI
+            {/* status */}
+            <span
+              className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold border ${REG_STATUS_CLASS[status]}`}
+            >
+              {REG_STATUS_LABEL[status]}
+            </span>
+            {/* badges */}
+            {badges.map((b) => (
+              <span
+                key={b.label}
+                className={`px-1.5 py-0.5 rounded-full text-[10px] font-semibold ${b.className}`}
+              >
+                {b.label}
               </span>
-            )}
-            {status === "live" && (
-              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                Open
-              </span>
-            )}
-            {status === "closing-soon" && (
-              <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
-                Closing soon
-              </span>
-            )}
+            ))}
           </div>
 
           <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
@@ -87,10 +115,16 @@ export function OpportunityCard({ opp }: { opp: OpportunityCardData }) {
                 {opp.prizes || opp.stipend}
               </span>
             )}
-            {opp.closesAt && status !== "ended" && (
+            {showCountdown && opp.closesAt && (
               <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
                 <Calendar className="w-3 h-3" />
                 Closes {fmtDate(opp.closesAt)}
+              </span>
+            )}
+            {!opp.closesAt && opp.recurringMonth && (
+              <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                <Calendar className="w-3 h-3" />
+                Usually opens {opp.recurringMonth}
               </span>
             )}
           </div>

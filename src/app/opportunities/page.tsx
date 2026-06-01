@@ -6,7 +6,7 @@ import {
   CATEGORY_ORDER,
   type OpportunityCategory,
 } from "@/lib/opportunity-constants";
-import { getStatus } from "@/lib/opportunity-status";
+import { getRegStatus } from "@/lib/opportunity-status";
 import type { OpportunityCardData } from "@/components/opportunities/OpportunityCard";
 
 export const dynamic = "force-dynamic";
@@ -35,9 +35,9 @@ export default async function OpportunitiesHubPage() {
     byCategory.get(cat)!.push(opp);
   }
 
-  // Most urgent closing-soon opportunity for the big countdown
+  // Soonest registration-open opportunity for the big countdown
   const urgent = serialized
-    .filter((o) => o.closesAt && getStatus(o) === "closing-soon")
+    .filter((o) => o.closesAt && getRegStatus(o) === "registration_open")
     .sort(
       (a, b) =>
         new Date(a.closesAt!).getTime() - new Date(b.closesAt!).getTime()

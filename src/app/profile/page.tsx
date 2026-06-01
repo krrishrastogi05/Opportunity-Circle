@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Image from "next/image";
 import { Bell, Newspaper, Trash2, User as UserIcon } from "lucide-react";
-import { BRANCH_GROUPS } from "@/lib/branches";
+import { BRANCHES } from "@/lib/branches";
+
+const GENDERS = ["Female", "Male", "Non-binary", "Prefer not to say"];
 
 const currentYear = new Date().getFullYear();
 const gradYears = Array.from({ length: 7 }, (_, i) => currentYear + i - 1);
@@ -17,6 +19,7 @@ interface UserProfile {
   image?: string;
   branch?: string;
   graduationYear?: number;
+  gender?: string;
   alertsEnabled: boolean;
   digestEnabled: boolean;
   createdAt?: string;
@@ -30,6 +33,7 @@ export default function ProfilePage() {
   const [name, setName] = useState("");
   const [branch, setBranch] = useState("");
   const [graduationYear, setGraduationYear] = useState<number | "">("");
+  const [gender, setGender] = useState("");
   const [alertsEnabled, setAlertsEnabled] = useState(true);
   const [digestEnabled, setDigestEnabled] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -52,6 +56,7 @@ export default function ProfilePage() {
             setName(data.name || "");
             setBranch(data.branch || "");
             setGraduationYear(data.graduationYear || "");
+            setGender(data.gender || "");
             setAlertsEnabled(data.alertsEnabled ?? true);
             setDigestEnabled(data.digestEnabled ?? true);
           }
@@ -70,6 +75,7 @@ export default function ProfilePage() {
           name: name.trim(),
           branch: branch || undefined,
           graduationYear: graduationYear || undefined,
+          gender,
         }),
       });
       if (res.ok) {
@@ -186,16 +192,33 @@ export default function ProfilePage() {
               onChange={(e) => setBranch(e.target.value)}
             >
               <option value="">Select your branch</option>
-              {BRANCH_GROUPS.map((group) => (
-                <optgroup key={group.label} label={group.label}>
-                  {group.branches.map((b) => (
-                    <option key={b} value={b}>
-                      {b}
-                    </option>
-                  ))}
-                </optgroup>
+              {BRANCHES.map((b) => (
+                <option key={b} value={b}>
+                  {b}
+                </option>
               ))}
             </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1.5">
+              Gender <span className="text-muted-foreground font-normal">(optional)</span>
+            </label>
+            <select
+              className={inputClass}
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+            >
+              <option value="">Prefer not to specify</option>
+              {GENDERS.map((g) => (
+                <option key={g} value={g}>
+                  {g}
+                </option>
+              ))}
+            </select>
+            <p className="text-[11px] text-muted-foreground/60 mt-1">
+              Only used to surface diversity &amp; women-only opportunities. Never shown publicly.
+            </p>
           </div>
 
           <div>

@@ -37,10 +37,15 @@ export interface IOpportunity extends Document {
   applicationUrl?: string;
   logoUrl?: string;
   opensAt?: Date;
-  closesAt?: Date;
+  closesAt?: Date; // registration deadline (the countdown target)
+  endsAt?: Date; // final/event end — stays visible until this date
   eventDate?: Date;
+  recurringMonth?: string; // e.g. "February" for yearly programs
+  statusOverride?: string; // "" = auto, else forces the status badge
   isPPIOffering: boolean;
   ppiDetails?: string;
+  isDiversity: boolean;
+  isFemaleOnly: boolean;
   prizes?: string;
   stipend?: string;
   rounds: IRound[];
@@ -73,9 +78,14 @@ const OpportunitySchema = new Schema<IOpportunity>(
     logoUrl: String,
     opensAt: Date,
     closesAt: Date,
+    endsAt: Date,
     eventDate: Date,
+    recurringMonth: String,
+    statusOverride: { type: String, default: "" },
     isPPIOffering: { type: Boolean, default: false },
     ppiDetails: String,
+    isDiversity: { type: Boolean, default: false },
+    isFemaleOnly: { type: Boolean, default: false },
     prizes: String,
     stipend: String,
     rounds: [

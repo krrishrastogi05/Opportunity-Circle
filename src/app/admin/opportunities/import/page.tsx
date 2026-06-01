@@ -18,11 +18,16 @@ const SCHEMA_SPEC = `You are generating data for OpportunitySignal. Output ONLY 
   "eligibility": "string — who can apply",
   "applicationUrl": "string — registration/apply link",
   "logoUrl": "string — optional",
-  "opensAt": "ISO date string — optional e.g. 2026-06-01",
-  "closesAt": "ISO date string — optional",
-  "eventDate": "ISO date string — optional",
+  "opensAt": "ISO date — optional, when registration opens",
+  "closesAt": "ISO date — optional, REGISTRATION DEADLINE (the countdown target)",
+  "endsAt": "ISO date — optional, final/event end. Item stays 'Ongoing' until this date even after registration closes",
+  "eventDate": "ISO date — optional",
+  "recurringMonth": "string — optional, e.g. 'February' for yearly programs (LFX, Outreachy)",
+  "statusOverride": "optional, force status: '' (auto) | upcoming | registration_open | registration_closed | ongoing | ended",
   "isPPIOffering": true/false,
   "ppiDetails": "string — optional, explain the PPI/fast-track",
+  "isDiversity": "true/false — diversity badge",
+  "isFemaleOnly": "true/false — women-only badge",
   "prizes": "string — optional",
   "stipend": "string — optional (for programs/open source)",
   "rounds": [ { "name": "string", "timeline": "string", "description": "string" } ],
@@ -30,11 +35,11 @@ const SCHEMA_SPEC = `You are generating data for OpportunitySignal. Output ONLY 
   "tips": [ "string" ],
   "timeline": [ { "phase": "string", "period": "string", "description": "string" } ],
   "tags": [ "string" ],
-  "featured": true/false,
+  "featured": "true/false — shows with an animated highlight",
   "published": true
 }
 
-Use "rounds" for hiring_challenge/hackathon. Use "steps", "timeline", "tips" for open_source/internship programs. Set "published": true to make it live immediately.`;
+Use "rounds" for hiring_challenge/hackathon. Use "steps", "timeline", "tips" for open_source/internship programs. closesAt = registration deadline; endsAt = when the whole thing ends. Set "published": true to make it live immediately.`;
 
 export default function BulkImportPage() {
   const [json, setJson] = useState("");

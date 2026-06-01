@@ -83,3 +83,113 @@ export function orgColor(organizer?: string): string {
 export function orgMark(organizer?: string): string {
   return (organizer && ORG_MARKS[organizer]) || organizer?.[0]?.toUpperCase() || "?";
 }
+
+// ── Registration / lifecycle status ──────────────────────────────
+export type RegStatus =
+  | "upcoming"
+  | "registration_open"
+  | "registration_closed"
+  | "ongoing"
+  | "ended";
+
+export interface LifecycleOpportunity {
+  opensAt?: string | null;
+  closesAt?: string | null; // registration deadline
+  endsAt?: string | null; // final/event end
+  eventDate?: string | null;
+  statusOverride?: string;
+  recurringMonth?: string;
+}
+
+const VALID_OVERRIDES: RegStatus[] = [
+  "upcoming",
+  "registration_open",
+  "registration_closed",
+  "ongoing",
+  "ended",
+];
+
+export function getRegStatus(o: LifecycleOpportunity): RegStatus {
+  if (o.statusOverride && VALID_OVERRIDES.includes(o.statusOverride as RegStatus)) {
+    return o.statusOverride as RegStatus;
+  }
+  const now = Date.now();
+  const opens = o.opensAt ? new Date(o.opensAt).getTime() : null;
+  const closes = o.closesAt ? new Date(o.closesAt).getTime() : null;
+  const ends = o.endsAt
+    ? new Date(o.endsAt).getTime()
+    : o.eventDate
+      ? new Date(o.eventDate).getTime()
+      : null;
+
+  if (ends && now > ends) return "ended";
+  if (opens && now < opens) return "upcoming";
+  if (closes && now <= closes) return "registration_open";
+  if (closes && now > closes) {
+    // registration over, but event may still be running
+    if (ends && now <= ends) return "ongoing";
+    return "registration_closed";
+  }
+  // no closes date — rolling/ongoing if it has any opens date, else open
+  return opens ? "ongoing" : "registration_open";
+}
+
+export const REG_STATUS_LABEL: Record<RegStatus, string> = {
+  upcoming: "Opening soon",
+  registration_open: "Registration open",
+  registration_closed: "Registration closed",
+  ongoing: "Ongoing",
+  ended: "Ended",
+};
+
+export const REG_STATUS_CLASS: Record<RegStatus, string> = {
+  upcoming:
+    "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border-yellow-500/20",
+  registration_open:
+    "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20",
+  registration_closed:
+    "bg-muted text-muted-foreground border-border",
+  ongoing:
+    "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
+  ended: "bg-muted text-muted-foreground/60 border-border",
+};
+
+export interface BadgeOpportunity extends LifecycleOpportunity {
+  isPPIOffering?: boolean;
+  isDiversity?: boolean;
+  isFemaleOnly?: boolean;
+}
+
+export interface Badge {
+  label: string;
+  className: string;
+}
+
+/** Non-status badges (PPI, diversity, women-only). */
+export function getBadges(o: BadgeOpportunity): Badge[] {
+  const badges: Badge[] = [];
+  if (o.isPPIOffering)
+    badges.push({
+      label: "PPI",
+      className: "bg-foreground text-background",
+    });
+  if (o.isFemaleOnly)
+    badges.push({
+      label: "Women only",
+      className:
+        "bg-pink-500/10 text-pink-600 dark:text-pink-400 border border-pink-500/20",
+    });
+  if (o.isDiversity)
+    badges.push({
+      label: "Diversity",
+      className:
+        "bg-violet-500/10 text-violet-600 dark:text-violet-400 border border-violet-500/20",
+    });
+  return badges;
+}
+
+/** Whether to hide the deadline counter (only show while registration open/upcoming). */
+export function showRegistrationCountdown(o: LifecycleOpportunity): boolean {
+  const s = getRegStatus(o);
+  return s === "registration_open" || s === "upcoming";
+}

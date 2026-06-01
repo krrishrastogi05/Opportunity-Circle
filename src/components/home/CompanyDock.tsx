@@ -56,11 +56,11 @@ export function CompanyDock() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-3 w-full">
       <p className="text-[11px] text-muted-foreground tracking-widest uppercase">
         Companies you can explore
       </p>
-      <div className="flex items-end gap-2.5 px-5 py-3.5 rounded-2xl border border-border/40 bg-card/50 backdrop-blur-md shadow-xl shadow-black/25">
+      <div className="flex items-end gap-2.5 px-5 py-3.5 rounded-2xl border border-border/40 bg-card/50 backdrop-blur-md shadow-xl shadow-black/25 max-w-full overflow-x-auto no-scrollbar [&>*]:shrink-0">
         {companies.map((co) => {
           const isHov = hovered === co.name;
           return (
