@@ -3,7 +3,14 @@
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Link from "next/link";
 import { Compass } from "lucide-react";
+
+function getCallbackUrl(): string {
+  if (typeof window === "undefined") return "/onboarding";
+  const cb = new URLSearchParams(window.location.search).get("callbackUrl");
+  return cb && cb.startsWith("/") ? cb : "/onboarding";
+}
 
 export default function SignInPage() {
   const { data: session, status } = useSession();
@@ -12,11 +19,9 @@ export default function SignInPage() {
   useEffect(() => {
     if (session?.user) {
       const user = session.user as { profileCompleted?: boolean };
-      if (user.profileCompleted) {
-        router.push("/");
-      } else {
-        router.push("/onboarding");
-      }
+      const cb = getCallbackUrl();
+      if (cb !== "/onboarding") router.push(cb);
+      else router.push(user.profileCompleted ? "/" : "/onboarding");
     }
   }, [session, router]);
 
@@ -28,7 +33,7 @@ export default function SignInPage() {
     );
   }
 
-  if (session) return null; // will redirect via useEffect
+  if (session) return null; // redirecting via useEffect
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4">
@@ -38,16 +43,17 @@ export default function SignInPage() {
             <Compass className="h-7 w-7 text-primary" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight mb-2">
-            Welcome to Opportunity<span className="text-primary">Signal</span>
+            Hey — glad you&apos;re here.
           </h1>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Sign in to get alerts when new opportunities drop, save your
-            favourites, and never miss a deadline.
+            Take a quick second to sign in, and the whole board is yours — live
+            deadlines, saved opportunities, and gentle reminders so nothing you
+            care about slips by. No spam, ever.
           </p>
         </div>
 
         <button
-          onClick={() => signIn("google", { callbackUrl: "/onboarding" })}
+          onClick={() => signIn("google", { callbackUrl: getCallbackUrl() })}
           className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl border border-border bg-card hover:bg-accent/50 transition-colors"
         >
           <svg className="h-5 w-5" viewBox="0 0 24 24">
@@ -60,8 +66,11 @@ export default function SignInPage() {
         </button>
 
         <p className="mt-6 text-center text-[11px] text-muted-foreground/60">
-          By signing in, you agree to receive opportunity alerts. You can
-          unsubscribe anytime from your profile.
+          Just browsing?{" "}
+          <Link href="/" className="underline underline-offset-2 hover:text-foreground">
+            Head back home
+          </Link>
+          . You can sign in whenever you&apos;re ready.
         </p>
       </div>
     </div>
