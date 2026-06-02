@@ -23,6 +23,12 @@ export function AdminHeader() {
           >
             Opportunities
           </a>
+          <a
+            href="/admin/users"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Users
+          </a>
         </div>
         <div className="flex items-center gap-4">
           <a
