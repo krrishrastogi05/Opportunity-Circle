@@ -24,6 +24,7 @@ type DeadlineEntry = {
   recurringMonth?: string;
   description: string;
   isPPIOffering: boolean;
+  featured?: boolean;
 };
 
 type Status = "closing-soon" | "live" | "rolling" | "upcoming" | "ended";
@@ -117,6 +118,8 @@ export function DeadlineFeed({
       return true;
     })
     .sort((a, b) => {
+      // Featured first
+      if (!!b.featured !== !!a.featured) return a.featured ? -1 : 1;
       if (ORDER[a.status] !== ORDER[b.status])
         return ORDER[a.status] - ORDER[b.status];
       if (a.closesAt && b.closesAt)
@@ -325,6 +328,11 @@ export function DeadlineFeed({
                       <span className="text-sm font-semibold text-foreground">
                         {entry.title}
                       </span>
+                      {entry.featured && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-primary/10 text-primary border border-primary/20">
+                          Featured
+                        </span>
+                      )}
                       {isLive && (
                         <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
                           <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />

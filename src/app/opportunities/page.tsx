@@ -27,13 +27,16 @@ export default async function OpportunitiesHubPage() {
 
   const serialized: OpportunityCardData[] = JSON.parse(JSON.stringify(all));
 
-  // Group by category
+  // Group by category, featured first within each
   const byCategory = new Map<OpportunityCategory, OpportunityCardData[]>();
   for (const opp of serialized) {
     const cat = opp.category as OpportunityCategory;
     if (!byCategory.has(cat)) byCategory.set(cat, []);
     byCategory.get(cat)!.push(opp);
   }
+  Array.from(byCategory.values()).forEach((list) =>
+    list.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
+  );
 
   const openByDeadline = serialized
     .filter((o) => o.closesAt && getRegStatus(o) === "registration_open")

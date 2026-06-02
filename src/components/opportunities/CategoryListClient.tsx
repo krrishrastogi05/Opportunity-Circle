@@ -25,6 +25,8 @@ export function CategoryListClient({
       return true;
     })
     .sort((a, b) => {
+      // Featured first
+      if (!!b.featured !== !!a.featured) return a.featured ? -1 : 1;
       const sa = STATUS_ORDER[getStatus(a)];
       const sb = STATUS_ORDER[getStatus(b)];
       if (sa !== sb) return sa - sb;
