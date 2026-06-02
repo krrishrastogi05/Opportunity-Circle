@@ -345,6 +345,39 @@ const opportunities = [
       "CNCF contributions are the most recognisable to cloud-native hiring teams.",
     ],
   },
+
+  // ── 7. Amazon WoW — Women of the World (diversity) ─────────
+  {
+    title: "Amazon WoW – Career Readiness Program for Women",
+    slug: "amazon-wow",
+    category: "internship",
+    organizer: "Amazon",
+    companySlug: "amazon",
+    companyUrl: "https://app.brazenconnect.com/a/asp-sdengineering/e/28N38",
+    applicationUrl: "https://app.brazenconnect.com/a/asp-sdengineering/e/28N38",
+    description:
+      "A free career-readiness and skill-building program by Amazon for women students — leadership skills, mentorship, and a direct line to Amazon's University Recruitment team.",
+    longDescription:
+      "Amazon WoW (Women of the World) is a free career readiness and skill-building program designed to support women pursuing careers in technology and other fields.\n\nThe programming helps you build professional and leadership skills, explore career paths, expand your network, and learn from inspiring women professionals — all to get you ready for internships and full-time roles. Students registered through the WoW portal are periodically contacted by Amazon's University team for full-time graduate and internship opportunities. There is no cost to participate.",
+    eligibility:
+      "Open to all women students currently pursuing university education, and women who graduated within the last 24 months.",
+    statusOverride: "registration_open",
+    isFemaleOnly: true,
+    isDiversity: true,
+    prizes: "Free · skill sessions + Amazon recruiter access",
+    published: true,
+    tags: ["Women only", "Career Readiness", "Free", "Networking", "Amazon"],
+    steps: [
+      { step: 1, title: "Register on the WoW portal", description: "Click 'Register Now' on the Amazon WoW (Brazen) portal to create your profile. It's completely free." },
+      { step: 2, title: "Attend skill & career sessions", description: "Join sessions on professional skills, leadership, and career readiness, and hear from women professionals at Amazon." },
+      { step: 3, title: "Network & get noticed", description: "Connect with Amazon's University Recruitment team — registered students are contacted for internship and full-time graduate opportunities." },
+    ],
+    tips: [
+      "Register early and keep your profile complete — that's how the recruiting team reaches out.",
+      "Attend live sessions; engagement is what builds the network and visibility.",
+      "Eligible if you graduated within the last 24 months, not just current students.",
+    ],
+  },
 ];
 
 async function seed() {
