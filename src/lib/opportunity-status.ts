@@ -158,6 +158,7 @@ export interface BadgeOpportunity extends LifecycleOpportunity {
   isPPIOffering?: boolean;
   isDiversity?: boolean;
   isFemaleOnly?: boolean;
+  isInternational?: boolean;
 }
 
 export interface Badge {
@@ -184,6 +185,12 @@ export function getBadges(o: BadgeOpportunity): Badge[] {
       label: "Diversity",
       className:
         "bg-violet-500/10 text-violet-600 dark:text-violet-400 border border-violet-500/20",
+    });
+  if (o.isInternational)
+    badges.push({
+      label: "International",
+      className:
+        "bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20",
     });
   return badges;
 }

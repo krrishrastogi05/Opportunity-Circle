@@ -28,6 +28,7 @@ const SCHEMA_SPEC = `You are generating data for OpportunitySignal. Output ONLY 
   "ppiDetails": "string — optional, explain the PPI/fast-track",
   "isDiversity": "true/false — diversity badge",
   "isFemaleOnly": "true/false — women-only badge",
+  "isInternational": "true/false — international badge (open globally)",
   "prizes": "string — optional",
   "stipend": "string — optional (for programs/open source)",
   "rounds": [ { "name": "string", "timeline": "string", "description": "string" } ],

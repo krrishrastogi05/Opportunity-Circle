@@ -46,6 +46,7 @@ export interface IOpportunity extends Document {
   ppiDetails?: string;
   isDiversity: boolean;
   isFemaleOnly: boolean;
+  isInternational: boolean;
   prizes?: string;
   stipend?: string;
   rounds: IRound[];
@@ -86,6 +87,7 @@ const OpportunitySchema = new Schema<IOpportunity>(
     ppiDetails: String,
     isDiversity: { type: Boolean, default: false },
     isFemaleOnly: { type: Boolean, default: false },
+    isInternational: { type: Boolean, default: false },
     prizes: String,
     stipend: String,
     rounds: [

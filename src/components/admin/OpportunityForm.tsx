@@ -50,6 +50,7 @@ interface OpportunityData {
   ppiDetails: string;
   isDiversity: boolean;
   isFemaleOnly: boolean;
+  isInternational: boolean;
   prizes: string;
   stipend: string;
   rounds: Round[];
@@ -83,6 +84,7 @@ const emptyForm: OpportunityData = {
   ppiDetails: "",
   isDiversity: false,
   isFemaleOnly: false,
+  isInternational: false,
   prizes: "",
   stipend: "",
   rounds: [],
@@ -405,6 +407,15 @@ export function OpportunityForm({
               className="h-4 w-4 rounded border-border"
             />
             Women-only badge
+          </label>
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={form.isInternational}
+              onChange={(e) => update("isInternational", e.target.checked)}
+              className="h-4 w-4 rounded border-border"
+            />
+            International badge
           </label>
         </div>
       </section>

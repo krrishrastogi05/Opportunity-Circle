@@ -34,6 +34,7 @@ const OpportunitySchema = new mongoose.Schema(
     ppiDetails: String,
     isDiversity: { type: Boolean, default: false },
     isFemaleOnly: { type: Boolean, default: false },
+    isInternational: { type: Boolean, default: false },
     prizes: String,
     stipend: String,
     rounds: [{ name: String, description: String, timeline: String }],
@@ -231,6 +232,7 @@ const opportunities = [
       "Above the legal age of majority in your country of residence. Some countries/territories excluded (see official rules). International — open worldwide.",
     closesAt: new Date("2026-06-12T02:30:00+05:30"),
     isPPIOffering: false,
+    isInternational: true,
     prizes: "$60,000 total — per partner bucket: $5,000 / $3,000 / $2,000",
     published: true,
     tags: ["Gemini", "AI Agents", "Google Cloud", "International", "Devpost"],
@@ -298,6 +300,49 @@ const opportunities = [
       "The contribution period decides selection — not your essays. Contribute early and in public.",
       "Pick projects where you can start contributing within the first week.",
       "Past GSoC contributors are ineligible — this is strictly enforced.",
+    ],
+  },
+
+  // ── 6. LFX Mentorship — Term 3 (Fall) ──────────────────────
+  {
+    title: "LFX Mentorship — Term 3 (Fall)",
+    slug: "lfx-mentorship-term-3",
+    category: "open_source",
+    organizer: "Linux Foundation",
+    companyUrl: "https://mentorship.lfx.linuxfoundation.org/",
+    applicationUrl: "https://mentorship.lfx.linuxfoundation.org/",
+    description:
+      "The Linux Foundation's paid mentorship across CNCF, OpenSSF, and 50+ top open-source projects. Term 3 (Fall) applications open around July–August.",
+    longDescription:
+      "LFX Mentorship runs three terms a year; Term 3 (Fall) is the final cohort of the year. You work on real production code in major open-source ecosystems — CNCF (Kubernetes, Argo, Prometheus, Helm), OpenSSF, Hyperledger, and more — under a mentor, and get paid for it.\n\nDates below are the typical/expected Term 3 window based on previous years and may shift slightly — always confirm on the official LFX portal once the term is announced.",
+    eligibility:
+      "Open to anyone with the required skills for a project (students and early-career devs especially). A complete LFX profile (GitHub, resume) is required. Many projects also require a prerequisite task during the application window.",
+    opensAt: new Date("2026-07-21T00:00:00Z"),
+    closesAt: new Date("2026-08-13T23:59:00Z"),
+    endsAt: new Date("2026-11-30T23:59:00Z"),
+    recurringMonth: "July–August (Term 3 / Fall)",
+    stipend: "$3,000 – $6,600",
+    isInternational: true,
+    published: true,
+    tags: ["Linux Foundation", "CNCF", "Kubernetes", "Cloud Native", "Term 3 / Fall"],
+    steps: [
+      { step: 1, title: "Complete your LFX profile", description: "Sign up at mentorship.lfx.linuxfoundation.org as a mentee; add GitHub, LinkedIn, and resume. Incomplete profiles are auto-rejected." },
+      { step: 2, title: "Browse Term 3 projects", description: "Filter for 'Accepting Applications'. CNCF projects (Kubernetes, Argo, Prometheus, Helm) are the most resume-relevant." },
+      { step: 3, title: "Join the community + do the prerequisite task", description: "Join the project's Slack, read recent PRs/issues, and complete any required prerequisite task — these are eliminatory." },
+      { step: 4, title: "Write a tailored Statement of Purpose", description: "Explain what the project does, what the task involves, why you're qualified, and your approach. Generic SoPs get filtered fast." },
+    ],
+    timeline: [
+      { phase: "Applications open (expected)", period: "~21 July 2026", description: "Confirm exact dates on the LFX portal" },
+      { phase: "Application deadline (expected)", period: "~13 August 2026", description: "Complete prerequisite tasks before this" },
+      { phase: "Mentee selection", period: "Late August 2026", description: "Mentors review and select" },
+      { phase: "Mentorship term", period: "September – November 2026", description: "~12 weeks, with a midterm evaluation" },
+      { phase: "Stipend payments", period: "Midterm (50%) + completion (50%)", description: "" },
+    ],
+    tips: [
+      "Term 3 dates shift year to year — set a reminder for mid-July and confirm on the official portal.",
+      "The prerequisite task is non-negotiable; treat it as step zero.",
+      "Apply to 3–5 projects and tailor each Statement of Purpose.",
+      "CNCF contributions are the most recognisable to cloud-native hiring teams.",
     ],
   },
 ];
