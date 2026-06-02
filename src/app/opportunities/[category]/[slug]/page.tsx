@@ -12,7 +12,16 @@ export const dynamic = "force-dynamic";
 async function getOpportunity(slug: string) {
   await connectDB();
   const doc = await Opportunity.findOne({ slug, published: true }).lean();
-  return doc ? (JSON.parse(JSON.stringify(doc)) as OpportunityDetailData) : null;
+  if (!doc) return null;
+  const opp = JSON.parse(JSON.stringify(doc)) as OpportunityDetailData;
+  // Normalise array fields — docs created via upsert/admin may omit them,
+  // and the detail UI reads .length / .map on them.
+  opp.rounds = opp.rounds ?? [];
+  opp.steps = opp.steps ?? [];
+  opp.timeline = opp.timeline ?? [];
+  opp.tips = opp.tips ?? [];
+  opp.tags = opp.tags ?? [];
+  return opp;
 }
 
 export async function generateMetadata({
