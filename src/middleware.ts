@@ -14,6 +14,12 @@ function hasUserSession(req: NextRequest): boolean {
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
+  // Never gate static files (e.g. company logos in /public/companies/*.png,
+  // which are served under the gated /companies path).
+  if (/\.[a-zA-Z0-9]+$/.test(pathname)) {
+    return NextResponse.next();
+  }
+
   // Admin area keeps its own JWT auth.
   if (pathname.startsWith("/admin")) {
     const token = req.cookies.get(COOKIE_NAME)?.value;
