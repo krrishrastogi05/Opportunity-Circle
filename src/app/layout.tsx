@@ -5,6 +5,7 @@ import { Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { AuthProvider } from "@/components/auth/AuthProvider";
+import { OnboardingGuard } from "@/components/auth/OnboardingGuard";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "sonner";
@@ -44,6 +45,7 @@ export default function RootLayout({
       >
         <AuthProvider>
           <ThemeProvider>
+            <OnboardingGuard />
             <SiteHeader />
             <main className="min-h-screen animate-page-in">{children}</main>
             <Footer />
