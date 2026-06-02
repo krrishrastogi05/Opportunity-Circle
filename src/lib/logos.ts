@@ -26,6 +26,7 @@ const DOMAINS: Record<string, string> = {
   meesho: "meesho.com",
   freshworks: "freshworks.com",
   rippling: "rippling.com",
+  cisco: "cisco.com",
   "goldman sachs": "goldmansachs.com",
   "goldman-sachs": "goldmansachs.com",
   "linux foundation": "linuxfoundation.org",

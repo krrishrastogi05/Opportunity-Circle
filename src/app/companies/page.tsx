@@ -19,6 +19,7 @@ const companies: CompanyEntry[] = [
   { slug: "google", name: "Google", tier: "big-tech", tags: "Big Tech · Search & Cloud · Pure DSA · STEP Intern" },
   { slug: "microsoft", name: "Microsoft", tier: "big-tech", tags: "Big Tech · Cloud & Productivity · DSA + CS Fundamentals · Very Broad Campus" },
   { slug: "uber", name: "Uber", tier: "big-tech", tags: "Ride-hailing · Real-time Systems · High DSA Bar · LLD + HLD" },
+  { slug: "cisco", name: "Cisco", tier: "big-tech", hiring: true, tags: "Networking & Infra · Security · Code with Cisco · Bengaluru" },
   /* ── Indian Unicorns ── */
   { slug: "flipkart", name: "Flipkart", tier: "unicorn", hiring: true, tags: "Indian E-commerce · Machine Coding Round · Campus-Heavy" },
   { slug: "swiggy", name: "Swiggy", tier: "unicorn", tags: "Food Delivery · Quick Commerce · Machine Coding · Bangalore" },

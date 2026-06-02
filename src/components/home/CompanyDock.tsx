@@ -22,7 +22,7 @@ const companies = [
   { name: "Atlassian", slug: "atlassian" },
 ];
 
-const TOTAL_COMPANIES = 13;
+const TOTAL_COMPANIES = 14;
 
 export function CompanyDock() {
   const [hovered, setHovered] = useState<string | null>(null);

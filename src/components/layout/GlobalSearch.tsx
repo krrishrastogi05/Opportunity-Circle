@@ -23,6 +23,7 @@ const COMPANIES: SearchItem[] = [
   { id: "google",     label: "Google",     sublabel: "Big Tech · Pure DSA · STEP Intern",  href: "/companies/google",     category: "company", tags: "search cloud gsoc step" },
   { id: "microsoft",  label: "Microsoft",  sublabel: "Big Tech · DSA + CS Fundamentals",   href: "/companies/microsoft",  category: "company", tags: "azure cloud engage" },
   { id: "uber",       label: "Uber",       sublabel: "Real-time Systems · LLD + HLD",      href: "/companies/uber",       category: "company", tags: "rides maps star engineer" },
+  { id: "cisco",      label: "Cisco",      sublabel: "Networking & Infra · Code with Cisco", href: "/companies/cisco",    category: "company", tags: "cisco networking security code with cisco bengaluru" },
   { id: "flipkart",   label: "Flipkart",   sublabel: "Indian E-commerce · Machine Coding", href: "/companies/flipkart",   category: "company", tags: "grid hackathon ecommerce" },
   { id: "swiggy",     label: "Swiggy",     sublabel: "Food Delivery · Machine Coding",     href: "/companies/swiggy",     category: "company", tags: "food delivery bangalore" },
   { id: "eternal",    label: "Eternal (formerly Zomato)", sublabel: "Food Tech · Zomato · Blinkit", href: "/companies/eternal", category: "company", tags: "eternal zomato blinkit district food gurugram" },
