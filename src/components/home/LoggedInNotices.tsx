@@ -1,23 +1,26 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { DismissibleNotice } from "@/components/ui/DismissibleNotice";
+import { AlertModal } from "@/components/ui/AlertModal";
 
 /**
- * Short notices shown to signed-in users on the home page.
- * Add a new <DismissibleNotice> (with a fresh storageKey) for each update.
+ * Important notices shown to signed-in users. Each notice is a front-and-
+ * center popup. Add another <AlertModal> (fresh storageKey) for new updates.
  */
 export function LoggedInNotices() {
   const { status } = useSession();
   if (status !== "authenticated") return null;
 
   return (
-    <DismissibleNotice
-      storageKey="notice-gridlock-deadline-jun5-v2"
-      title="Flipkart Gridlock 2.0 — Round 1 deadline preponed"
-      body="Heads up: submissions now close earlier — 5 June 2026, 11:59 PM IST. Shortlisted entries go through a reproducibility review, so keep your source (.ipynb) ready and submit soon."
-      href="/opportunities/hackathons/flipkart-gridlock-2"
-      linkText="View Gridlock"
+    <AlertModal
+      storageKey="notice-gridlock-deadline-jun5-popup"
+      tone="urgent"
+      eyebrow="Deadline preponed"
+      title="Flipkart Gridlock 2.0 — submit sooner"
+      chip="Now closes 5 June 2026, 11:59 PM IST"
+      body="Round 1 has been moved earlier. Finish your submission before the new deadline. Shortlisted entries undergo a reproducibility review — keep your source (.ipynb) ready."
+      ctaText="View Gridlock"
+      ctaHref="/opportunities/hackathons/flipkart-gridlock-2"
     />
   );
 }
