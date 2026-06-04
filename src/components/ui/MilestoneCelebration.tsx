@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { PartyPopper, X, ArrowRight } from "lucide-react";
 
@@ -106,9 +107,9 @@ export function MilestoneCelebration({
     setVisible(false);
   }
 
-  if (!visible) return null;
+  if (!visible || typeof document === "undefined") return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[120] flex items-center justify-center px-4">
       {/* Backdrop */}
       <div
@@ -194,6 +195,7 @@ export function MilestoneCelebration({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

@@ -3,6 +3,7 @@ import { WhatSection } from "@/components/home/PillarsSection";
 import { DeadlineFeed } from "@/components/home/DeadlineFeed";
 import { UrgentCountdown } from "@/components/home/UrgentCountdown";
 import { FirstVisitCelebration } from "@/components/home/FirstVisitCelebration";
+import { LoggedInNotices } from "@/components/home/LoggedInNotices";
 import { connectDB } from "@/lib/mongodb";
 import { Opportunity } from "@/models/Opportunity";
 import { getRegStatus } from "@/lib/opportunity-status";
@@ -66,6 +67,7 @@ export default async function Home() {
     <>
       <FirstVisitCelebration />
       <HeroSection />
+      <LoggedInNotices />
       {spotlight && (
         <UrgentCountdown
           opp={spotlight}

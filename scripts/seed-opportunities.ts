@@ -167,7 +167,7 @@ const opportunities = [
   // ── 3. Flipkart Gridlock 2.0 (general hackathon) ───────────
   {
     title: "Flipkart Gridlock 2.0",
-    slug: "flipkart-gridlock-2",
+    slug: "flipkart-gridlock-2", // closesAt updated to 5 June (HackerEarth extension)
     category: "hackathon",
     organizer: "Flipkart",
     companySlug: "flipkart",
@@ -180,7 +180,7 @@ const opportunities = [
     eligibility:
       "Open to students and professionals from anywhere in India — no specific city, academic background, or credential required. Solo builders or teams of up to 4.",
     opensAt: new Date("2026-05-26T00:00:00+05:30"),
-    closesAt: new Date("2026-06-07T23:59:00+05:30"),
+    closesAt: new Date("2026-06-05T23:59:00+05:30"),
     endsAt: new Date("2026-07-03T23:59:00+05:30"),
     eventDate: new Date("2026-07-03T10:00:00+05:30"),
     isPPIOffering: false,
