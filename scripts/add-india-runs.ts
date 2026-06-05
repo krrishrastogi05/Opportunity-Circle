@@ -23,8 +23,8 @@ const indiaRuns = {
   category: "hackathon",
   organizer: "Redrob",
   // No internal company page yet; logo resolves from /companies/redrob.png
-  companyUrl: "https://hack2skill.com/",
-  applicationUrl: "https://hack2skill.com/",
+  companyUrl: "https://hack2skill.com/event/india_runs/",
+  applicationUrl: "https://hack2skill.com/event/india_runs/",
   description:
     "India's most open hackathon by Redrob AI (Hack2skill) — open to everyone, no code or degree needed. ₹50 Lakh+ prize pool across 3 tracks over 42 days.",
   longDescription:
