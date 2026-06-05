@@ -19,6 +19,7 @@ async function getOpportunity(slug: string) {
   opp.rounds = opp.rounds ?? [];
   opp.steps = opp.steps ?? [];
   opp.timeline = opp.timeline ?? [];
+  opp.tracks = opp.tracks ?? [];
   opp.tips = opp.tips ?? [];
   opp.tags = opp.tags ?? [];
   return opp;

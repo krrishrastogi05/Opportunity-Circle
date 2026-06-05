@@ -43,6 +43,13 @@ interface TimelinePhase {
   period: string;
   description: string;
 }
+interface Track {
+  name: string;
+  description?: string;
+  prize?: string;
+  opensAt?: string;
+  closesAt?: string;
+}
 
 export interface OpportunityDetailData {
   _id: string;
@@ -72,6 +79,7 @@ export interface OpportunityDetailData {
   rounds: Round[];
   steps: Step[];
   timeline: TimelinePhase[];
+  tracks?: Track[];
   tips: string[];
   tags: string[];
 }
@@ -247,6 +255,56 @@ export function OpportunityDetail({ opp }: { opp: OpportunityDetailData }) {
             </span>
           ))}
         </div>
+      )}
+
+      {/* Tracks — each with its own deadline & status */}
+      {opp.tracks && opp.tracks.length > 0 && (
+        <section className="mb-8">
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-4">
+            Tracks &amp; deadlines
+          </p>
+          <div className="space-y-2.5">
+            {opp.tracks.map((tr, i) => {
+              const trStatus = getRegStatus({
+                opensAt: tr.opensAt,
+                closesAt: tr.closesAt,
+              });
+              return (
+                <div
+                  key={i}
+                  className="rounded-xl border border-border bg-card p-4"
+                >
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <p className="text-sm font-semibold text-foreground">
+                      {tr.name}
+                    </p>
+                    {tr.prize && (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-foreground/5 border border-border text-foreground">
+                        {tr.prize}
+                      </span>
+                    )}
+                    <span
+                      className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold border ${REG_STATUS_CLASS[trStatus]}`}
+                    >
+                      {REG_STATUS_LABEL[trStatus]}
+                    </span>
+                  </div>
+                  {tr.description && (
+                    <p className="text-xs text-muted-foreground leading-relaxed mb-1">
+                      {tr.description}
+                    </p>
+                  )}
+                  {tr.closesAt && (
+                    <p className="text-[11px] text-muted-foreground flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      Submissions close {fmtDate(tr.closesAt)}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
       )}
 
       {/* Rounds (hiring/hackathon) */}

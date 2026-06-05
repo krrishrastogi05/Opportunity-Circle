@@ -24,6 +24,14 @@ export interface ITimelinePhase {
   description: string;
 }
 
+export interface ITrack {
+  name: string;
+  description?: string;
+  prize?: string;
+  opensAt?: Date;
+  closesAt?: Date;
+}
+
 export interface IOpportunity extends Document {
   title: string;
   slug: string;
@@ -52,6 +60,7 @@ export interface IOpportunity extends Document {
   rounds: IRound[];
   steps: IStep[];
   timeline: ITimelinePhase[];
+  tracks: ITrack[];
   tips: string[];
   tags: string[];
   featured: boolean;
@@ -95,6 +104,15 @@ const OpportunitySchema = new Schema<IOpportunity>(
         name: String,
         description: String,
         timeline: String,
+      },
+    ],
+    tracks: [
+      {
+        name: String,
+        description: String,
+        prize: String,
+        opensAt: Date,
+        closesAt: Date,
       },
     ],
     steps: [

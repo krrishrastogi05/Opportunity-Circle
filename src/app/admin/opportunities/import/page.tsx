@@ -32,6 +32,7 @@ const SCHEMA_SPEC = `You are generating data for OpportunitySignal. Output ONLY 
   "prizes": "string — optional",
   "stipend": "string — optional (for programs/open source)",
   "rounds": [ { "name": "string", "timeline": "string", "description": "string" } ],
+  "tracks": [ { "name": "string", "prize": "string", "description": "string", "opensAt": "ISO date", "closesAt": "ISO date — each track can have its own deadline" } ],
   "steps": [ { "step": 1, "title": "string", "description": "string" } ],
   "tips": [ "string" ],
   "timeline": [ { "phase": "string", "period": "string", "description": "string" } ],

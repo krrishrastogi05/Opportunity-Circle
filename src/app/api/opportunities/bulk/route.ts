@@ -80,6 +80,7 @@ export async function POST(req: NextRequest) {
           category: category as OpportunityCategory,
           // normalise arrays so partial JSON doesn't break the schema
           rounds: Array.isArray(raw.rounds) ? raw.rounds : [],
+          tracks: Array.isArray(raw.tracks) ? raw.tracks : [],
           steps: Array.isArray(raw.steps) ? raw.steps : [],
           timeline: Array.isArray(raw.timeline) ? raw.timeline : [],
           tips: Array.isArray(raw.tips) ? raw.tips : [],
