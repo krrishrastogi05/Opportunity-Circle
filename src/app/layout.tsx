@@ -9,6 +9,7 @@ import { OnboardingGuard } from "@/components/auth/OnboardingGuard";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/next";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -29,8 +30,12 @@ export const metadata: Metadata = {
   description:
     "The tech career map every confused student needs. Explore company profiles, opportunity types, and skill guides — structured, calm, and beginner-friendly.",
   keywords: [
-    "tech career guide", "internship guide", "DSA preparation",
-    "company expectations", "open source", "campus placement",
+    "tech career guide",
+    "internship guide",
+    "DSA preparation",
+    "company expectations",
+    "open source",
+    "campus placement",
   ],
   robots: { index: true, follow: true },
 };
@@ -52,6 +57,7 @@ export default function RootLayout({
             <Toaster richColors position="bottom-right" />
           </ThemeProvider>
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );
